@@ -95,18 +95,19 @@ table th {
     color: white;
 }
 
-button {
+button.edit-btn , button.delete-btn {
     background-color: #001F3F;
     color: white;
     padding: 10px 15px;
     border: none;
-    border-radius: 5px;
+    border-radius: 15px;
     cursor: pointer;
     margin-right: 10px;
 }
 
 button.edit-btn:hover {
     background-color: #6A9AB0;
+   
 }
 
 button.delete-btn:hover {

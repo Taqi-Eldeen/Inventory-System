@@ -1,0 +1,67 @@
+.main-content {
+    margin-left: 280px; 
+    padding: 20px; 
+    min-height: 100vh; 
+    background-color: #f1f1f1;
+  }
+  
+
+  .sidebar {
+    width: 280px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #343a40;
+    padding-top: 20px;
+    overflow-y: auto;
+  }
+
+
+.container {
+    max-width: 500px;
+    margin: auto;
+    background: white; /* White background for the form */
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #001F3F; /* Header color from your palette */
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+select {
+    width: 100%; /* Full-width input fields */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #3A6D8C; /* Button color */
+    color: white; /* White text for the button */
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%; /* Full-width button */
+}
+
+button:hover {
+    background-color: #6A9AB0; /* Button hover color */
+}
