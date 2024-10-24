@@ -64,7 +64,7 @@
                 <li><a class="dropdown-item" href="#">Settings</a></li>
                 <li><a class="dropdown-item" href="#">Profile</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-right-from-bracket"></i> Sign out</a></li>
+                <li><a class="dropdown-item" href="loginhome.php"><i class="fa-solid fa-right-from-bracket"></i> Sign out</a></li>
             </ul>
         </div>
     </div>

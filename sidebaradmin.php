@@ -34,10 +34,9 @@
         <hr>
         <ul class="nav nav-pills flex-column mb-auto" id="sidebar-nav">
             <li>
-                <a href="dashboard.php" class="nav-link text-white"><i class="fa-solid fa-table-columns"></i> Dashboard</a>
+                <a href="admin.php" class="nav-link text-white"><i class="fa-solid fa-table-columns"></i> Dashboard</a>
             </li>
-            <li>
-                <a href="products.php" class="nav-link text-white"><i class="fa-solid fa-cubes"></i> Stock</a>
+            
             </li>
             <li>
                 <a href="supplier.php" class="nav-link text-white"><i class="fa-solid fa-truck"></i> Supplier Management</a>
@@ -63,7 +62,7 @@
                 <li><a class="dropdown-item" href="#">Settings</a></li>
                 <li><a class="dropdown-item" href="#">Profile</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-right-from-bracket"></i> Sign out</a></li>
+                <li><a class="dropdown-item" href="loginhome.php"><i class="fa-solid fa-right-from-bracket"></i> Sign out</a></li>
             </ul>
         </div>
     </div>

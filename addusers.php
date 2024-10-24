@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="addusers.css">
 </head>
 <body>
-<?php require 'sidebar.php'; ?>
+<?php require 'sidebaradmin.php'; ?>
 
 <div class="main-content"> 
 
