@@ -1,0 +1,122 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.main-content {
+    margin-left: 280px; 
+    padding: 20px; 
+    min-height: 100vh; 
+    background: linear-gradient(to right, #f1f1f1 , #EAD8B1);
+  }
+  
+  /* Sidebar Styling */
+  .sidebar {
+    width: 280px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #343a40;
+    padding-top: 20px;
+    overflow-y: auto;
+  }
+
+/* Panel styles */
+.panel {
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.panel-heading {
+    background-color: #1a2948;
+    color: #fff;
+    padding: 15px;
+    font-size: 18px;
+}
+
+.panel-heading .btn-primary {
+    background-color: darkblue;
+    border-color: darkblue;
+    color: #fff;
+    border-radius: 4px;
+}
+
+.panel-body {
+    padding: 0;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+.table-bordered {
+    border: 1px solid #ddd;
+}
+
+.table th, 
+.table td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+.table th {
+    background-color: #1a2948;
+    color: white;
+}
+
+.table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Button styles */
+.btn-primary {
+    background-color: #1a2948;
+    border-color: #1a2948;
+    color: white;
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 3px;
+}
+
+.btn-primary:hover {
+    background-color: #16326a;
+    border-color: #16326a;
+}
+
+/* Trash icon button */
+.fa-trash {
+    color: white;
+}
+
+.btn-primary i {
+    font-size: 16px;
+}
+
+/* Tooltip styles */
+[data-toggle="tooltip"] {
+    position: relative;
+}
+
+[data-toggle="tooltip"]:hover:after {
+    content: attr(title);
+    position: absolute;
+    left: 0;
+    top: -25px;
+    background: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 1000;
+}

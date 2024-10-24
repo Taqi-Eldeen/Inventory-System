@@ -1,3 +1,4 @@
+
 .sidebar {
     width: 280px;
     height: 100vh;
@@ -21,8 +22,9 @@
     margin-left: 280px;
     padding: 20px;
     min-height: 100vh;
-    background-color: #f1f1f1;
+    background-color: #f1f1f1 ;
     transition: margin-left 0.3s ease;
+    background: linear-gradient(to right, #f1f1f1 , #EAD8B1);
 }
 
 .search-nav {
@@ -185,6 +187,18 @@
 
 .burger-menu.active .bar:nth-child(3) {
     transform: rotate(-45deg) translate(5px, -5px);
+}
+.notification-bell {
+    position: relative;
+}
+.notification-bell .badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 3px 6px;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
 }
 
 @keyframes dropdownAnimation {
