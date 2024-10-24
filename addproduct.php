@@ -10,7 +10,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-<?php require 'sidebar.php'; ?>
+<?php require 'sidebarsupplier.php'; ?>
     <div class="main-content"> 
 <div class="container">
     <div class="row">

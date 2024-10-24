@@ -9,7 +9,7 @@
 <body>
 
 
-    <?php require 'sidebar.php'; ?>
+<?php require 'sidebaradmin.php'; ?>
     <div class="main-content"> 
         <section class="overview-section">
             <h2>Overview</h2>

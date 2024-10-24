@@ -10,7 +10,7 @@
 </head>
 <body>
 
-    <?php require 'sidebar.php'; ?>
+    <?php require 'sidebaradmin.php'; ?>
 
     <div class="main-content">
         <div class="content">

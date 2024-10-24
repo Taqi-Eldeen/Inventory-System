@@ -17,7 +17,7 @@
 </head>
 <body>
     
-<?php require 'sidebar.php'; ?>
+<?php require 'sidebaradmin.php'; ?>
 
 <div class="main-content"> 
     <table id="example" class="table table-striped" style="width:100%">

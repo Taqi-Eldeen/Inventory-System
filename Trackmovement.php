@@ -9,7 +9,7 @@
  
 </head>
 <body>
-<?php require 'sidebar.php'; ?>
+<?php require 'sidebarsupplier.php'; ?>
     <div class="main-content"> 
 <div class="container">
     <h2>Stock Movements</h2>
