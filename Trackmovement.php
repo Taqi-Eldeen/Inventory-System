@@ -5,15 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Track Stock Movements</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <style>
-        body {
-            padding: 20px;
-        }
-        .table {
-            margin-top: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="trackmovement.css">
+ 
 </head>
 <body>
 <?php require 'sidebar.php'; ?>
@@ -49,7 +42,7 @@
             </tr>
         </thead>
         <tbody id="movement-log">
-            <!-- Stock movements will be logged here -->
+        
         </tbody>
     </table>
 </div>
