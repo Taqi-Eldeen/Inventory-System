@@ -1,10 +1,11 @@
 body {
-	background: #1690A7;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
-	flex-direction: column;
+	background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("Images/cs-bitrode04.jpg");    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 *{
@@ -41,7 +42,7 @@ label {
 
 button {
 	float: right;
-	background: #555;
+	background: #0a0a0a;
 	padding: 10px 15px;
 	color: #fff;
 	border-radius: 5px;
