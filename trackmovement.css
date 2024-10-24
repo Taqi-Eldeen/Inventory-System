@@ -6,20 +6,10 @@ body {
     margin-left: 280px; 
     padding: 20px; 
     min-height: 100vh; 
-    background: linear-gradient(to right, #f1f1f1 , #EAD8B1);
+    background: linear-gradient(to right, #e2e2e2 , #e2e2e2);
   }
   
   /* Sidebar Styling */
-  .sidebar {
-    width: 280px;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: #343a40;
-    padding-top: 20px;
-    overflow-y: auto;
-  }
 
 .container {
     background-color: #f9f9f9;
