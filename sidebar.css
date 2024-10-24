@@ -22,9 +22,8 @@
     margin-left: 280px;
     padding: 20px;
     min-height: 100vh;
-    background-color: #f1f1f1 ;
     transition: margin-left 0.3s ease;
-    background: linear-gradient(to right, #f1f1f1 , #EAD8B1);
+ 
 }
 
 .search-nav {

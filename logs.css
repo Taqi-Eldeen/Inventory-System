@@ -1,4 +1,8 @@
-.table-data {
+
+body{
+    background: linear-gradient(to right, #f1f1f1 , #EAD8B1);
+      
+}.table-data {
     display: flex;
     flex-wrap: wrap;
     grid-gap: 24px;
