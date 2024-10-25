@@ -22,7 +22,7 @@
     margin-left: 280px;
     padding: 20px;
     min-height: 100vh;
-    background: linear-gradient(to right, #e2e2e2 , #e2e2e2);
+    background-color: #d8dede;
     transition: margin-left 0.3s ease;
  
 }

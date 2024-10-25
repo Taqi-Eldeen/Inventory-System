@@ -11,7 +11,7 @@ include_once 'sidebar.php';
     </head>
     <body>
         <div class="main-content">
-            <H2>Dashboard-></H2>
+            <H2>Dashboard</H2>
 
             <ul class="box-info">
                 <li>
@@ -51,7 +51,7 @@ include_once 'sidebar.php';
                 
                 
             </div>
-            <div class="Recent-5-Table" style=" margin-left:50px;">
+            <div class="Recent-5-Table">
 
 
 
