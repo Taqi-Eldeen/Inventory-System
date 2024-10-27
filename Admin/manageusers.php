@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css">
     <link rel="stylesheet" href="manageusers.css">
@@ -18,6 +19,11 @@
 <body>
     
 <?php require 'sidebaradmin.php'; ?>
+<?php
+include "../userClass.php"; // Including the Users class
+
+$users = Users::listUsers(); // Get list of users
+?>
 
 <div class="main-content"> 
     <table id="example" class="table table-striped" style="width:100%">
@@ -30,133 +36,17 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>Tiger Nixon</td>
-                <td>tiger@example.com</td>
-                <td>
-                    <button class="edit-btn">Edit</button>
-                    <button class="delete-btn">Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Tiger Nixon</td>
-                <td>tiger@example.com</td>
-                <td>
-                    <button class="edit-btn">Edit</button>
-                    <button class="delete-btn">Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Tiger Nixon</td>
-                <td>tiger@example.com</td>
-                <td>
-                    <button class="edit-btn">Edit</button>
-                    <button class="delete-btn">Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Tiger Nixon</td>
-                <td>tiger@example.com</td>
-                <td>
-                    <button class="edit-btn">Edit</button>
-                    <button class="delete-btn">Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Tiger Nixon</td>
-                <td>tiger@example.com</td>
-                <td>
-                    <button class="edit-btn">Edit</button>
-                    <button class="delete-btn">Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Tiger Nixon</td>
-                <td>tiger@example.com</td>
-                <td>
-                    <button class="edit-btn">Edit</button>
-                    <button class="delete-btn">Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Tiger Nixon</td>
-                <td>tiger@example.com</td>
-                <td>
-                    <button class="edit-btn">Edit</button>
-                    <button class="delete-btn">Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Tiger Nixon</td>
-                <td>tiger@example.com</td>
-                <td>
-                    <button class="edit-btn">Edit</button>
-                    <button class="delete-btn">Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Tiger Nixon</td>
-                <td>tiger@example.com</td>
-                <td>
-                    <button class="edit-btn">Edit</button>
-                    <button class="delete-btn">Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Tiger Nixon</td>
-                <td>tiger@example.com</td>
-                <td>
-                    <button class="edit-btn">Edit</button>
-                    <button class="delete-btn">Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Tiger Nixon</td>
-                <td>tiger@example.com</td>
-                <td>
-                    <button class="edit-btn">Edit</button>
-                    <button class="delete-btn">Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Tiger Nixon</td>
-                <td>tiger@example.com</td>
-                <td>
-                    <button class="edit-btn">Edit</button>
-                    <button class="delete-btn">Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Garrett Winters</td>
-                <td>garrett@example.com</td>
-                <td>
-                    <button class="edit-btn">Edit</button>
-                    <button class="delete-btn">Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Ashton Cox</td>
-                <td>ashton@example.com</td>
-                <td>
-                    <button class="edit-btn">Edit</button>
-                    <button class="delete-btn">Delete</button>
-                </td>
-            </tr>
-            <!-- Add more rows as needed -->
+            <?php foreach ($users as $user): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($user->id); ?></td>
+                    <td><?php echo htmlspecialchars($user->username); ?></td>
+                    <td><?php echo htmlspecialchars($user->email); ?></td>
+                    <td>
+                        <button class="edit-btn" data-id="<?php echo $user->id; ?>">Edit</button>
+                        <button class="delete-btn" data-id="<?php echo $user->id; ?>">Delete</button>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
         </tbody>
         <tfoot>
             <tr>
