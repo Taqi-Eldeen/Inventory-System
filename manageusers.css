@@ -4,12 +4,7 @@
     box-sizing: border-box;
     font-family: Arial, sans-serif;
 }
-.main-content {
-    margin-left: 280px; 
-    padding: 20px; 
-    min-height: 100vh; 
-    background: linear-gradient(to right, #e2e2e2 , #e2e2e2);
-  }
+
 body {
     background-color: #f4f4f4;
 }

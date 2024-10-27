@@ -6,97 +6,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Product</title>
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 <?php require 'sidebarsupplier.php'; ?>
     <div class="main-content"> 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="alert alert-info" id="msg" style="display:none;"></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-8">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <strong>
-                        <span class="glyphicon glyphicon-th"></span>
-                        <span>Add New Product</span>
-                    </strong>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-info" id="msg" style="display:none;"></div>
                 </div>
-                <div class="panel-body">
-                    <div class="col-md-12">
-                        <form id="addProductForm" class="clearfix">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <i class="glyphicon glyphicon-th-large"></i>
-                                    </span>
-                                    <input type="text" class="form-control" name="product-title" placeholder="Product Title" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <select class="form-control" name="product-categorie" required>
-                                            <option value="">Select Product Category</option>
-                                            <option value="1">phones</option>
-                                            <option value="2">laptops</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <select class="form-control" name="product-photo">
-                                            <option value="">Select Product Photo</option>
-                                           
-                                            <option value="1">Photo 1</option>
-                                            <option value="2">Photo 2</option>
-                                        </select>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>
+                                <span class="glyphicon glyphicon-th"></span>
+                                <span>Add New Product</span>
+                            </strong>
+                        </div>
+                        <div class="card-body">
+                            <form id="addProductForm" class="clearfix">
+                                <div class="mb-3">
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="glyphicon glyphicon-th-large"></i>
+                                        </span>
+                                        <input type="text" class="form-control" name="product-title" placeholder="Product Title" required>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="glyphicon glyphicon-shopping-cart"></i>
-                                            </span>
-                                            <input type="number" class="form-control" name="product-quantity" placeholder="Product Quantity" required>
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <select class="form-select" name="product-categorie" required>
+                                                <option value="">Select Product Category</option>
+                                                <option value="1">Phones</option>
+                                                <option value="2">Laptops</option>
+                                            </select>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="glyphicon glyphicon-usd"></i>
-                                            </span>
-                                            <input type="number" class="form-control" name="buying-price" placeholder="Buying Price" required>
-                                            <span class="input-group-addon">.00</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="glyphicon glyphicon-usd"></i>
-                                            </span>
-                                            <input type="number" class="form-control" name="saleing-price" placeholder="Selling Price" required>
-                                            <span class="input-group-addon">.00</span>
+                                        <div class="col-md-6">
+                                            <select class="form-select" name="product-photo">
+                                                <option value="">Select Product Photo</option>
+                                                <option value="1">Photo 1</option>
+                                                <option value="2">Photo 2</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <button type="submit" style="background-color: darkblue; color: white;" class="btn">Add Product</button>
-
-                        </form>
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <i class="glyphicon glyphicon-shopping-cart"></i>
+                                                </span>
+                                                <input type="number" class="form-control" name="product-quantity" placeholder="Product Quantity" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <i class="glyphicon glyphicon-usd"></i>
+                                                </span>
+                                                <input type="number" class="form-control" name="buying-price" placeholder="Buying Price" required>
+                                                <span class="input-group-text">.00</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <i class="glyphicon glyphicon-usd"></i>
+                                                </span>
+                                                <input type="number" class="form-control" name="selling-price" placeholder="Selling Price" required>
+                                                <span class="input-group-text">.00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary" style="background-color: darkblue; color: white;">Add Product</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-</div>
 
 <script>
     $(document).ready(function() {
