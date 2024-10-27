@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="../sidebar.css">
     <style>
         /* Badge style for notifications */
         .notification-bell {
@@ -39,7 +39,7 @@
             
             </li>
             <li>
-                <a href="supplier.php" class="nav-link text-white"><i class="fa-solid fa-truck"></i> Supplier Management</a>
+                <a href="supplierManagement.php" class="nav-link text-white"><i class="fa-solid fa-truck"></i> Supplier Management</a>
             </li>
             <li>
                 <a href="manageusers.php" class="nav-link text-white"><i class="fa-solid fa-users-gear"></i> Manage Users</a>
@@ -48,7 +48,7 @@
                 <a href="addusers.php" class="nav-link text-white"><i class="fa-solid fa-user-plus"></i> Add Users</a>
             </li>
             <li>
-                <a href="logs.php" class="nav-link text-white"><i class="fa-solid fa-file-waveform"></i> Logs</a>
+                <a href="../logs.php" class="nav-link text-white"><i class="fa-solid fa-file-waveform"></i> Logs</a>
             </li>
         </ul>
         <hr>

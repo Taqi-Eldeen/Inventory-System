@@ -1,10 +1,12 @@
 body {
-background: linear-gradient(to right, #e2e2e2 , #e2e2e2);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
-	flex-direction: column;
+	background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("Images/cs-bitrode04.jpg");   
+	 display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 *{
@@ -33,15 +35,11 @@ input {
 	margin: 10px auto;
 	border-radius: 5px;
 }
-label {
-	color: #888;
-	font-size: 18px;
-	padding: 10px;
-}
+
 
 button {
 	float: right;
-	background: #555;
+	background: #000000;
 	padding: 10px 15px;
 	color: #fff;
 	border-radius: 5px;
@@ -60,21 +58,18 @@ button:hover{
    margin: 20px auto;
 }
 
-h1 {
-	text-align: center;
-	color: #fff;
+.ca {
+    text-align: center;
+    margin-top: 15px;
+    color: #333;
+    font-size: 16px;
 }
 
-a {
-	float: right;
-	background: #555;
-	padding: 10px 15px;
-	color: #fff;
-	border-radius: 5px;
-	margin-right: 10px;
-	border: none;
-	text-decoration: none;
+.ca a {
+    color: #007BFF;
+    text-decoration: none;
 }
-a:hover{
-	opacity: .7;
+
+.ca a:hover {
+    text-decoration: underline;
 }
