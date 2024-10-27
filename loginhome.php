@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>LOGIN</title>
-	<link rel="stylesheet" type="text/css" href="login.css">
+	<link rel="stylesheet" type="text/css" href="Login.css">
 </head>
 <body>
      <form action="login.php" method="post">
@@ -18,12 +18,9 @@
 
      	<button type="submit">Login</button>
      
-	
-		 <div class="donot-have-account">
+		 <p class="ca"><a href="signuppage.php">Don't have an account yet?</a></p>
 
-<a href="signupregister.html">Dont have an account yet?</a>
-</div>	
-	 </form>
+</form>
 	 
 
 </body>
