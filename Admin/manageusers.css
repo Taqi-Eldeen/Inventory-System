@@ -96,3 +96,91 @@ button.edit-btn:hover {
 button.delete-btn:hover {
     background-color: #B22222;
 }
+/* Modal Background */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: white; /* White background */
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px; /* Some padding */
+    border: 1px solid #888; /* Gray border */
+    border-radius: 10px; /* Rounded corners */
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* Modal Header */
+.modal-header {
+    display: flex; /* Flex for header layout */
+    justify-content: space-between; /* Space between title and close button */
+    align-items: center; /* Center items vertically */
+    border-bottom: 1px solid #ddd; /* Bottom border */
+}
+
+.modal-header h2 {
+    margin: 0; /* No margin for title */
+    color: #001F3F; /* Dark blue color */
+}
+
+/* Close Button */
+.close {
+    color: #aaa; /* Gray color */
+    font-size: 28px; /* Font size */
+    font-weight: bold; /* Bold text */
+    cursor: pointer; /* Pointer on hover */
+}
+
+.close:hover,
+.close:focus {
+    color: #000; /* Black on hover/focus */
+    text-decoration: none; /* No underline */
+    cursor: pointer; /* Pointer on hover */
+}
+
+/* Modal Body */
+.modal-body {
+    margin: 20px 0; /* Margin for body */
+}
+
+/* Modal Footer */
+.modal-footer {
+    display: flex; /* Flex for footer layout */
+    justify-content: flex-end; /* Align buttons to the right */
+    border-top: 1px solid #ddd; /* Top border */
+    padding-top: 10px; /* Padding on top */
+}
+
+.modal-footer button {
+    padding: 10px 15px; /* Padding for buttons */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer on hover */
+}
+
+.modal-footer .btn-primary {
+    background-color: #3A6D8C; /* Primary button color */
+    color: white; /* White text */
+}
+
+.modal-footer .btn-secondary {
+    background-color: #ddd; /* Secondary button color */
+    color: #000; /* Black text */
+}
+
+.modal-footer .btn-primary:hover {
+    background-color: #6A9AB0; /* Lighter on hover */
+}
+
+.modal-footer .btn-secondary:hover {
+    background-color: #ccc; /* Lighter on hover */
+}

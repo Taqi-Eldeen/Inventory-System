@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "db_conn.php";
+include "DBConnection.php";
 
 if (isset($_POST['uname']) && isset($_POST['password'])) {
 
@@ -21,7 +21,7 @@ if (isset($_POST['uname']) && isset($_POST['password'])) {
         header("Location: loginhome.php?error=Password is required");
         exit();
     } else {
-        $sql = "SELECT * FROM users WHERE username='$uname'";
+        $sql = "SELECT * FROM user WHERE username='$uname'";
         $result = mysqli_query($conn, $sql);
 
         if (mysqli_num_rows($result) === 1) {

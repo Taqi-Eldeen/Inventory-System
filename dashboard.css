@@ -49,6 +49,7 @@
     display: grid; 
     grid-template-columns: repeat(3, 1fr); 
     gap: 5px; 
+    margin-left: 50px;
 }
 
 .sales-chart-cont, .stock-chart-cont {
@@ -68,8 +69,10 @@
 
 .Recent-5-Table {
     margin-top: 10px;
+   
+    margin-left: 50px;
     background: #ffffff; 
-    border-radius: 10px; 
+    border-radius: 20px; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
     padding: 10px; 
     height: 50%;

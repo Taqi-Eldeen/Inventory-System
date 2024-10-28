@@ -36,7 +36,7 @@ include_once 'sidebar.php';
                     </span>
                 </li>
             </ul>
-            <div class=" chart-container">
+            <div class=" chart-container" >
                 <div class="sales-chart-cont">
                     
                     <canvas id="sales-chart" ></canvas>
@@ -51,10 +51,7 @@ include_once 'sidebar.php';
                 
                 
             </div>
-            <div class="Recent-5-Table">
-
-
-
+            <div class="Recent-5-Table" >
             <div class="table-data"  >
             <div class="order">
                 <div class="head">

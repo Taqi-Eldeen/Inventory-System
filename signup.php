@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "db_conn.php";
+include "DBConnection.php";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     function validate($data) {
@@ -10,13 +10,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         return $data;
     }
 
-    $name = validate($_POST['name']);
+
     $uname = validate($_POST['uname']);
     $email = validate($_POST['email']);
     $password = validate($_POST['password']);
     $re_password = validate($_POST['re_password']);
 
-    if (empty($name) || empty($uname) || empty($email) || empty($password) || empty($re_password)) {
+    if ( empty($uname) || empty($email) || empty($password) || empty($re_password)) {
         header("Location: signuppage.php?error=All fields are required&name=$name&uname=$uname&email=$email");
         exit();
     } else if ($password !== $re_password) {
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Hash the password
         $password = password_hash($password, PASSWORD_DEFAULT);
 
-        $sql = "INSERT INTO users(name, username, email, password) VALUES('$name', '$uname', '$email', '$password')";
+        $sql = "INSERT INTO user (username, email, password , type) VALUES('$uname', '$email', '$password' , '2')";
         $result = mysqli_query($conn, $sql);
 
         if ($result) {

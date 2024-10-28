@@ -1,51 +1,72 @@
 <?php
-include "DBConnection.php";
+include "../DBConnection.php";
 
-class Users {
-    private $db;
+class User{
+    public $ID;
+    public $username;
+    public $email;
+    public $password;
+    public $type;
 
-    // Constructor accepts the DB connection as a parameter
-    public function __construct($db) {
-        $this->db = $db;
+    function __construct($id)	{
+		if ($id !=""){
+			$sql="select * from user where id=$id";
+			$User = mysqli_query($GLOBALS['conn'],$sql);
+			if ($row = mysqli_fetch_array($User)){
+				$this->username=$row["username"];
+                $this->email=$row["email"];
+				$this->password=$row["password"];
+				$this->ID=$row["id"];
+                $this->type=$row["type"];
+			}
+		}
+	}
+    static function InsertinDB_Static($UN, $PW, $email, $userTypeID) {
+        // Prepare the SQL statement
+        $sql = "INSERT INTO user (username, password, email, type) VALUES ('$UN', '$PW', '$email', '$userTypeID')";
+
+        // Execute the query and return true on success, false otherwise
+        if (mysqli_query($GLOBALS['conn'], $sql)) {
+            return true;
+        } else {
+            // Log or handle error appropriately
+            return false;
+        }
     }
 
-    public function createUser($username, $email, $type, $password) {
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $sql = "INSERT INTO users (username, email, type, password) VALUES (?, ?, ?, ?)";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bind_param("ssss", $username, $email, $type, $hashedPassword);
-        return $stmt->execute();
+    
+    static function SelectAllUsersInDB() {
+  
+        $sql = "SELECT * FROM user";
+        $Users = mysqli_query($GLOBALS['conn'], $sql);
+    
+        if (!$Users) {
+            die("Query failed: " . mysqli_error($conn)); 
+        }
+    
+        $Result = []; 
+        $i = 0;
+    
+        while ($row = mysqli_fetch_array($Users)) { 
+            $MyObj = new User($row["id"]); 
+            $Result[$i] = $MyObj;
+            $i++;
+        }
+    
+        return $Result; // Return the array of User objects
     }
-
-    public function readUser($id) {
-        $sql = "SELECT * FROM users WHERE id = ?";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        return $stmt->get_result()->fetch_object();
-    }
-
-    public function updateUser($id, $username, $email, $type, $password) {
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $sql = "UPDATE users SET username = ?, email = ?, type = ?, password = ? WHERE id = ?";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bind_param("ssssi", $username, $email, $type, $hashedPassword, $id);
-        return $stmt->execute();
-    }
-
-    public function deleteUser($id) {
-        $sql = "DELETE FROM users WHERE id = ?";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bind_param("i", $id);
-        return $stmt->execute();
-    }
-
-   // List all users
-public function listUsers() {
-    $sql = "SELECT * FROM user"; // Corrected table name
-    $result = $this->db->query($sql);
-    return $result->fetch_all(MYSQLI_ASSOC);
+    function UpdateMyDB(){
+        $sql = "UPDATE user SET username='" . $this->username . "', password='" . $this->password . "', email='" . $this->email . "' WHERE id=" . $this->ID;
+		if(mysqli_query($GLOBALS['conn'],$sql))
+			return true;
+		else
+			return false;	
+	}	
+    static function deleteUser($ObjUser){
+		$sql="delete from user where id=".$ObjUser->ID;
+		if(mysqli_query($GLOBALS['conn'],$sql))
+			return true;
+		else
+			return false;
+	}
 }
-
-}
-?>
