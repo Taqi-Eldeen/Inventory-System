@@ -1,3 +1,14 @@
+<?php
+session_start();
+include "DBConnection.php";
+
+// Check if the user is logged in and has supplier privileges
+if (!isset($_SESSION['username']) || $_SESSION['type'] != 1) {
+    header("Location: loginhome.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,38 +44,37 @@
         </a>
         <hr>
         <ul class="nav nav-pills flex-column mb-auto" id="sidebar-nav">
-        <li>
-    <a href="dashboard.php" class="nav-link text-white"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
-</li>
-<li>
-    <a href="products.php" class="nav-link text-white"><i class="fa-solid fa-boxes-stacked"></i> Stock</a>
-</li>
-<li>
-    <a href="editproduct.php" class="nav-link text-white"><i class="fa-solid fa-pen-to-square"></i> Edit Product</a>
-</li>
-<li>
-    <a href="addproduct.php" class="nav-link text-white"><i class="fa-solid fa-plus"></i> Add Product</a>
-</li>
-<li>
-    <a href="trackmovement.php" class="nav-link text-white"><i class="fa-solid fa-chart-line"></i> Track Movement</a>
-</li>
-<li>
-    <a href="logs.php" class="nav-link text-white"><i class="fa-solid fa-scroll"></i> Logs</a>
-</li>
-
+            <li>
+                <a href="dashboard.php" class="nav-link text-white"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+            </li>
+            <li>
+                <a href="products.php" class="nav-link text-white"><i class="fa-solid fa-boxes-stacked"></i> Stock</a>
+            </li>
+            <li>
+                <a href="editproduct.php" class="nav-link text-white"><i class="fa-solid fa-pen-to-square"></i> Edit Product</a>
+            </li>
+            <li>
+                <a href="addproduct.php" class="nav-link text-white"><i class="fa-solid fa-plus"></i> Add Product</a>
+            </li>
+            <li>
+                <a href="trackmovement.php" class="nav-link text-white"><i class="fa-solid fa-chart-line"></i> Track Movement</a>
+            </li>
+            <li>
+                <a href="logs.php" class="nav-link text-white"><i class="fa-solid fa-scroll"></i> Logs</a>
+            </li>
         </ul>
         <hr>
         <div class="dropdown">
             <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                 <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                <strong>mdo</strong>
+                <strong><?php echo $_SESSION['username']; ?></strong>
             </a>
             <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
                 <li><a class="dropdown-item" href="#">New project...</a></li>
                 <li><a class="dropdown-item" href="#">Settings</a></li>
                 <li><a class="dropdown-item" href="#">Profile</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="loginhome.php"><i class="fa-solid fa-right-from-bracket"></i> Sign out</a></li>
+                <li><a class="dropdown-item" href="../signout.php"><i class="fa-solid fa-right-from-bracket"></i> Sign out</a></li>
             </ul>
         </div>
     </div>
@@ -77,7 +87,7 @@
                 <div class="notification-bell me-4">
                     <a href="#" class="text-white">
                         <i class="fa-solid fa-bell fa-lg"></i>
-                        <span class="badge"></span> <!-- Badge to show number of notifications -->
+                        <span class="badge">2</span> <!-- Badge to show number of notifications -->
                     </a>
                 </div>
                 <form class="d-flex" role="search">
@@ -108,16 +118,6 @@
                 link.removeAttribute('aria-current');
             }
         }
-    });
-
-    const burgerMenu = document.querySelector('.burger-menu');
-    const sidebar = document.querySelector('.sidebar');
-    const mainContent = document.querySelector('.main-content');
-
-    burgerMenu.addEventListener('click', () => {
-        burgerMenu.classList.toggle('active');
-        sidebar.classList.toggle('active');
-        mainContent.classList.toggle('active');
     });
   </script>
 </body>

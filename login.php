@@ -30,14 +30,29 @@ if (isset($_POST['uname']) && isset($_POST['password'])) {
                 $_SESSION['username'] = $row['username'];
                 $_SESSION['name'] = $row['name'];
                 $_SESSION['id'] = $row['id'];
-                header("Location: dashboard.php");
+                $_SESSION['type'] = $row['type']; 
+                
+                switch ($row['type']) {
+                    case 0:
+                        header("Location: admin/admin.php");
+                        break;
+                    case 1:
+                        header("Location: supplier/addproduct.php");
+                        break;
+                    case 2:
+                        header("Location: dashboard.php");
+                        break;
+                    default:
+                        header("Location: loginhome.php?error=Unauthorized access");
+                        break;
+                }
                 exit();
             } else {
-                header("Location: loginhome.php?error=Incorrect User name or password");
+                header("Location: loginhome.php?error=Incorrect username or password");
                 exit();
             }
         } else {
-            header("Location: loginhome.php?error=Incorrect User name or password");
+            header("Location: loginhome.php?error=Incorrect username or password");
             exit();
         }
     }
