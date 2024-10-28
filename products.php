@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-<?php require 'sidebarsupplier.php'; ?>
+<?php require 'sidebar.php'; ?>
 <div class="main-content"> 
     <div class="container">
         <div class="row">
@@ -45,13 +45,13 @@
                                 <tr>
                                     <td class="text-center">1</td>
                                     <td>////</td>
-                                    <td>iphone 16</td>
+                                    <td>iPhone 16</td>
                                     <td>Phones</td>
                                     <td>47</td>
                                     <td>65,000 EGP</td>
                                     <td>80,000 EGP</td>
                                     <td>10 October, 2023, 7:45:33 AM</td>
-                                    <td>smart koshk usa</td>
+                                    <td>Smart Koshk USA</td>
                                     <td>
                                         <a href="delete_product.php?id=1" class="btn btn-danger btn-sm" title="Delete" data-toggle="tooltip">
                                             <i class="fa-solid fa-trash"></i>
@@ -67,7 +67,7 @@
                                     <td>90,000 EGP</td>
                                     <td>120,000 EGP</td>
                                     <td>17 October, 2024, 9:57:22 AM</td>
-                                    <td>alarm store uae</td>
+                                    <td>Alarm Store UAE</td>
                                     <td>
                                         <a href="delete_product.php?id=2" class="btn btn-danger btn-sm" title="Delete" data-toggle="tooltip">
                                             <i class="fa-solid fa-trash"></i>

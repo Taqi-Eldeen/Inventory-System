@@ -53,7 +53,8 @@
             <div class="form-group">
                 <label for="role">Role:</label>
                 <select id="role" name="role" required>
-                    <option value="2">User</option> <!-- Assuming '2' is the ID for User -->
+                    <option value="2">User</option>
+                    <option value="1">Supplier</option> <!-- Assuming '2' is the ID for User -->
                     <option value="0">Admin</option> <!-- Assuming '1' is the ID for Admin -->
                 </select>
             </div>
