@@ -1,5 +1,5 @@
 <?php
-include "../DBConnection.php";
+include "DBConnection.php";
 
 class User{
     public $ID;
@@ -56,12 +56,14 @@ class User{
         return $Result; // Return the array of User objects
     }
     function UpdateMyDB(){
-        $sql = "UPDATE user SET username='" . $this->username . "', password='" . $this->password . "', email='" . $this->email . "' WHERE id=" . $this->ID;
-		if(mysqli_query($GLOBALS['conn'],$sql))
-			return true;
-		else
-			return false;	
-	}	
+        $sql = "UPDATE user SET username='" . $this->username . "', password='" . $this->password . "', email='" . $this->email . "' WHERE ID=" . intval($this->ID);
+
+        if (mysqli_query($GLOBALS['conn'], $sql)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     static function deleteUser($ObjUser){
 		$sql="delete from user where id=".$ObjUser->ID;
 		if(mysqli_query($GLOBALS['conn'],$sql))
@@ -69,4 +71,5 @@ class User{
 		else
 			return false;
 	}
+
 }

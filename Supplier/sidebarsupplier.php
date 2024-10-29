@@ -49,9 +49,7 @@ if (!isset($_SESSION['username']) || $_SESSION['type'] != 1) {
             <li>
                 <a href="dashboard.php" class="nav-link text-white"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
             </li>
-            <li>
-                <a href="products.php" class="nav-link text-white"><i class="fa-solid fa-boxes-stacked"></i> Stock</a>
-            </li>
+            
             <li>
                 <a href="editproduct.php" class="nav-link text-white"><i class="fa-solid fa-pen-to-square"></i> Edit Product</a>
             </li>
@@ -61,9 +59,7 @@ if (!isset($_SESSION['username']) || $_SESSION['type'] != 1) {
             <li>
                 <a href="trackmovement.php" class="nav-link text-white"><i class="fa-solid fa-chart-line"></i> Track Movement</a>
             </li>
-            <li>
-                <a href="logs.php" class="nav-link text-white"><i class="fa-solid fa-scroll"></i> Logs</a>
-            </li>
+            
         </ul>
         <hr>
         <div class="dropdown">

@@ -1,5 +1,4 @@
 <?php
-session_start(); 
 
 include "DBConnection.php"; 
 include "productsClass.php";
@@ -18,6 +17,8 @@ include "productsClass.php";
 <body>
 <?php require 'sidebar.php'; ?>
 <div class="main-content"> 
+<H2>Stock</H2>
+
     <table id="productsTable" class="table table-striped" style="width:100%">
         <thead>
             <tr>
@@ -25,7 +26,7 @@ include "productsClass.php";
                 <th>Name</th>
                 <th>Price</th>
                 <th>Quantity</th>
-                <th>User ID</th>
+                <th>Supplier</th>
             </tr>
         </thead>
         <tbody>

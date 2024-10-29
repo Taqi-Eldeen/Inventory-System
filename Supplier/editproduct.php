@@ -135,11 +135,11 @@ if (isset($_POST['update_product'])) {
                     </div>
                     <div class="mb-3">
                         <label for="price" class="form-label">Price:</label>
-                        <input type="text" class="form-control" id="price" name="price" required>
+                        <input type="number" class="form-control" id="price" name="price" required min="1">
                     </div>
                     <div class="mb-3">
                         <label for="qty" class="form-label">Quantity:</label>
-                        <input type="number" class="form-control" id="qty" name="qty" required>
+                        <input type="number" class="form-control" id="qty" name="qty" required min="0">
                     </div>
                     <div class="modal-footer">
                         <button type="submit" name="update_product" class="btn btn-primary">Save Changes</button>

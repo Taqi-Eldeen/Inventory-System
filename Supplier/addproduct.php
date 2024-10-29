@@ -13,8 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Insert product into database using the Product class
     $isInserted = Product::InsertProductInDB_Static($name, $price, $qty, $userID);
-
-    // Set the message based on the result
     if ($isInserted) {
         $message = "Product added successfully!";
     } else {
@@ -26,17 +24,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="addproduct.css">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Product</title>
 
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  
 </head>
 <body>
 <?php require 'sidebarsupplier.php'; ?>
+<style>
+    
+    .form-control {
+        height: 50px; 
+        font-size: 16px;}
+     .input-group-text { 
+        height: 50px;
+        font-size: 16px;
+     } 
+     .btn { 
+        width: 100%;
+        height: 50px;
+        font-size: 16px; 
+    }
+</style>
     <div class="main-content"> 
         <div class="container">
             <div class="row">
@@ -47,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-10 mx-auto"> <!-- Change col-md-8 to col-md-10 for more width -->
                     <div class="card">
                         <div class="card-header">
                             <strong>
@@ -56,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </strong>
                         </div>
                         <div class="card-body">
-                            <form action="addproduct.php" method="POST" id="addProductForm">
+                            <form action="addproduct.php" method="POST" id="addProductForm" style="width: 100%; margin: auto;"> <!-- Set width to 80% -->
                                 <div class="mb-3">
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="glyphicon glyphicon-th-large"></i></span>
@@ -64,22 +79,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="input-group">
-                                                <span class="input-group-text"><i class="glyphicon glyphicon-shopping-cart"></i></span>
-                                                <input type="number" class="form-control" name="qty" placeholder="Product Quantity" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="input-group">
-                                                <span class="input-group-text"><i class="glyphicon glyphicon-usd"></i></span>
-                                                <input type="number" class="form-control" name="price" placeholder="Product Price" required>
-                                                <span class="input-group-text">.00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="input-group">
+                <span class="input-group-text"><i class="glyphicon glyphicon-shopping-cart"></i></span>
+                <input type="number" class="form-control" name="qty" placeholder="Product Quantity" required min="1">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group">
+                <span class="input-group-text"><i class="glyphicon glyphicon-usd"></i></span>
+                <input type="number" class="form-control" name="price" placeholder="Product Price" required min="0">
+                <span class="input-group-text">.00</span>
+            </div>
+        </div>
+    </div>
+</div>
+
 
                                 <input type="hidden" name="userID" value="<?php echo $_SESSION['id']; ?>"> 
                                 <button type="submit" class="btn btn-primary" style="background-color: darkblue; color: white;">Add Product</button>

@@ -11,6 +11,7 @@
 <body>
 <?php require 'sidebar.php'; ?>
 <div class="main-content"> 
+<H2>Logs</H2>
 <table id="example" class="table table-striped" style="width:100%">
     <thead>
         <tr>

@@ -53,8 +53,9 @@ if (!isset($_SESSION['username']) || $_SESSION['type'] != 0) {
             <li>
                 <a href="addusers.php" class="nav-link text-white"><i class="fa-solid fa-user-plus"></i> Add Users</a>
             </li>
+         
             <li>
-                <a href="../logs.php" class="nav-link text-white"><i class="fa-solid fa-file-waveform"></i> Logs</a>
+                <a href="generateReports.php" class="nav-link text-white"><i class="fa-solid fa-file-alt"></i> Generate Reports</a>
             </li>
         </ul>
         <hr>
@@ -64,8 +65,6 @@ if (!isset($_SESSION['username']) || $_SESSION['type'] != 0) {
                 <strong><?php echo htmlspecialchars($_SESSION['username']); ?></strong>
             </a>
             <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                <li><a class="dropdown-item" href="#">New project...</a></li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
                 <li><a class="dropdown-item" href="#">Profile</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="../signout.php"><i class="fa-solid fa-right-from-bracket"></i> Sign out</a></li>
@@ -94,7 +93,7 @@ if (!isset($_SESSION['username']) || $_SESSION['type'] != 0) {
     
   </main>
   
-  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
         const currentPage = window.location.pathname.split('/').pop();
@@ -112,16 +111,6 @@ if (!isset($_SESSION['username']) || $_SESSION['type'] != 0) {
                 link.removeAttribute('aria-current');
             }
         }
-    });
-
-    const burgerMenu = document.querySelector('.burger-menu');
-    const sidebar = document.querySelector('.sidebar');
-    const mainContent = document.querySelector('.main-content');
-
-    burgerMenu.addEventListener('click', () => {
-        burgerMenu.classList.toggle('active');
-        sidebar.classList.toggle('active');
-        mainContent.classList.toggle('active');
     });
   </script>
 </body>
