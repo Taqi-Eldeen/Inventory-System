@@ -1,81 +1,39 @@
-/* General layout styling */
-body {
-    font-family: Arial, sans-serif;
-  
-}
+     body {
+            font-family: Arial, sans-serif;
+        }
 
-.container {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-    margin-top: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
+        .container {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
 
-/* Main content styling */
-.main-content {
-    margin-left: 220px; /* assuming a sidebar width */
-    padding: 20px;
-}
+        /* Main content styling */
+        .main-content {
+            margin-left: 220px; /* assuming a sidebar width */
+            padding: 20px;
+        }
 
-/* Form styling */
-h3 {
-    color: #333;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
+        /* Update Product button styling */
+        button.edit-btn, button.delete-btn {
+            background-color: #001F3F;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
 
-.form-group label {
-    font-weight: bold;
-    color: #333;
-}
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .main-content {
+                margin-left: 0;
+            }
 
-.form-control {
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-shadow: none;
-}
-
-/* Update Product button styling */
-.btn-primary {
-    background-color: #001F3F; /* Dark blue button */
-    border-color: #001F3F;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 4px;
-    margin-top: 10px;
-}
-
-.btn-primary:hover {
-    background-color: #003366;
-    border-color: #003366;
-}
-
-/* Box styling for the form */
-.form-box {
-    background-color: #ffffff;
-    padding: 15px;
-    border-radius: 6px;
-    border: 1px solid #e3e3e3;
-}
-
-/* Icon styling */
-.form-box .icon {
-    margin-right: 10px;
-}
-
-.icon-label {
-    display: flex;
-    align-items: center;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .main-content {
-        margin-left: 0;
-    }
-
-    .btn-primary {
-        width: 100%;
-    }
-}
+            button.edit-btn, button.delete-btn {
+                width: 100%;
+            }
+        }

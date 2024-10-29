@@ -1,3 +1,28 @@
+<?php
+include "../DBConnection.php";
+include "../productsClass.php";
+// Include the Product class file
+
+$message = ""; // Initialize the message variable
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = $_POST['name'];
+    $price = $_POST['price'];
+    $qty = $_POST['qty'];
+    $userID = $_POST['userID'];
+
+    // Insert product into database using the Product class
+    $isInserted = Product::InsertProductInDB_Static($name, $price, $qty, $userID);
+
+    // Set the message based on the result
+    if ($isInserted) {
+        $message = "Product added successfully!";
+    } else {
+        $message = "Failed to add product. Please try again.";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +41,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="alert alert-info" id="msg" style="display:none;"></div>
+                    <div class="alert alert-info" id="msg" style="<?php echo $message ? 'display:block;' : 'display:none;'; ?>">
+                        <?php echo $message; ?>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -29,63 +56,32 @@
                             </strong>
                         </div>
                         <div class="card-body">
-                            <form id="addProductForm" class="clearfix">
+                            <form action="addproduct.php" method="POST" id="addProductForm">
                                 <div class="mb-3">
                                     <div class="input-group">
-                                        <span class="input-group-text">
-                                            <i class="glyphicon glyphicon-th-large"></i>
-                                        </span>
-                                        <input type="text" class="form-control" name="product-title" placeholder="Product Title" required>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <select class="form-select" name="product-categorie" required>
-                                                <option value="">Select Product Category</option>
-                                                <option value="1">Phones</option>
-                                                <option value="2">Laptops</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <select class="form-select" name="product-photo">
-                                                <option value="">Select Product Photo</option>
-                                                <option value="1">Photo 1</option>
-                                                <option value="2">Photo 2</option>
-                                            </select>
-                                        </div>
+                                        <span class="input-group-text"><i class="glyphicon glyphicon-th-large"></i></span>
+                                        <input type="text" class="form-control" name="name" placeholder="Product Name" required>
                                     </div>
                                 </div>
                                 <div class="mb-3">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="input-group">
-                                                <span class="input-group-text">
-                                                    <i class="glyphicon glyphicon-shopping-cart"></i>
-                                                </span>
-                                                <input type="number" class="form-control" name="product-quantity" placeholder="Product Quantity" required>
+                                                <span class="input-group-text"><i class="glyphicon glyphicon-shopping-cart"></i></span>
+                                                <input type="number" class="form-control" name="qty" placeholder="Product Quantity" required>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="input-group">
-                                                <span class="input-group-text">
-                                                    <i class="glyphicon glyphicon-usd"></i>
-                                                </span>
-                                                <input type="number" class="form-control" name="buying-price" placeholder="Buying Price" required>
-                                                <span class="input-group-text">.00</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="input-group">
-                                                <span class="input-group-text">
-                                                    <i class="glyphicon glyphicon-usd"></i>
-                                                </span>
-                                                <input type="number" class="form-control" name="selling-price" placeholder="Selling Price" required>
+                                                <span class="input-group-text"><i class="glyphicon glyphicon-usd"></i></span>
+                                                <input type="number" class="form-control" name="price" placeholder="Product Price" required>
                                                 <span class="input-group-text">.00</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
+                                <input type="hidden" name="userID" value="<?php echo $_SESSION['id']; ?>"> 
                                 <button type="submit" class="btn btn-primary" style="background-color: darkblue; color: white;">Add Product</button>
                             </form>
                         </div>
@@ -96,13 +92,12 @@
     </div>
 
 <script>
-    $(document).ready(function() {
-        $('#addProductForm').on('submit', function(event) {
-            event.preventDefault();
-            // Add your form submission logic here (e.g., AJAX request)
-            $('#msg').text('Product added successfully!').addClass('alert-success').show();
-        });
+$(document).ready(function() {
+    $('#addProductForm').on('submit', function(event) {
+        // event.preventDefault(); // Remove this line for regular submission
+        this.submit(); // Submit the form normally
     });
+});
 </script>
 
 </body>
