@@ -50,6 +50,7 @@
     grid-template-columns: repeat(3, 1fr); 
     gap: 8px; 
     margin-left: 40px;
+
     
 }
 
@@ -58,17 +59,14 @@
     border-radius: 20px; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
     padding: 20px; 
-    align-items: center;
-    justify-content: center; 
-    align-items: center;
+    padding-top: 15%;
 }
 .stock-chart-cont {
     background: #ffffff; 
     border-radius: 20px; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
     padding: 10px; 
-    align-items: center;
-    justify-content: center; 
+    padding-top: 15%;
 }
 
 .pie-chart-cont {
