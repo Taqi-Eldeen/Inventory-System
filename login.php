@@ -37,7 +37,7 @@ if (isset($_POST['uname']) && isset($_POST['password'])) {
                         header("Location: admin/admin.php");
                         break;
                     case 1:
-                        header("Location: supplier/addproduct.php");
+                        header("Location: supplier/supplierdashboard.php");
                         break;
                     case 2:
                         header("Location: dashboard.php");

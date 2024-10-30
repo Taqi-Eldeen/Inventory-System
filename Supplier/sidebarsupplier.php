@@ -47,7 +47,7 @@ if (!isset($_SESSION['username']) || $_SESSION['type'] != 1) {
         <hr>
         <ul class="nav nav-pills flex-column mb-auto" id="sidebar-nav">
             <li>
-                <a href="dashboard.php" class="nav-link text-white"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+                <a href="supplierdashboard.php" class="nav-link text-white"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
             </li>
             
             <li>

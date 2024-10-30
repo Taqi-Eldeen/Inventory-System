@@ -53,10 +53,7 @@ if (!isset($_SESSION['username']) || $_SESSION['type'] != 0) {
             <li>
                 <a href="addusers.php" class="nav-link text-white"><i class="fa-solid fa-user-plus"></i> Add Users</a>
             </li>
-         
-            <li>
-                <a href="generateReports.php" class="nav-link text-white"><i class="fa-solid fa-file-alt"></i> Generate Reports</a>
-            </li>
+        
         </ul>
         <hr>
         <div class="dropdown">
