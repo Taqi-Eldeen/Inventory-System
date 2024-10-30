@@ -6,7 +6,7 @@ include_once 'sidebarsupplier.php';
         <link rel="stylesheet" href="supplierdashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css">
-    <link rel="stylesheet" href="logs.css">
+    <link rel="stylesheet" href="../logs.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
     <body>
@@ -62,7 +62,89 @@ include_once 'sidebarsupplier.php';
             </div>
             <div class="Recent-5-Table" >
             <div class="table-data"  >
-            
+            <div class="order">
+                <div class="head">
+                    <h3>Recent 5 Movements</h3>
+                </div>
+                <table id="productsTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Remaining Pieces</th>
+                            <th>sold</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="pname">Product 1</td>
+                           
+                            <td class="pprice">$19.99</td>
+                          
+                            <td class="psold">10</td>
+                            <td class="premain">5</td>
+                            <td class="de" id="delete">
+                                
+                                </td>
+                               
+                              
+                            </tr>
+                            <tr>
+                            <td class="pname">Product 1</td>
+                           
+                            <td class="pprice">$19.99</td>
+                          
+                            <td class="psold">10</td>
+                            <td class="premain">5</td>
+                            <td class="de" id="delete">
+                                
+                                </td>
+                               
+                            </tr>
+                            <tr>
+                            <td class="pname">Product 1</td>
+                           
+                            <td class="pprice">$19.99</td>
+                          
+                            <td class="psold">10</td>
+                            <td class="premain">5</td>
+                            <td class="de" id="delete">
+                                
+                                </td>
+                               
+                            </tr>
+                            <tr>
+                            <td class="pname">Product 1</td>
+                           
+                            <td class="pprice">$19.99</td>
+                          
+                            <td class="psold">10</td>
+                            <td class="premain">5</td>
+                            <td class="de" id="delete">
+                                
+                                </td>
+                               
+                            </tr>
+                            <tr>
+                            <td class="pname">Product 1</td>
+                           
+                            <td class="pprice">$19.99</td>
+                          
+                            <td class="psold">10</td>
+                            <td class="premain">5</td>
+                            <td class="de" id="delete">
+                                
+                                </td>
+                               
+                            </tr>
+                            
+                            
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
 
             </div>
