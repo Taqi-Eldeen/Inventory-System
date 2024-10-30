@@ -8,7 +8,9 @@ include_once 'sidebar.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventory Management System - Profile</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="sidebar.css" rel="stylesheet">
 </head>
+
 <body>
 
     <div class="container" style="margin-top: 50px;">

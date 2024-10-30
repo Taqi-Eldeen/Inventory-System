@@ -30,7 +30,7 @@ if (!isset($_SESSION['username'])) {
                     <a href="products.php" class="nav-link text-white"><i class="fa-solid fa-cubes"></i> Stock</a>
                 </li>
                 <li>
-                    <a href="customers.php" class="nav-link text-white"><i class="fa-solid fa-truck-ramp-box"></i> Suppliers</a>
+                    <a href="availablesuppliers.php" class="nav-link text-white"><i class="fa-solid fa-truck-ramp-box"></i> Suppliers</a>
                 </li>
                 <li>
                     <a href="logs.php" class="nav-link text-white"><i class="fa-solid fa-file-waveform"></i> Logs</a>
