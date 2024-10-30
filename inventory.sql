@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 27, 2024 at 11:16 PM
+-- Generation Time: Oct 30, 2024 at 12:55 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,9 +29,12 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `logs` (
   `id` int(50) NOT NULL,
-  `date` date NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `product_id` int(11) NOT NULL,
   `msg` text NOT NULL,
-  `userid` int(50) NOT NULL
+  `userid` int(50) NOT NULL,
+  `status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -60,6 +63,15 @@ CREATE TABLE `product` (
   `userid` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `product`
+--
+
+INSERT INTO `product` (`id`, `name`, `price`, `qty`, `userid`) VALUES
+(3, 'IPhone 15', 1005, 8, 69),
+(4, 'Abdo', 1000, 4, 69),
+(5, 'iphone 14', 4, 5, 76);
+
 -- --------------------------------------------------------
 
 --
@@ -76,6 +88,20 @@ CREATE TABLE `sales_item` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `supplier`
+--
+
+CREATE TABLE `supplier` (
+  `supplier_name` varchar(50) NOT NULL,
+  `contact_details` varchar(60) NOT NULL,
+  `payment_terms` varchar(100) NOT NULL,
+  `products_supplied` varchar(100) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user`
 --
 
@@ -85,7 +111,21 @@ CREATE TABLE `user` (
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
   `type` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `email`, `password`, `type`) VALUES
+(25, 'you', 'admin@example.com', '123123123', 0),
+(69, 'lba', 'majed@gmail.com', '$2y$10$F.JTIufruK62Q/wGHf88iuJ1TorPtNN1WIAoRa32TVrUYBnNUKBG6', 1),
+(71, '7amed', '7amed@gmail.com', '$2y$10$ZYT72amgdyhDmTst6Iv01.pfvZSTQHb4lruSjcyLB/VHE4MEXOCLi', 2),
+(72, 'majed', 'Admin Name', '123123', 0),
+(73, 'sameh', 'abu_lba@yahoo.com', '$2y$10$8ZqMb413QCU6bU4l33jDg.3tjHNnVFkkwrW1SlcNgfw4uhoNtLtOq', 0),
+(75, 'ziad', 'gmail@gmail.com', '$2y$10$rtv7N7dPA/uxsf0gig4TqOtVumXDev8PgUfGjh/zJzwVqQ4X1bEg.', 1),
+(76, 'abdo', 'sapodasnpd@gmail.com', '$2y$10$Oqgi8aj45fGRwzJVg9SofuLVWnlv7zKoJmdaRWIrgo.esRFeJsL/G', 1),
+(80, 'mew', 'Hussein@gmail.com', '$2y$10$Y5K8SDhfvupkm3CQt3Uw0.NNdveE0Oi.BDc5HbcTzSv2VcXdzkp4e', 2);
 
 --
 -- Indexes for dumped tables
@@ -96,7 +136,8 @@ CREATE TABLE `user` (
 --
 ALTER TABLE `logs`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `userid` (`userid`);
+  ADD KEY `userid` (`userid`),
+  ADD KEY `product_id` (`product_id`);
 
 --
 -- Indexes for table `order_product`
@@ -119,6 +160,13 @@ ALTER TABLE `sales_item`
   ADD PRIMARY KEY (`id`),
   ADD KEY `productid` (`productid`),
   ADD KEY `orderid` (`orderid`);
+
+--
+-- Indexes for table `supplier`
+--
+ALTER TABLE `supplier`
+  ADD PRIMARY KEY (`supplier_name`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `user`
@@ -146,7 +194,7 @@ ALTER TABLE `order_product`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `sales_item`
@@ -168,6 +216,7 @@ ALTER TABLE `user`
 -- Constraints for table `logs`
 --
 ALTER TABLE `logs`
+  ADD CONSTRAINT `productid_fk` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
   ADD CONSTRAINT `userid_fk` FOREIGN KEY (`userid`) REFERENCES `user` (`id`);
 
 --
@@ -188,6 +237,12 @@ ALTER TABLE `product`
 ALTER TABLE `sales_item`
   ADD CONSTRAINT `orderid_fk` FOREIGN KEY (`orderid`) REFERENCES `order_product` (`id`),
   ADD CONSTRAINT `productid_fk_sales` FOREIGN KEY (`productid`) REFERENCES `product` (`id`);
+
+--
+-- Constraints for table `supplier`
+--
+ALTER TABLE `supplier`
+  ADD CONSTRAINT `usersid_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

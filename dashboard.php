@@ -15,21 +15,30 @@ include_once 'sidebar.php';
 
             <ul class="box-info">
                 <li>
-                <i class="fa-solid fa-users icon"></i>
+                  
+                <i class="fa-solid fa-user"></i>
+
+                    
                     <span class="text">
                         <h3>2450</h3>
                         <p>Users</p>
                     </span>
                 </li>
                 <li>
-                    <i class='bx bxs-dollar-circle icon'></i>
+                  
+
+                        <i class="fa-solid fa-truck-fast"></i>
+                   
                     <span class="text">
                         <h3>3</h3>
                         <p>Suppliers</p>
                     </span>
                 </li>
                 <li>
-                    <i class='bx bxs-cart icon'></i>
+                    
+
+                        <i class="fa-solid fa-box-open"></i>
+                   
                     <span class="text">
                         <h3>654</h3>
                         <p>Items</p>
@@ -63,8 +72,8 @@ include_once 'sidebar.php';
                             <th>Name</th>
                             <th>Price</th>
                             <th>Remaining Pieces</th>
-                            <th>Delete</th>
-                            <th>Edit</th>
+                            <th>sold</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -78,11 +87,8 @@ include_once 'sidebar.php';
                             <td class="de" id="delete">
                                 
                                 </td>
-                                <td class="de" id="edit">
-                                    <a href="/manageProducts/edit/product1_id">
-                                        <i class="fa-solid fa-pencil"></i>
-                                    </a>
-                                </td>
+                               
+                              
                             </tr>
                             <tr>
                             <td class="pname">Product 1</td>
@@ -94,11 +100,7 @@ include_once 'sidebar.php';
                             <td class="de" id="delete">
                                 
                                 </td>
-                                <td class="de" id="edit">
-                                    <a href="/manageProducts/edit/product1_id">
-                                        <i class="fa-solid fa-pencil"></i>
-                                    </a>
-                                </td>
+                               
                             </tr>
                             <tr>
                             <td class="pname">Product 1</td>
@@ -110,11 +112,7 @@ include_once 'sidebar.php';
                             <td class="de" id="delete">
                                 
                                 </td>
-                                <td class="de" id="edit">
-                                    <a href="/manageProducts/edit/product1_id">
-                                        <i class="fa-solid fa-pencil"></i>
-                                    </a>
-                                </td>
+                               
                             </tr>
                             <tr>
                             <td class="pname">Product 1</td>
@@ -126,11 +124,7 @@ include_once 'sidebar.php';
                             <td class="de" id="delete">
                                 
                                 </td>
-                                <td class="de" id="edit">
-                                    <a href="/manageProducts/edit/product1_id">
-                                        <i class="fa-solid fa-pencil"></i>
-                                    </a>
-                                </td>
+                               
                             </tr>
                             <tr>
                             <td class="pname">Product 1</td>
@@ -142,11 +136,7 @@ include_once 'sidebar.php';
                             <td class="de" id="delete">
                                 
                                 </td>
-                                <td class="de" id="edit">
-                                    <a href="/manageProducts/edit/product1_id">
-                                        <i class="fa-solid fa-pencil"></i>
-                                    </a>
-                                </td>
+                               
                             </tr>
                             
                             
