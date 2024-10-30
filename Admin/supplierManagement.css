@@ -1,34 +1,15 @@
-/* Main Content Background */
-
-/* Sidebar Styling */
-/* .sidebar {
-  width: 280px;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: #343a40;
-  padding-top: 20px;
-  overflow-y: auto;
-}
-.main-content {
-  margin-left: 280px; 
-  padding: 20px; 
-  min-height: 100vh; 
-  background: linear-gradient(to right, #e2e2e2 , #e2e2e2);
-} */
 
 
-/* Hide scrollbar for sidebar */
+
 .sidebar {
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: none; 
 }
 
 .sidebar::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, and Edge */
+  display: none; 
 }
 
-/* Content Box Styling */
+
 .content {
   padding:  20px;
   border-radius: 15px;
@@ -41,7 +22,7 @@
   flex-wrap: wrap;
 }
 
-/* Form and Supplier Table Styling */
+
 .form-container, .supplier-table {
   background-color: #f9f9f9;
   padding: 20px;
@@ -58,7 +39,7 @@
   font-size: 1.5em;
 }
 
-/* Table Styling */
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -104,7 +85,7 @@ button:hover {
   opacity: 0.8;
 }
 
-/* Form Styling */
+
 form label {
   margin-top: 15px;
 }

@@ -46,14 +46,6 @@
 .order table td {
     padding: 16px 0;
 }
-
-/* .order table tr td:first-child {
-    display: flex;
-    align-items: center;
-    grid-gap: 12px;
-    padding-left: 6px;
-} */
-
 .order table td img {
     width: 36px;
     height: 36px;

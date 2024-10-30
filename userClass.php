@@ -22,14 +22,13 @@ class User{
 		}
 	}
     static function InsertinDB_Static($UN, $PW, $email, $userTypeID) {
-        // Prepare the SQL statement
+      
         $sql = "INSERT INTO user (username, password, email, type) VALUES ('$UN', '$PW', '$email', '$userTypeID')";
 
-        // Execute the query and return true on success, false otherwise
         if (mysqli_query($GLOBALS['conn'], $sql)) {
             return true;
         } else {
-            // Log or handle error appropriately
+            
             return false;
         }
     }
@@ -53,7 +52,7 @@ class User{
             $i++;
         }
     
-        return $Result; // Return the array of User objects
+        return $Result; 
     }
     function UpdateMyDB(){
         $sql = "UPDATE user SET username='" . $this->username . "', password='" . $this->password . "', email='" . $this->email . "' WHERE ID=" . intval($this->ID);

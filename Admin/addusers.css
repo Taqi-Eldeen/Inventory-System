@@ -10,7 +10,7 @@
 
 h1 {
     text-align: center;
-    color: #001F3F; /* Header color from your palette */
+    color: #001F3F; 
 }
 
 .form-group {
@@ -26,7 +26,7 @@ input[type="text"],
 input[type="password"],
 input[type="email"],
 select {
-    width: 100%; /* Full-width input fields */
+    width: 100%; 
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -34,15 +34,15 @@ select {
 }
 
 button {
-    background-color: #3A6D8C; /* Button color */
-    color: white; /* White text for the button */
+    background-color: #3A6D8C; 
+    color: white; 
     padding: 10px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    width: 100%; /* Full-width button */
+    width: 100%; 
 }
 
 button:hover {
-    background-color: #6A9AB0; /* Button hover color */
+    background-color: #6A9AB0; 
 }

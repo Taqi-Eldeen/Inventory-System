@@ -16,7 +16,7 @@ include_once 'sidebar.php';
     <div class="container" style="margin-top: 50px;">
 
         <div class="row">
-            <!-- User Details Section -->
+         
             <div class="col-md-12 mb-4">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
@@ -32,7 +32,7 @@ include_once 'sidebar.php';
                 </div>
             </div>
 
-            <!-- Current Suppliers Section -->
+
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
@@ -79,7 +79,7 @@ include_once 'sidebar.php';
         </div>
     </div>
 
-    <!-- Edit User Modal -->
+    
     <div class="modal fade" id="editUser Modal" tabindex="-1" aria-labelledby="editUser ModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -119,7 +119,7 @@ include_once 'sidebar.php';
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Get references to the relevant elements
+     
         const editUserForm = document.getElementById('editUserForm'); 
         const passwordInput = document.getElementById('password');
         const businessNameInput = document.getElementById('businessName');
@@ -132,26 +132,26 @@ include_once 'sidebar.php';
         const displayPhoneNumber = document.getElementById('displayPhoneNumber');
         const displayLocation = document.getElementById('displayLocation');
 
-        // Event listener for the Verify Password button
+        
         verifyPasswordButton.addEventListener('click', () => {
-            // Simulate password validation success
+         
             businessNameInput.disabled = false;
             businessEmailInput.disabled = false;
             phoneNumberInput.disabled = false;
             locationInput.disabled = false;
-            // You might want to clear the password input for security
+         
             passwordInput.value = '';
         });
 
-        // Event listener for the form submission
+    
         editUserForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            // Update the user details section with the new values
+         
             displayBusinessName.textContent = businessNameInput.value;
             displayBusinessEmail.textContent = businessEmailInput.value;
             displayPhoneNumber.textContent = phoneNumberInput.value;
             displayLocation.textContent = locationInput.value;
-            alert('Changes saved!'); // Placeholder for actual save logic
+            alert('Changes saved!'); 
         });
     </script>
 </body>

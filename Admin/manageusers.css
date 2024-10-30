@@ -96,91 +96,89 @@ button.edit-btn:hover {
 button.delete-btn:hover {
     background-color: #B22222;
 }
-/* Modal Background */
+
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1000; /* Sit on top */
+    display: none; 
+    position: fixed; 
+    z-index: 1000; 
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+    width: 100%;
+    height: 100%; 
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); 
 }
 
-/* Modal Content */
 .modal-content {
-    background-color: white; /* White background */
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px; /* Some padding */
-    border: 1px solid #888; /* Gray border */
-    border-radius: 10px; /* Rounded corners */
-    width: 80%; /* Could be more or less, depending on screen size */
+    background-color: white; 
+    margin: 15% auto; 
+    padding: 20px; 
+    border: 1px solid #888; 
+    border-radius: 10px;
+    width: 80%; 
 }
 
-/* Modal Header */
 .modal-header {
-    display: flex; /* Flex for header layout */
-    justify-content: space-between; /* Space between title and close button */
-    align-items: center; /* Center items vertically */
-    border-bottom: 1px solid #ddd; /* Bottom border */
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    border-bottom: 1px solid #ddd;
 }
 
 .modal-header h2 {
-    margin: 0; /* No margin for title */
-    color: #001F3F; /* Dark blue color */
+    margin: 0;
+    color: #001F3F; 
 }
 
-/* Close Button */
+
 .close {
-    color: #aaa; /* Gray color */
-    font-size: 28px; /* Font size */
-    font-weight: bold; /* Bold text */
-    cursor: pointer; /* Pointer on hover */
+    color: #aaa; 
+    font-size: 28px; 
+    font-weight: bold; 
+    cursor: pointer; 
 }
 
 .close:hover,
 .close:focus {
-    color: #000; /* Black on hover/focus */
-    text-decoration: none; /* No underline */
-    cursor: pointer; /* Pointer on hover */
+    color: #000; 
+    text-decoration: none; 
+    cursor: pointer; 
 }
 
-/* Modal Body */
+
 .modal-body {
-    margin: 20px 0; /* Margin for body */
+    margin: 20px 0; 
 }
 
-/* Modal Footer */
+
 .modal-footer {
-    display: flex; /* Flex for footer layout */
-    justify-content: flex-end; /* Align buttons to the right */
-    border-top: 1px solid #ddd; /* Top border */
-    padding-top: 10px; /* Padding on top */
+    display: flex; 
+    justify-content: flex-end; 
+    border-top: 1px solid #ddd; 
+    padding-top: 10px; 
 }
 
 .modal-footer button {
-    padding: 10px 15px; /* Padding for buttons */
-    border: none; /* No border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer on hover */
+    padding: 10px 15px;
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
 }
 
 .modal-footer .btn-primary {
-    background-color: #3A6D8C; /* Primary button color */
-    color: white; /* White text */
+    background-color: #3A6D8C; 
+    color: white; 
 }
 
 .modal-footer .btn-secondary {
-    background-color: #ddd; /* Secondary button color */
-    color: #000; /* Black text */
+    background-color: #ddd; 
+    color: #000; 
 }
 
 .modal-footer .btn-primary:hover {
-    background-color: #6A9AB0; /* Lighter on hover */
+    background-color: #6A9AB0; 
 }
 
 .modal-footer .btn-secondary:hover {
-    background-color: #ccc; /* Lighter on hover */
+    background-color: #ccc; 
 }

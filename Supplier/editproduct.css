@@ -10,13 +10,13 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
-        /* Main content styling */
+    
         .main-content {
-            margin-left: 220px; /* assuming a sidebar width */
+            margin-left: 220px; 
             padding: 20px;
         }
 
-        /* Update Product button styling */
+
         button.edit-btn, button.delete-btn {
             background-color: #001F3F;
             color: white;
@@ -27,7 +27,7 @@
             margin-right: 10px;
         }
 
-        /* Responsive adjustments */
+     
         @media (max-width: 768px) {
             .main-content {
                 margin-left: 0;

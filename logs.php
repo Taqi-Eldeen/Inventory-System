@@ -16,7 +16,7 @@
     <thead>
         <tr>
             <th>ID</th>
-            <th>Sender Name</th>  <!-- Added Sender Name Column -->
+            <th>Sender Name</th>  
             <th>Start Date</th>
             <th>End Date</th>
             <th>Product ID</th>
@@ -28,7 +28,7 @@
     <tbody>
         <tr>
             <td>1</td>
-            <td>John Doe</td>  <!-- Sender Name -->
+            <td>John Doe</td> 
             <td>2024-10-01</td>
             <td>2024-10-10</td>
             <td>61</td>
@@ -38,7 +38,7 @@
         </tr>
         <tr>
             <td>2</td>
-            <td>Jane Smith</td>  <!-- Sender Name -->
+            <td>Jane Smith</td>  
             <td>2024-10-05</td>
             <td>2024-10-15</td>
             <td>62</td>
@@ -46,12 +46,12 @@
             <td>102</td>
             <td>Completed</td>
         </tr>
-        <!-- Add more rows as needed -->
+ 
     </tbody>
     <tfoot>
         <tr>
             <td colspan="7" style="text-align:right;"><strong>Total Records:</strong></td>
-            <td>2</td> <!-- Adjust this value based on your data -->
+            <td>2</td> 
         </tr>
         <tr>
             <td colspan="8" style="text-align:center;">* All dates are in YYYY-MM-DD format.</td>

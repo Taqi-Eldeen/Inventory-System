@@ -31,8 +31,8 @@ include "productsClass.php";
         </thead>
         <tbody>
             <?php
-            // Assuming you have a function to get all products from the database
-            $products = Product::SelectAllProductsInDB(); // Adjust this to match your actual method
+           
+            $products = Product::SelectAllProductsInDB(); 
 
             foreach ($products as $product): ?>
                 <tr>
@@ -47,7 +47,7 @@ include "productsClass.php";
         <tfoot>
             <tr>
                 <td colspan="4" style="text-align:right;"><strong>Total Products:</strong></td>
-                <td><?php echo count($products); ?></td> <!-- Total number of products -->
+                <td><?php echo count($products); ?></td> 
             </tr>
         </tfoot>
     </table>

@@ -2,7 +2,6 @@
 include "../DBConnection.php";
 include "../userClass.php"; 
 
-// Handle delete request
 if (isset($_POST['delete_id'])) {
     $userID = intval($_POST['delete_id']);
 
@@ -103,7 +102,7 @@ $allUsers = User::SelectAllUsersInDB();
     </table>
 </div>
 
-<!-- Edit User Modal -->
+
 <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -136,13 +135,13 @@ $allUsers = User::SelectAllUsersInDB();
     </div>
 </div>
 
-<!-- Initialize DataTable and handle modal data population -->
+
 <script>
  $(document).ready(function() {
     $('#example').DataTable();
  
 
-        // Handle edit button click
+     
         $('.edit-btn').on('click', function() {
             const userID = $(this).data('id');
             const username = $(this).data('username');

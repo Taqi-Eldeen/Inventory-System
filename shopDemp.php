@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<!-- Navbar -->
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
     <a class="navbar-brand" href="#">TechStore</a>
@@ -34,12 +34,12 @@
   </div>
 </nav>
 
-<!-- Main content -->
+
 <div class="container my-5">
   <div class="row text-center">
     <h1 class="mb-4">Tech Products</h1>
     
-    <!-- Product 1 -->
+   
     <div class="col-md-4 mb-4">
       <div class="card">
         <img src="https://via.placeholder.com/150" class="card-img-top" alt="Product Image">
@@ -51,7 +51,7 @@
       </div>
     </div>
     
-    <!-- Product 2 -->
+   
     <div class="col-md-4 mb-4">
       <div class="card">
         <img src="https://via.placeholder.com/150" class="card-img-top" alt="Product Image">
@@ -63,7 +63,7 @@
       </div>
     </div>
     
-    <!-- Product 3 -->
+
     <div class="col-md-4 mb-4">
       <div class="card">
         <img src="https://via.placeholder.com/150" class="card-img-top" alt="Product Image">
@@ -80,7 +80,7 @@
 
 
 
-<!-- Bootstrap JS Bundle -->
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

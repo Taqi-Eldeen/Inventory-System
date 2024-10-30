@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-10 mx-auto"> <!-- Change col-md-8 to col-md-10 for more width -->
+                <div class="col-md-10 mx-auto"> 
                     <div class="card">
                         <div class="card-header">
                             <strong>
@@ -112,8 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <script>
 $(document).ready(function() {
     $('#addProductForm').on('submit', function(event) {
-        // event.preventDefault(); // Remove this line for regular submission
-        this.submit(); // Submit the form normally
+        this.submit(); 
     });
 });
 </script>

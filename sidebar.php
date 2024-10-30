@@ -39,7 +39,7 @@ if (!isset($_SESSION['username'])) {
             <hr>
             <div class="dropdown">
                 <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                    <img src="images/user.jpg" alt="" width="32" height="32" class="rounded-circle me-2">
                     <strong><?php echo $_SESSION['username']; ?></strong> <!-- Output the username -->
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
@@ -60,7 +60,7 @@ if (!isset($_SESSION['username'])) {
     </div>
 </nav>
     </main>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> -->
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const currentPage = window.location.pathname.split('/').pop();

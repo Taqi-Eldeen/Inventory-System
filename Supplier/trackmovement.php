@@ -45,7 +45,7 @@
                     </tr>
                 </thead>
                 <tbody id="movement-log">
-                    <!-- Movement logs will be appended here -->
+               
                 </tbody>
             </table>
         </div>
@@ -55,8 +55,6 @@
     $(document).ready(function() {
         $('#stockMovementForm').on('submit', function(event) {
             event.preventDefault();
-            // Add your form submission logic here (e.g., AJAX request)
-            // Example of adding data to the table
             const productName = $('#product-name').val();
             const movementType = $('#movement-type').val();
             const quantity = $('#quantity').val();
@@ -70,8 +68,6 @@
                     <td>${quantity}</td>
                 </tr>
             `);
-
-            // Clear the form fields
             $('#stockMovementForm')[0].reset();
         });
     });

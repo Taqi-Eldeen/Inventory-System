@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = validate($_POST['password']);
     $re_password = validate($_POST['re_password']);
 
-    // Password validation regex (min 6 chars, at least one special character)
+   
     $password_regex = "/^(?=.*[!@#$%^&*(),.?\":{}|<>]).{8,}$/";
 
     if (empty($uname) || empty($email) || empty($password) || empty($re_password)) {
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header("Location: signuppage.php?error=The confirmation password does not match&uname=$uname&email=$email");
         exit();
     } else {
-        // Check if username or email already exists
+
         $sql_check = "SELECT * FROM user WHERE username='$uname' OR email='$email' LIMIT 1";
         $result_check = mysqli_query($conn, $sql_check);
 
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             header("Location: signuppage.php?error=The username or email is already taken&uname=$uname&email=$email");
             exit();
         } else {
-            // Hash the password
+      
             $password = password_hash($password, PASSWORD_DEFAULT);
 
             $sql = "INSERT INTO user (username, email, password, type) VALUES('$uname', '$email', '$password', '2')";

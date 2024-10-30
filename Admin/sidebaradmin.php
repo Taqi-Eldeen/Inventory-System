@@ -1,8 +1,8 @@
 <?php
 session_start();
-// Ensure only admins can access this page
+
 if (!isset($_SESSION['username']) || $_SESSION['type'] != 0) {
-    header("Location: ../loginhome.php"); // Redirect to login if not admin
+    header("Location: ../loginhome.php"); 
     exit();
 }
 ?>
@@ -15,7 +15,7 @@ if (!isset($_SESSION['username']) || $_SESSION['type'] != 0) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../sidebar.css">
     <style>
-        /* Badge style for notifications */
+    
         .notification-bell {
             position: relative;
         }
@@ -34,7 +34,7 @@ if (!isset($_SESSION['username']) || $_SESSION['type'] != 0) {
 
   <main class="d-flex flex-nowrap">
         
-    <!-- Sidebar -->
+
     <div class="d-flex flex-column flex-shrink-0 p-3 sidebar">
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
             <span class="fs-4">Admin Dashboard</span>
@@ -58,7 +58,7 @@ if (!isset($_SESSION['username']) || $_SESSION['type'] != 0) {
         <hr>
         <div class="dropdown">
             <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                <img src="../images/user.jpg" alt="" width="32" height="32" class="rounded-circle me-2">
                 <strong><?php echo htmlspecialchars($_SESSION['username']); ?></strong>
             </a>
             <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
@@ -69,15 +69,15 @@ if (!isset($_SESSION['username']) || $_SESSION['type'] != 0) {
         </div>
     </div>
     
-    <!-- Main content -->
+
     <div class="flex-grow-1 d-flex flex-column" style="margin-left: 280px;">
         <nav class="navbar search-nav">
             <div class="container-fluid justify-content-end">
-                <!-- Notification bell with badge -->
+          
                 <div class="notification-bell me-4">
                     <a href="#" class="text-white">
                         <i class="fa-solid fa-bell fa-lg"></i>
-                        <span class="badge">5</span> <!-- Badge to show number of notifications -->
+                        <span class="badge">5</span>
                     </a>
                 </div>
                 <form class="d-flex" role="search">

@@ -56,10 +56,10 @@ if (isset($_POST['update_product'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Product</title>
 
-    <!-- New Bootstrap CSS -->
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     
-    <!-- New DataTables CSS -->
+
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css">
 
     <style>
@@ -119,7 +119,7 @@ if (isset($_POST['update_product'])) {
     </table>
 </div>
 
-<!-- Edit Product Modal -->
+
 <div class="modal" id="editModal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -158,9 +158,9 @@ if (isset($_POST['update_product'])) {
 <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
 <script>
     $(document).ready(function() {
-        $('#example').DataTable(); // Initialize DataTables
+        $('#example').DataTable(); 
 
-        // Handle edit button click
+      
         $('.edit-btn').on('click', function() {
             const productID = $(this).data('id');
             const name = $(this).data('name');
@@ -172,7 +172,7 @@ if (isset($_POST['update_product'])) {
             $('#price').val(price);
             $('#qty').val(qty);
 
-            // Show the modal
+           
             $('#editModal').modal('show');
         });
     });
