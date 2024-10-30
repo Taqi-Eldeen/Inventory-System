@@ -45,6 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <?php require 'sidebaradmin.php'; ?>
 
 <div class="main-content"> 
+<H2>Add Users</H2>
     <div class="container">
         <h1>Add New User</h1>
         <?php if (!empty($errorMessage)): ?>

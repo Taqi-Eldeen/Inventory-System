@@ -15,6 +15,7 @@
     <?php require 'sidebar.php'; ?>
 
     <div class="main-content"> 
+    <H2>Avaliable Suppliers</H2>
         <table id="supplierTable" class="table table-striped" style="width:100%">
             <thead>
                 <tr>

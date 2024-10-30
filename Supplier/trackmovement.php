@@ -13,6 +13,7 @@
 <body>
 <?php require 'sidebarsupplier.php'; ?>
     <div class="main-content"> 
+    <H2>Track Movement</H2>
         <div class="container">
             <h2 class="mt-4">Stock Movements</h2>
             <form id="stockMovementForm" class="mb-4">

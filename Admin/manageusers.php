@@ -60,6 +60,7 @@ $allUsers = User::SelectAllUsersInDB();
 <?php require 'sidebaradmin.php'; ?>
 
 <div class="main-content"> 
+<H2>Manage Users</H2>
     <table id="example" class="table table-striped" style="width:100%">
         <thead>
             <tr>

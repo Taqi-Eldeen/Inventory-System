@@ -52,7 +52,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         font-size: 16px; 
     }
 </style>
+
     <div class="main-content"> 
+    <H2>Add Products</H2> 
         <div class="container">
             <div class="row">
                 <div class="col-md-12">

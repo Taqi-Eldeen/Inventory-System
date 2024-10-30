@@ -51,7 +51,7 @@ if (!isset($_SESSION['username']) || $_SESSION['type'] != 1) {
             </li>
             
             <li>
-                <a href="editproduct.php" class="nav-link text-white"><i class="fa-solid fa-pen-to-square"></i> Edit Product</a>
+                <a href="editproduct.php" class="nav-link text-white"><i class="fa-solid fa-pen-to-square"></i>Manage Products</a>
             </li>
             <li>
                 <a href="addproduct.php" class="nav-link text-white"><i class="fa-solid fa-plus"></i> Add Product</a>

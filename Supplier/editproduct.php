@@ -82,6 +82,7 @@ if (isset($_POST['update_product'])) {
 <?php require 'sidebarsupplier.php'; ?>
 
 <div class="main-content"> 
+<H2>Manage Products</H2>
     <table id="example" class="table table-striped" style="width:100%">
         <thead>
             <tr>
