@@ -12,7 +12,7 @@ if (!isset($_SESSION['username'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="../../../public/css/sidebar.css">
 </head>
 <body>
   
@@ -45,7 +45,7 @@ if (!isset($_SESSION['username'])) {
                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
                     <li><a class="dropdown-item" href="profile.php">Profile</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="signout.php"><i class="fa-solid fa-right-from-bracket"></i>Sign out</a></li>
+                    <li><a class="dropdown-item" href="../auth/signout.php"><i class="fa-solid fa-right-from-bracket"></i>Sign out</a></li>
                 </ul>
             </div>
         </div>

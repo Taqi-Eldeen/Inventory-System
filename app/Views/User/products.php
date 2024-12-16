@@ -1,7 +1,7 @@
 <?php
 
-include "DBConnection.php"; 
-include "productsClass.php";
+include "../../config/DBConnection.php";
+include "../../Controllers/productsClass.php"; 
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +12,7 @@ include "productsClass.php";
     <title>Products DataTable</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css">
-    <link rel="stylesheet" href="products.css">
+    <link rel="stylesheet" href="../../../public/css/products.css">
 </head>
 <body>
 <?php require 'sidebar.php'; ?>

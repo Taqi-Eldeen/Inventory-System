@@ -1,6 +1,6 @@
 <?php
-include "../DBConnection.php";
-include "../userClass.php"; 
+include "../../config/DBConnection.php";
+include "../../Controllers/userClass.php"; 
 
 if (isset($_POST['delete_id'])) {
     $userID = intval($_POST['delete_id']);

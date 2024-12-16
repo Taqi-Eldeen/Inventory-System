@@ -1,5 +1,5 @@
 <?php
-include "DBConnection.php";
+include "../../config/DBConnection.php";
 
 class User{
     public $ID;

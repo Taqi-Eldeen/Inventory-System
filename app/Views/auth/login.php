@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "DBConnection.php";
+include "../../config/DBConnection.php";
 
 if (isset($_POST['uname']) && isset($_POST['password'])) {
 
@@ -34,13 +34,13 @@ if (isset($_POST['uname']) && isset($_POST['password'])) {
                 
                 switch ($row['type']) {
                     case 0:
-                        header("Location: admin/admin.php");
+                        header("Location: ../Admin/admin.php");
                         break;
                     case 1:
-                        header("Location: supplier/supplierdashboard.php");
+                        header("Location: ../Supplier/supplierdashboard.php");
                         break;
                     case 2:
-                        header("Location: dashboard.php");
+                        header("Location: ../User/dashboard.php");
                         break;
                     default:
                         header("Location: loginhome.php?error=Unauthorized access");

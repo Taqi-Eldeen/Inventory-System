@@ -1,5 +1,6 @@
 <?php
-include "DBConnection.php";
+include "../../config/DBConnection.php";
+
 
 class Product {
     public $ID;

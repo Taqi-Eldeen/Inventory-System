@@ -6,7 +6,7 @@
     <title>Manage Suppliers</title>
  
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="supplierManagement.css">
+    <link rel="stylesheet" href="../../../public/css/supplierManagement.css">
 </head>
 <body>
 

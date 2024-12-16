@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "DBConnection.php";
+include "../../config/DBConnection.php";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     function validate($data) {

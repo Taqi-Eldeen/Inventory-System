@@ -1,8 +1,8 @@
 <?php
 session_start(); 
 
-include "../DBConnection.php"; 
-include "../productsClass.php";
+include "../../config/DBConnection.php";
+include "../../Controllers/productsClass.php"; 
 
 
 if (!isset($_SESSION['id'])) {

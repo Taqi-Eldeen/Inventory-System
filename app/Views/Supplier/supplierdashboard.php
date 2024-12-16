@@ -6,7 +6,7 @@ include_once 'sidebarsupplier.php';
         <link rel="stylesheet" href="supplierdashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css">
-    <link rel="stylesheet" href="../logs.css">
+    <link rel="stylesheet" href="../../../public/css/supplierdashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
     <body>

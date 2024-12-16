@@ -1,6 +1,6 @@
 <?php
-include "../DBConnection.php";
-include "../productsClass.php";
+include "../../config/DBConnection.php";
+include "../../Controllers/productsClass.php"; 
 // Include the Product class file
 
 $message = ""; // Initialize the message variable
