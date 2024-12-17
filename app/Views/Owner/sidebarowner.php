@@ -37,10 +37,10 @@
                 <a href="Ownerdashboard.php" class="nav-link text-white"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
             </li>
             <li>
-                <a href="add_suppliers.php" class="nav-link text-white"><i class="fa-solid fa-truck"></i> mange  Suppliers</a>
+                <a href="add_suppliers.php" class="nav-link text-white"><i class="fa-solid fa-truck"></i>Manage  Suppliers</a>
             </li>
             <li>
-                <a href="add_employee.php" class="nav-link text-white"><i class="fa-solid fa-user-plus"></i> mange Employees</a>
+                <a href="add_employee.php" class="nav-link text-white"><i class="fa-solid fa-user-plus"></i>Manage Employees</a>
             </li>
             <li>
                 <a href="manage_business.php" class="nav-link text-white"><i class="fa-solid fa-briefcase"></i> Manage Business</a>
