@@ -1,93 +1,76 @@
 <?php
-include "../../config/DBConnection.php";
+// Include the Product and Products models and the base Controller
+require_once __DIR__ . "/../Config/DBConnection.php";
 
+require_once(dirname(__FILE__) . '/../model/Products.php');
+require_once(dirname(__FILE__) . '/../Controller/Controller.php');
 
-class Product {
-    public $ID;
-    public $name;
-    public $price;
-    public $qty;
-    public $userID;
+class ProductsController extends Controller {
+    private $productsModel; // Instance of the Products class
 
-    function __construct($id) {
-        if ($id != "") {
-            $sql = "SELECT * FROM product WHERE id = $id";
-            $Product = mysqli_query($GLOBALS['conn'], $sql);
-            if ($row = mysqli_fetch_array($Product)) {
-                $this->ID = $row["id"];
-                $this->name = $row["name"];
-                $this->price = $row["price"];
-                $this->qty = $row["qty"];
-                $this->userID = $row["userid"];
-            }
-        }
+    public function __construct() {
+        $this->productsModel = new Products(); // Initialize the Products model
+        parent::__construct($this->productsModel); // Pass the model to the parent constructor
     }
 
-   static function InsertProductInDB_Static($name, $price, $qty, $supplierID) {
-    $sql = "INSERT INTO product (name, price, qty, userid) VALUES ('$name', '$price', '$qty', '$supplierID')";
-    if (mysqli_query($GLOBALS['conn'], $sql)) {
-        return true;
-    } else {
-        return false;
-    }
-}
+    // Insert a new product
+    public function insert() {
+        $name = $_POST['name'];
+        $price = $_POST['price'];
+        $qty = $_POST['qty'];
+        $supplierid = $_POST['supplierid'];
 
-    static function SelectAllProductsInDB() {
-        $sql = "SELECT * FROM product";
-        $Products = mysqli_query($GLOBALS['conn'], $sql);
-
-        if (!$Products) {
-            die("Query failed: " . mysqli_error($GLOBALS['conn']));
-        }
-
-        $Result = [];
-        $i = 0;
-
-        while ($row = mysqli_fetch_array($Products)) {
-            $MyObj = new Product($row["id"]);
-            $Result[$i] = $MyObj;
-            $i++;
-        }
-
-        return $Result;
-    }
-    static function SelectProductsBySupplier($supplierID) {
-        $sql = "SELECT * FROM product WHERE userid = '$supplierID'";
-        $Products = mysqli_query($GLOBALS['conn'], $sql);
-
-        if (!$Products) {
-            die("Query failed: " . mysqli_error($GLOBALS['conn']));
-        }
-
-        $Result = [];
-        $i = 0;
-
-        while ($row = mysqli_fetch_array($Products)) {
-            $MyObj = new Product($row["id"]);
-            $Result[$i] = $MyObj;
-            $i++;
-        }
-
-        return $Result;
-    }
-
-    function UpdateProductInDB() {
-        $sql = "UPDATE product SET name='" . mysqli_real_escape_string($GLOBALS['conn'], $this->name) . "', price='" . mysqli_real_escape_string($GLOBALS['conn'], $this->price) . "', qty='" . mysqli_real_escape_string($GLOBALS['conn'], $this->qty) . "', userid='" . mysqli_real_escape_string($GLOBALS['conn'], $this->userID) . "' WHERE id=" . intval($this->ID);
-        
-        if (mysqli_query($GLOBALS['conn'], $sql)) {
-            return true;
+        if (!empty($name) && !empty($price) && !empty($qty) && !empty($supplierid)) {
+            $this->productsModel->insertProduct($name, $price, $qty, $supplierid);
         } else {
-            return false;
+            echo "All fields are required to insert a product.";
         }
     }
-    
 
-    static function deleteProduct($ObjProduct) {
-        $sql = "DELETE FROM product WHERE id=" . $ObjProduct->ID;
-        if (mysqli_query($GLOBALS['conn'], $sql)) {
-            return true;
+    // Edit an existing product
+    public function edit() {
+        $id = $_REQUEST['id'];
+        $name = $_REQUEST['name'];
+        $price = $_REQUEST['price'];
+        $qty = $_REQUEST['qty'];
+        $supplierid = $_REQUEST['supplierid'];
+
+        if (!empty($id) && !empty($name) && !empty($price) && !empty($qty) && !empty($supplierid)) {
+            $this->productsModel->updateProduct($id, $name, $price, $qty, $supplierid);
         } else {
-            return false;
+            echo "All fields are required to edit a product.";
+        }
+    }
+
+    // Delete a product by ID
+    public function delete($id) {
+        if (!empty($id)) {
+            $this->productsModel->deleteProduct($id);
+        } else {
+            echo "Product ID is required to delete a product.";
+        }
+    }
+
+    // Get all products
+    public function getProducts() {
+        // Fetch all products using the Products model
+        return $this->productsModel->getProducts();
+    }
+
+    // Get product details by ID
+    public function getProductByID($id) {
+        if (!empty($id)) {
+            $product = new Products($id);
+            return [
+                "id" => $product->getID(),
+                "name" => $product->getName(),
+                "price" => $product->getPrice(),
+                "qty" => $product->getQty(),
+                "supplierid" => $product->getsupplierid()
+            ];
+        } else {
+            echo "Product ID is required to fetch details.";
+            return null;
         }
     }
 }

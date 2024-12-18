@@ -1,61 +1,72 @@
 <?php
+// Include the configuration file to access database constants
+require_once('config.php'); // Adjust the path as necessary
 
-require_once("config.php");
+// Check if the class already exists to avoid redeclaration
+if (!class_exists('DatabaseHandler')) {
+    class DatabaseHandler {
+        private $servername;
+        private $username;
+        private $password;
+        private $dbname;
+        private $conn;
 
-class DBh {
-    private $servername;
-    private $username;
-    private $password;
-    private $dbname;
+        public function __construct() {
+            // Use the constants from config.php
+            $this->servername = DB_SERVER;
+            $this->username = DB_USER;
+            $this->password = DB_PASS;
+            $this->dbname = DB_DATABASE;
 
-    private $conn;
-    private $result;
-    public $sql;
-
-    function __construct() {
-        $this->servername = DB_SERVER;
-        $this->username = DB_USER;
-        $this->password = DB_PASS;
-        $this->dbname = DB_DATABASE;
-        $this->connect();
-    }
-
-    public function connect() {
-        $this->conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
-        if ($this->conn->connect_error) {
-            die("Connection failed: " . $this->conn->connect_error);
+            $this->connect();
         }
-        return $this->conn;
-    }
 
-    public function getConn() {
-        return $this->conn;
-    }
+        public function connect() {
+            // Establish a database connection
+            $this->conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
+            if ($this->conn->connect_error) {
+                die("Connection failed: " . $this->conn->connect_error);
+            }
+            return $this->conn;
+        }
 
-    public function query($sql) {
-        if (!empty($sql)){
-            $this->sql = $sql;
-            $this->result = $this->conn->query($sql);
-            return $this->result;
-        } else {
+        // Return the mysqli connection to use prepare() and other methods
+        public function getConn() {
+            return $this->conn;
+        }
+
+        // Query execution method (for normal queries)
+        public function query($sql) {
+            if (!empty($sql)) {
+                return $this->conn->query($sql);
+            }
             return false;
         }
-    }
 
-    public function fetchRow($result="") {
-        if (empty($result)){ 
-            $result = $this->result; 
+        // Prepared statement method (allows usage of prepare())
+        public function prepare($sql) {
+            return $this->conn->prepare($sql);
         }
-        return $result->fetch_assoc();
-    }
 
-    // Add the real_escape_string method
-    public function real_escape_string($value) {
-        return $this->conn->real_escape_string($value);
-    }
+        public function fetchRow($result = "") {
+            if (empty($result)) { 
+                $result = $this->result; 
+            }
+            return $result->fetch_assoc();
+        }
 
-    function __destruct() {
-        $this->conn->close();
+        public function real_escape_string($value) {
+            return $this->conn->real_escape_string($value);
+        }
+
+        // Method to retrieve the last inserted ID
+        public function getInsertId() {
+            return $this->conn->insert_id;
+        }
+
+        function __destruct() {
+            $this->conn->close();
+        }
     }
 }
 ?>

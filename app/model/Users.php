@@ -47,19 +47,75 @@ class Users extends Model {
             return false;
         }
     }
-
-    // Insert a new user into the database
     function insertUser($username, $email, $password, $type) {
+        // Sanitize inputs to prevent SQL injection
+        $username = $this->db->real_escape_string($username);
+        $email = $this->db->real_escape_string($email);
+        $password = $this->db->real_escape_string($password);
+        $type = intval($type);
+    
+        // Hash the password before inserting it into the database
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    
+        // Insert into the user table
         $sql = "INSERT INTO user (username, email, password, type) 
-                VALUES ('$username', '$email', '$password', '$type')";
-
+                VALUES ('$username', '$email', '$hashedPassword', $type)";
+    
         if ($this->db->query($sql) === true) {
             echo "User inserted successfully.";
-            $this->fillArray(); // Refresh the users array
+            
+            // Get the last inserted user ID
+            $user_id = $this->db->getInsertId();
+    
+            // If the user is a supplier, insert into the supplier table
+            if ($type === 1) { // 1 represents supplier
+                $this->insertSupplier($user_id);
+            }
+    
+            // Refresh the users array
+            $this->fillArray();
         } else {
             echo "ERROR: Could not execute $sql. " . $this->db->error;
         }
     }
+    
+    
+// Insert into the supplier table
+private function insertSupplier($user_id) {
+    if (empty($user_id)) {
+        echo "Error: User ID is required to add a supplier.";
+        return;
+    }
+
+    // Insert the user ID into the supplier table
+    $sql = "INSERT INTO supplier (userid) 
+            VALUES ($user_id)";
+
+    if ($this->db->query($sql) === true) {
+        echo "Supplier inserted successfully with User ID: $user_id.";
+    } else {
+        echo "ERROR: Could not insert supplier. " . $this->db->error;
+    }
+}
+public function getSupplierId($userId) {
+    // Sanitize the user ID to prevent SQL injection
+    $userId = intval($userId);
+
+    // Query to get the supplier ID from the supplier table
+    $sql = "SELECT supplierid FROM supplier WHERE userid = $userId";
+    $result = $this->db->query($sql);
+
+    if ($result && $result->num_rows === 1) {
+        $row = $result->fetch_assoc();
+        return $row['supplierid'];  // Return the supplier ID
+    } else {
+        return null;  // Return null if no supplier found
+    }
+}
+
+// Existing methods...
+
+
 
     // Delete a user by ID
     function deleteUser($id) {
