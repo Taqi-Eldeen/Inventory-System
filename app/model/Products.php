@@ -108,5 +108,34 @@ class Products extends Model {
             echo "ERROR: Could not execute $sql. " . $this->db->error;
         }
     }
+    public static function SelectAllProductsInDB() {
+        $db = new DatabaseHandler(); // Use DBh to get a connection
+        $sql = "SELECT * FROM product";
+        return $db->query($sql);
+    }
+
+ public static function SelectProductsBySupplier($supplierID) {
+    $db = new DatabaseHandler();
+    $sql = "SELECT * FROM product WHERE supplierid = " . intval($supplierID);
+    $result = $db->query($sql);
+
+    if ($result) {
+        $products = [];
+        if ($result->num_rows > 0) {  // Check if there are rows in the result
+            while ($row = $result->fetch_assoc()) {
+                $products[] = $row; // Add each product to the array
+            }
+        } else {
+            // If no rows are returned
+            echo "No products found for this supplier.";
+        }
+
+        return $products;
+    } else {
+        echo "ERROR: Could not retrieve products.";
+        return []; // Return an empty array if no products are found
+    }
+}
+
 }
 ?>

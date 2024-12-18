@@ -39,16 +39,17 @@ if (isset($_POST['login'])) {
             $_SESSION['type'] = $row['type'];  // Store user type
 
             // If user is a supplier (type = 1), retrieve their supplierid
-            if ($row['type'] == 1) {
-                // Call the method to get the supplier ID
-                $supplierId = $controller->getSupplierId($row['id']);
-                if ($supplierId) {
-                    $_SESSION['supplierid'] = $supplierId;  // Store supplierid in session
-                } else {
-                    // Handle error if no supplierid is found (optional)
-                    $_SESSION['error'] = "Supplier ID not found.";
-                }
-            }
+           if ($row['type'] == 1) {
+    // Call the method to get the supplier ID
+    $supplierId = $controller->getSupplierId($row['id']);
+    if ($supplierId) {
+        $_SESSION['supplierid'] = $supplierId;  // Store supplierid in session
+    } else {
+        // Handle error if no supplierid is found (optional)
+        $_SESSION['error'] = "Supplier ID not found.";
+    }
+}
+
 
             // Redirect based on user type
             switch ($row['type']) {
@@ -60,6 +61,9 @@ if (isset($_POST['login'])) {
                     break;
                 case 2:
                     header("Location: ../app/Views/User/dashboard.php");
+                    break;
+                case 3:
+                    header("Location: ../app/Views/Owner/ownerdashboard.php");
                     break;
                 default:
                     header("Location: loginhome.php?error=Invalid user type&type=login");
@@ -102,7 +106,7 @@ if (isset($_POST['signup'])) {
             exit();
         } else {
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $sql = "INSERT INTO user (username, email, password, type) VALUES('$uname', '$email', '$hashed_password', '2')";
+            $sql = "INSERT INTO user (username, email, password, type) VALUES('$uname', '$email', '$hashed_password', '3')";
 
             if ($dbh->query($sql)) {
                 // Log the user in immediately after signup
@@ -126,6 +130,8 @@ if (isset($_POST['signup'])) {
                     case 2:
                         header("Location: ../app/Views/User/dashboard.php");
                         break;
+                     case 3:
+                        header("Location: ../app/Views/Owner/ownerdashboard.php");
                 }
                 exit();
             } else {

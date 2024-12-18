@@ -12,6 +12,11 @@ class ProductsController extends Controller {
         $this->productsModel = new Products(); // Initialize the Products model
         parent::__construct($this->productsModel); // Pass the model to the parent constructor
     }
+    public function ProductsBySupplier($supplierID) {
+        $products = new Products(); // Create an instance of the Products class
+        return $products->SelectProductsBySupplier($supplierID);
+    }
+    
 
     // Insert a new product
     public function insert() {

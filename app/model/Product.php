@@ -102,28 +102,6 @@ class Product extends Model {
     }
 
     // Fetch all products from DB
-    public static function SelectAllProductsInDB() {
-        $db = new DatabaseHandler(); // Use DBh to get a connection
-        $sql = "SELECT * FROM product";
-        return $db->query($sql);
-    }
 
-    public static function SelectProductsBySupplier($supplierID) {
-        $db = new DatabaseHandler();
-        $sql = "SELECT * FROM product WHERE userid = " . intval($supplierID);
-        $result = $db->query($sql);
-    
-        // Check if any results were found and return them as an associative array
-        if ($result) {
-            $products = [];
-            while ($row = $result->fetch_assoc()) {
-                $products[] = $row; // Add each product to the array
-            }
-            return $products;
-        } else {
-            return []; // Return an empty array if no products are found
-        }
-    }
-    
 }
 ?>

@@ -1,20 +1,14 @@
 <?php
-// Include the ProductController
 
 require_once(dirname(__FILE__) . "/../../Controller/ProductController.php");
-// Check if a session is active, start one if not
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
 
-if (!isset($_SESSION['id'])) {
-    die("Session not set. Please log in.");
-}
+    $supplierId = $_SESSION['supplierid'];
 
-$currentSupplierID = $_SESSION['id'];
+
+
 
 require_once(dirname(__FILE__) . "/../../Controller/ProductController.php");
-$controller = new ProductController();
+$controller = new ProductsController();
 
 // Handle form submissions
 if (isset($_POST['update_product'])) {
@@ -26,7 +20,7 @@ if (isset($_POST['delete_product'])) {
 }
 
 // Fetch all products for the current supplier
-$products = $controller->getProductsBySupplier($currentSupplierID);
+$products = $controller->ProductsBySupplier($supplierId);
 
 
 ?>
@@ -65,7 +59,7 @@ $products = $controller->getProductsBySupplier($currentSupplierID);
                         <button class="btn btn-warning" 
                             data-bs-toggle="modal" 
                             data-bs-target="#editModal"
-                            data-id="<?php echo $product['ID']; ?>"
+                            data-id="<?php echo $product['id']; ?>"
                             data-name="<?php echo htmlspecialchars($product['name']); ?>"
                             data-price="<?php echo htmlspecialchars($product['price']); ?>"
                             data-qty="<?php echo htmlspecialchars($product['qty']); ?>">
@@ -74,7 +68,7 @@ $products = $controller->getProductsBySupplier($currentSupplierID);
 
                         <!-- Delete Button -->
                         <form method="POST" style="display:inline;">
-                            <input type="hidden" name="delete_id" value="<?php echo $product['ID']; ?>">
+                            <input type="hidden" name="delete_id" value="<?php echo $product['id']; ?>">
                             <button type="submit" name="delete_product" class="btn btn-danger">Delete</button>
                         </form>
                     </td>
@@ -95,7 +89,7 @@ $products = $controller->getProductsBySupplier($currentSupplierID);
             <div class="modal-body">
                 <form method="POST">
                     <input type="hidden" id="product_id" name="id">
-                    <input type="hidden" name="supplierID" value="<?php echo $currentSupplierID; ?>">
+                    <input type="hidden" name="supplierid" value="<?php echo  $supplierId; ?>">
                     <div class="mb-3">
                         <label for="name" class="form-label">Product Name:</label>
                         <input type="text" class="form-control" id="name" name="name" required>
