@@ -1,19 +1,21 @@
 <?php
-session_start();
+session_start();  // Start the session to store session variables
 
-define('__ROOT__', "../app/");
+define('__ROOT__', "../app/");  // Set root directory for include paths
+require_once(__ROOT__ . "Config/DBConnection.php");  
 require_once(__ROOT__ . "model/Users.php");
 require_once(__ROOT__ . "controller/UserController.php");
 
 $model = new Users();
 $controller = new UsersController($model);
 
+// Function to validate inputs
+function validate($data) {
+    return htmlspecialchars(stripslashes(trim($data)));
+}
+
 // Login Logic
 if (isset($_POST['login'])) {
-    function validate($data) {
-        return htmlspecialchars(stripslashes(trim($data)));
-    }
-
     $uname = validate($_POST['uname']);
     $password = validate($_POST['password']);
 
@@ -23,26 +25,40 @@ if (isset($_POST['login'])) {
     }
 
     $sql = "SELECT * FROM user WHERE username='$uname'";
-    $dbh = new Dbh();
+    $dbh = new DatabaseHandler();
     $result = $dbh->query($sql);
 
     if ($result->num_rows === 1) {
         $row = $result->fetch_assoc();
         if (password_verify($password, $row['password'])) {
-            $_SESSION['ID'] = $row['id'];
+            $_SESSION['id'] = $row['id']; 
             $_SESSION['username'] = $row['username'];
-            $_SESSION['type'] = $row['type'];
+            $_SESSION['type'] = $row['type']; 
+
+            if ($row['type'] == 1) {
+                $supplierId = $controller->getSupplierId($row['id']);
+                if ($supplierId) {
+                    $_SESSION['supplierid'] = $supplierId;
+                } else {
+                    $_SESSION['error'] = "Supplier ID not found.";
+                }
+            }
 
             switch ($row['type']) {
                 case 0:
                     header("Location: ../app/Views/Admin/admin.php");
                     break;
                 case 1:
-                    header("Location:../app/Views/Supplier/supplierdashboard.php");
+                    header("Location: ../app/Views/Supplier/supplierdashboard.php");
                     break;
                 case 2:
                     header("Location: ../app/Views/User/dashboard.php");
                     break;
+                case 3:
+                    header("Location: ../app/Views/Owner/ownerdashboard.php");
+                    break;
+                default:
+                    header("Location: loginhome.php?error=Invalid user type&type=login");
             }
             exit();
         } else {
@@ -57,16 +73,12 @@ if (isset($_POST['login'])) {
 
 // Signup Logic
 if (isset($_POST['signup'])) {
-    function validate($data) {
-        return htmlspecialchars(stripslashes(trim($data)));
-    }
-
     $uname = validate($_POST['uname']);
     $email = validate($_POST['email']);
     $password = validate($_POST['password']);
     $re_password = validate($_POST['re_password']);
 
-    $password_regex = "/^(?=.*[!@#$%^&*(),.?\":{}|<>]).{8,}$/" ;
+    $password_regex = "/^(?=.*[!@#$%^&*(),.?\":{}|<>]).{8,}$/";
 
     if (empty($uname) || empty($email) || empty($password) || empty($re_password)) {
         header("Location: loginhome.php?error=All fields are required&type=signup");
@@ -78,7 +90,7 @@ if (isset($_POST['signup'])) {
         header("Location: loginhome.php?error=Passwords do not match&type=signup");
         exit();
     } else {
-        $dbh = new Dbh();
+        $dbh = new DatabaseHandler();
         $sql_check = "SELECT * FROM user WHERE username='$uname' OR email='$email'";
         $result_check = $dbh->query($sql_check);
 
@@ -87,28 +99,33 @@ if (isset($_POST['signup'])) {
             exit();
         } else {
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $sql = "INSERT INTO user (username, email, password, type) VALUES('$uname', '$email', '$hashed_password', '2')";
+            $sql = "INSERT INTO user (username, email, password, type) VALUES('$uname', '$email', '$hashed_password', '3')";
 
             if ($dbh->query($sql)) {
-                // Log the user in immediately after signup
                 $sql = "SELECT * FROM user WHERE username='$uname' AND email='$email'";
                 $result = $dbh->query($sql);
                 $user = $result->fetch_assoc();
-                $_SESSION['ID'] = $user['id'];
+
+                $_SESSION['id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['type'] = $user['type'];
 
-                // Redirect based on user type
+                // Insert into the 'owner' table
+                $ownerSql = "INSERT INTO owner (user_id) VALUES ('" . $user['id'] . "')";
+                $dbh->query($ownerSql); // Insert into the owner table
+
                 switch ($user['type']) {
                     case 0:
-                        header("Location: /app/Views/Admin/admin.php");
+                        header("Location: ../app/Views/Admin/admin.php");
                         break;
                     case 1:
-                        header("Location: ../Supplier/supplierdashboard.php");
+                        header("Location: ../app/Views/Supplier/supplierdashboard.php");
                         break;
                     case 2:
-                        header("Location: ../User/dashboard.php");
+                        header("Location: ../app/Views/User/dashboard.php");
                         break;
+                    case 3:
+                        header("Location: ../app/Views/Owner/ownerdashboard.php");
                 }
                 exit();
             } else {
@@ -119,7 +136,6 @@ if (isset($_POST['signup'])) {
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html>
@@ -186,4 +202,3 @@ if (isset($_POST['signup'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
