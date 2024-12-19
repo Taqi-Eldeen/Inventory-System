@@ -11,7 +11,7 @@ abstract class Model{
 
     public function connect(){
         if(null === $this->conn ){
-            $this->db = new Dbh();
+            $this->db = new DatabaseHandler();
         }
         return $this->db;
     }

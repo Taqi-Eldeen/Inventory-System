@@ -6,19 +6,19 @@ class Product extends Model {
     private $name;
     private $price;
     private $qty;
-    private $userID;
+    private $supplierid;
 
-    function __construct($id, $name = "", $price = "", $qty = "", $userID = "") {
-        $this->id = $id;
-        $this->db = $this->connect();
-
-        if ($name === "") {
-            $this->readProduct($id);
+    function __construct($id = null, $name = "", $price = "", $qty = "", $supplierid = "") {
+        $this->db = $this->connect(); // Ensure DB connection
+        if ($id !== null) {
+            $this->id = $id;
+            $this->readProduct($id); // Read product if ID is provided
         } else {
+            // If no ID is passed, set default values
             $this->name = $name;
             $this->price = $price;
             $this->qty = $qty;
-            $this->userID = $userID;
+            $this->supplierid = $supplierid;
         }
     }
 
@@ -30,6 +30,7 @@ class Product extends Model {
     function getName() {
         return $this->name;
     }
+
     function setName($name) {
         $this->name = $name;
     }
@@ -37,6 +38,7 @@ class Product extends Model {
     function getPrice() {
         return $this->price;
     }
+
     function setPrice($price) {
         $this->price = $price;
     }
@@ -44,33 +46,40 @@ class Product extends Model {
     function getQty() {
         return $this->qty;
     }
+
     function setQty($qty) {
         $this->qty = $qty;
     }
 
-    function getUserID() {
-        return $this->userID;
+    function getsupplierid() {
+        return $this->supplierid;
     }
-    function setUserID($userID) {
-        $this->userID = $userID;
+
+    function setsupplierid($supplierid) {
+        $this->supplierid = $supplierid;
     }
 
     // Fetch Product Details
     function readProduct($id) {
-        $sql = "SELECT * FROM product WHERE id = $id";
-        $result = $this->db->query($sql);
+        if (!empty($id)) {
+            $sql = "SELECT * FROM product WHERE id = " . intval($id); // Prevent SQL injection using intval
+            $result = $this->db->query($sql);
 
-        if ($result && $result->num_rows == 1) {
-            $row = $result->fetch_assoc();
-            $this->name = $row["name"];
-            $this->price = $row["price"];
-            $this->qty = $row["qty"];
-            $this->userID = $row["userid"];
+            if ($result && $result->num_rows == 1) {
+                $row = $result->fetch_assoc();
+                $this->name = $row["name"];
+                $this->price = $row["price"];
+                $this->qty = $row["qty"];
+                $this->supplierid = $row["supplierid"];
+            } else {
+                // If no product is found, set default values
+                $this->name = "";
+                $this->price = "";
+                $this->qty = "";
+                $this->supplierid = "";
+            }
         } else {
-            $this->name = "";
-            $this->price = "";
-            $this->qty = "";
-            $this->userID = "";
+            echo "Product ID is required!";
         }
     }
 
@@ -80,7 +89,7 @@ class Product extends Model {
                 name = '" . $this->db->real_escape_string($this->name) . "', 
                 price = '" . $this->db->real_escape_string($this->price) . "', 
                 qty = '" . $this->db->real_escape_string($this->qty) . "', 
-                userid = '" . $this->db->real_escape_string($this->userID) . "' 
+                supplierid = '" . $this->db->real_escape_string($this->supplierid) . "' 
                 WHERE id = " . intval($this->id);
 
         return $this->db->query($sql);
@@ -91,5 +100,8 @@ class Product extends Model {
         $sql = "DELETE FROM product WHERE id = " . intval($this->id);
         return $this->db->query($sql);
     }
+
+    // Fetch all products from DB
+
 }
 ?>

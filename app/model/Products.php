@@ -1,6 +1,6 @@
 <?php
-require_once(__ROOT__ . "model/Model.php");
-require_once(__ROOT__ . "model/Product.php");
+require_once(dirname(__FILE__) . '/../model/Model.php');
+require_once(dirname(__FILE__) . '/../model/Product.php');
 
 class Products extends Model {
     private $products;
@@ -23,7 +23,7 @@ class Products extends Model {
                     $row["name"], 
                     $row["price"], 
                     $row["qty"], 
-                    $row["userid"]
+                    $row["supplierid"]
                 );
                 array_push($this->products, $product);
             }
@@ -47,19 +47,39 @@ class Products extends Model {
         }
     }
 
-    // Insert a new product into the database
-    function insertProduct($name, $price, $qty, $userID) {
-        $sql = "INSERT INTO product (name, price, qty, userid) 
-                VALUES ('$name', '$price', '$qty', '$userID')";
-
-        if ($this->db->query($sql) === true) {
-            echo "Product inserted successfully.";
+    function insertProduct($name, $price, $qty, $userid) {
+        // Step 1: Fetch supplierid based on userid
+        $getSupplierIdSql = "SELECT supplierid FROM supplier WHERE userid = ?";
+        $stmt = $this->db->prepare($getSupplierIdSql);
+        $stmt->bind_param("i", $userid);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        if ($result->num_rows === 0) {
+            // If no supplierid exists for the given userid, show an error
+            echo "ERROR: No supplier found with User ID $userid.";
+            return;
+        }
+    
+        // Fetch the supplierid
+        $row = $result->fetch_assoc();
+        $supplierid = $row['supplierid'];
+    
+        // Step 2: Insert the product using the dynamically fetched supplierid
+        $insertProductSql = "INSERT INTO product (name, price, qty, supplierid) VALUES (?, ?, ?, ?)";
+        $stmt = $this->db->prepare($insertProductSql);
+        $stmt->bind_param("siii", $name, $price, $qty, $supplierid);
+    
+        if ($stmt->execute()) {
+            echo "Product inserted successfully with Supplier ID $supplierid.";
             $this->fillArray(); // Refresh the products array
         } else {
-            echo "ERROR: Could not execute $sql. " . $this->db->error;
+            echo "ERROR: Could not insert product. " . $this->db->error;
         }
     }
-
+    
+    
+    
     // Delete a product by ID
     function deleteProduct($id) {
         $sql = "DELETE FROM product WHERE id = " . intval($id);
@@ -73,12 +93,12 @@ class Products extends Model {
     }
 
     // Update an existing product
-    function updateProduct($id, $name, $price, $qty, $userID) {
+    function updateProduct($id, $name, $price, $qty, $supplierid) {
         $sql = "UPDATE product SET 
                     name = '$name', 
                     price = '$price', 
                     qty = '$qty', 
-                    userid = '$userID'
+                    supplierid = '$supplierid'
                 WHERE id = " . intval($id);
 
         if ($this->db->query($sql) === true) {
@@ -88,5 +108,34 @@ class Products extends Model {
             echo "ERROR: Could not execute $sql. " . $this->db->error;
         }
     }
+    public static function SelectAllProductsInDB() {
+        $db = new DatabaseHandler(); // Use DBh to get a connection
+        $sql = "SELECT * FROM product";
+        return $db->query($sql);
+    }
+
+ public static function SelectProductsBySupplier($supplierID) {
+    $db = new DatabaseHandler();
+    $sql = "SELECT * FROM product WHERE supplierid = " . intval($supplierID);
+    $result = $db->query($sql);
+
+    if ($result) {
+        $products = [];
+        if ($result->num_rows > 0) {  // Check if there are rows in the result
+            while ($row = $result->fetch_assoc()) {
+                $products[] = $row; // Add each product to the array
+            }
+        } else {
+            // If no rows are returned
+            echo "No products found for this supplier.";
+        }
+
+        return $products;
+    } else {
+        echo "ERROR: Could not retrieve products.";
+        return []; // Return an empty array if no products are found
+    }
+}
+
 }
 ?>

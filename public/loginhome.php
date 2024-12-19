@@ -1,19 +1,22 @@
 <?php
-session_start();
+session_start();  // Start the session to store session variables
 
-define('__ROOT__', "../app/");
+define('__ROOT__', "../app/");  // Set root directory for include paths
+require_once(__ROOT__ . "Config/DBConnection.php");  
 require_once(__ROOT__ . "model/Users.php");
 require_once(__ROOT__ . "controller/UserController.php");
 
 $model = new Users();
 $controller = new UsersController($model);
 
+// Function to validate inputs
+function validate($data) {
+    return htmlspecialchars(stripslashes(trim($data)));
+}
+
+// Login Logic
 // Login Logic
 if (isset($_POST['login'])) {
-    function validate($data) {
-        return htmlspecialchars(stripslashes(trim($data)));
-    }
-
     $uname = validate($_POST['uname']);
     $password = validate($_POST['password']);
 
@@ -22,27 +25,48 @@ if (isset($_POST['login'])) {
         exit();
     }
 
+    // Query to check username
     $sql = "SELECT * FROM user WHERE username='$uname'";
-    $dbh = new Dbh();
+    $dbh = new DatabaseHandler();  // Use DatabaseHandler to interact with the database
     $result = $dbh->query($sql);
 
     if ($result->num_rows === 1) {
         $row = $result->fetch_assoc();
         if (password_verify($password, $row['password'])) {
-            $_SESSION['ID'] = $row['id'];
+            // Store user data in session, including user ID
+            $_SESSION['id'] = $row['id'];  // Store user ID
             $_SESSION['username'] = $row['username'];
-            $_SESSION['type'] = $row['type'];
+            $_SESSION['type'] = $row['type'];  // Store user type
 
+            // If user is a supplier (type = 1), retrieve their supplierid
+           if ($row['type'] == 1) {
+    // Call the method to get the supplier ID
+    $supplierId = $controller->getSupplierId($row['id']);
+    if ($supplierId) {
+        $_SESSION['supplierid'] = $supplierId;  // Store supplierid in session
+    } else {
+        // Handle error if no supplierid is found (optional)
+        $_SESSION['error'] = "Supplier ID not found.";
+    }
+}
+
+
+            // Redirect based on user type
             switch ($row['type']) {
                 case 0:
                     header("Location: ../app/Views/Admin/admin.php");
                     break;
                 case 1:
-                    header("Location:../app/Views/Supplier/supplierdashboard.php");
+                    header("Location: ../app/Views/Supplier/supplierdashboard.php");
                     break;
                 case 2:
                     header("Location: ../app/Views/User/dashboard.php");
                     break;
+                case 3:
+                    header("Location: ../app/Views/Owner/ownerdashboard.php");
+                    break;
+                default:
+                    header("Location: loginhome.php?error=Invalid user type&type=login");
             }
             exit();
         } else {
@@ -55,18 +79,13 @@ if (isset($_POST['login'])) {
     }
 }
 
-// Signup Logic
 if (isset($_POST['signup'])) {
-    function validate($data) {
-        return htmlspecialchars(stripslashes(trim($data)));
-    }
-
     $uname = validate($_POST['uname']);
     $email = validate($_POST['email']);
     $password = validate($_POST['password']);
     $re_password = validate($_POST['re_password']);
 
-    $password_regex = "/^(?=.*[!@#$%^&*(),.?\":{}|<>]).{8,}$/" ;
+    $password_regex = "/^(?=.*[!@#$%^&*(),.?\":{}|<>]).{8,}$/";
 
     if (empty($uname) || empty($email) || empty($password) || empty($re_password)) {
         header("Location: loginhome.php?error=All fields are required&type=signup");
@@ -78,7 +97,7 @@ if (isset($_POST['signup'])) {
         header("Location: loginhome.php?error=Passwords do not match&type=signup");
         exit();
     } else {
-        $dbh = new Dbh();
+        $dbh = new DatabaseHandler();
         $sql_check = "SELECT * FROM user WHERE username='$uname' OR email='$email'";
         $result_check = $dbh->query($sql_check);
 
@@ -87,28 +106,32 @@ if (isset($_POST['signup'])) {
             exit();
         } else {
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $sql = "INSERT INTO user (username, email, password, type) VALUES('$uname', '$email', '$hashed_password', '2')";
+            $sql = "INSERT INTO user (username, email, password, type) VALUES('$uname', '$email', '$hashed_password', '3')";
 
             if ($dbh->query($sql)) {
                 // Log the user in immediately after signup
                 $sql = "SELECT * FROM user WHERE username='$uname' AND email='$email'";
                 $result = $dbh->query($sql);
                 $user = $result->fetch_assoc();
-                $_SESSION['ID'] = $user['id'];
+
+                // Store user data in session, including user ID
+                $_SESSION['id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['type'] = $user['type'];
 
                 // Redirect based on user type
                 switch ($user['type']) {
                     case 0:
-                        header("Location: /app/Views/Admin/admin.php");
+                        header("Location: ../app/Views/Admin/admin.php");
                         break;
                     case 1:
-                        header("Location: ../Supplier/supplierdashboard.php");
+                        header("Location: ../app/Views/Supplier/supplierdashboard.php");
                         break;
                     case 2:
-                        header("Location: ../User/dashboard.php");
+                        header("Location: ../app/Views/User/dashboard.php");
                         break;
+                     case 3:
+                        header("Location: ../app/Views/Owner/ownerdashboard.php");
                 }
                 exit();
             } else {
@@ -120,13 +143,12 @@ if (isset($_POST['signup'])) {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>Login & Signup</title>
-    <link rel="stylesheet" type="text/css" href="css/login.css">
-	<link rel="stylesheet" type="text/css" href="css/signup.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/signup.css">
     <style>
         body { font-family: Arial, sans-serif; }
         .container { display: flex; justify-content: center; margin-top: 50px; }
@@ -145,9 +167,8 @@ if (isset($_POST['signup'])) {
                 <a href="?type=login" class="<?php echo (!isset($_GET['type']) || $_GET['type'] == 'login') ? 'active' : ''; ?>">Login</a>
                 <a href="?type=signup" class="<?php echo (isset($_GET['type']) && $_GET['type'] == 'signup') ? 'active' : ''; ?>">Signup</a>
             </div>
-            
+
             <?php if (!isset($_GET['type']) || $_GET['type'] == 'login') { ?>
-                <!-- Login Form -->
                 <form action="loginhome.php" method="post">
                     <h2>Login</h2>
                     <?php if (isset($_GET['error'])) { ?>
@@ -160,7 +181,6 @@ if (isset($_POST['signup'])) {
                     <button type="submit" name="login">Login</button>
                 </form>
             <?php } else { ?>
-                <!-- Signup Form -->
                 <form action="loginhome.php" method="post">
                     <h2>Signup</h2>
                     <?php if (isset($_GET['error'])) { ?>
@@ -183,4 +203,3 @@ if (isset($_POST['signup'])) {
     </div>
 </body>
 </html>
-

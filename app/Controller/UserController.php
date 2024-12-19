@@ -12,21 +12,25 @@ class UsersController extends Controller {
     }
 
     // Insert a new user
-// Insert a new user
-public function insert() {
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $type = $_POST['type']; // 'type' is being used here
+    public function insert() {
+        $username = $_POST['username'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $type = $_POST['type']; // 1 for supplier, other values for other user types
 
-    if (!empty($username) && !empty($email) && !empty($password) && !empty($type)) {
-        $this->model->insertUser($username, $email, $password, $type);
-    } else {
-        echo "All fields are required to insert a user.";
+        if (!empty($username) && !empty($email) && !empty($password) && !empty($type)) {
+            // Validate password complexity
+            if (!validatePassword($password)) {
+                echo "Password must be at least 8 characters long and include at least one special character.";
+                return;
+            }
+
+            // Call the Users model's insertUser method
+            $this->model->insertUser($username, $email, $password, $type);
+        } else {
+            echo "All fields are required to insert a user.";
+        }
     }
-}
-
-
 
     // Edit an existing user
     public function edit() {
@@ -52,9 +56,15 @@ public function insert() {
         }
     }
 
+    // Get all users
     public function getUsers() {
         // Fetch all users from the model
         return $this->model->getUsers(); // or model->getAllUsers()
+    }
+
+    // Get the supplier ID for a given user ID
+    public function getSupplierId($userId) {
+        return $this->model->getSupplierId($userId);  // Use $this->model instead of $this->usersModel
     }
 }
 ?>
