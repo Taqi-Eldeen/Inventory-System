@@ -1,0 +1,25 @@
+body {
+    background-image: url('../images/Loginhome.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.btn-black {
+    background-color: black;
+    color: white;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-black:hover {
+    background-color: #33333300;
+    transform: scale(1.05);
+}
+
+.button-background {
+    background-color: white;
+    padding-top: 15px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+} 

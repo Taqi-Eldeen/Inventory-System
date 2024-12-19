@@ -5,16 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <style>
-        .card {
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-        .rounded-button {
-            border-radius: 50px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        body {
+            background-color: #f8f9fa;
         }
 
+        .card {
+            border-radius: 20px;
+            transition: transform 0.3s ease;
+            margin-bottom: 5px;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .rounded-button {
+            border-radius: 50px;
+            transition: background-color 0.3s ease;
+        }
+
+        .rounded-button:hover {
+            background-color: #0056b3;
+        }
+
+        .main-content {
+            padding: 30px;
+        }
+
+        .overview-section {
+            margin-bottom: 40px;
+        }
+
+        .businesses-section {
+            margin-bottom: 40px;
+        }
+
+        .reports-section {
+            margin-bottom: 40px;
+        }
+
+        .business-card {
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .text-center {
+            margin-bottom: 30px;
+        }
     </style>
 </head>
 <body>
@@ -22,23 +64,28 @@
 <?php require 'sidebaradmin.php'; ?>
 <div class="container-fluid">
     <div class="main-content"> 
-        <section class="overview-section my-4">
+        <h2 class="text-center">Admin Dashboard</h2>
+        
+        <section class="overview-section">
             <h2>Overview</h2>
             <div class="row">
                 <div class="col-md-4">
-                    <div class="card text-center p-3">
+                    <div class="card text-center p-3 rounded shadow animate__animated animate__fadeIn">
+                        <i class="fa-solid fa-building fa-3x"></i>
                         <h3>Total Businesses</h3>
                         <p>5</p>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card text-center p-3">
+                    <div class="card text-center p-3 rounded shadow animate__animated animate__fadeIn">
+                        <i class="fa-solid fa-box fa-3x"></i>
                         <h3>Total Products</h3>
                         <p>120</p>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card text-center p-3">
+                    <div class="card text-center p-3 rounded shadow animate__animated animate__fadeIn">
+                        <i class="fa-solid fa-dollar-sign fa-3x"></i>
                         <h3>Monthly Sales</h3>
                         <p>$12,400</p>
                     </div>
@@ -46,44 +93,38 @@
             </div>
         </section>
 
-        <section class="businesses-section my-4">
+        <section class="businesses-section">
             <h2>Manage Businesses</h2>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Business Name</th>
-                        <th>Owner</th>
-                        <th>Stock Level</th>
-                        <th>Sales</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Business 1</td>
-                        <td>John Doe</td>
-                        <td>45 Items</td>
-                        <td>$5,000</td>
-                        <td>
+            <div class="row">
+                <div class="col-md-4 business-card">
+                    <div class="card p-3 rounded shadow">
+                        <h5>Business 1</h5>
+                        <p>Owner: John Doe</p>
+                        <p>Stock Level: 45 Items</p>
+                        <p>Sales: $5,000</p>
+                        <div class="d-flex justify-content-between">
                             <button class="btn btn-primary rounded-button">Edit</button>
                             <button class="btn btn-danger rounded-button">Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Business 2</td>
-                        <td>Jane Smith</td>
-                        <td>30 Items</td>
-                        <td>$3,500</td>
-                        <td>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 business-card">
+                    <div class="card p-3 rounded shadow">
+                        <h5>Business 2</h5>
+                        <p>Owner: Jane Smith</p>
+                        <p>Stock Level: 30 Items</p>
+                        <p>Sales: $3,500</p>
+                        <div class="d-flex justify-content-between">
                             <button class="btn btn-primary rounded-button">Edit</button>
                             <button class="btn btn-danger rounded-button">Delete</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add more business cards as needed -->
+            </div>
         </section>
 
-        <section class="reports-section my-4">
+        <section class="reports-section">
             <h2>Sales Reports</h2>
             <div class="report-summary">
                 <p>Generate detailed reports on sales trends, inventory status, and more.</p>
