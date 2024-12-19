@@ -1,6 +1,14 @@
 <?php
 
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
+
+if (!isset($_SESSION['username']) || $_SESSION['type'] != 3) {
+    header("Location: ../loginhome.php"); 
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,13 +48,13 @@
                 <a href="Ownerdashboard.php" class="nav-link text-white"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
             </li>
             <li>
-                <a href="add_suppliers.php" class="nav-link text-white"><i class="fa-solid fa-truck"></i>Manage  Suppliers</a>
+                <a href="managesupply.php" class="nav-link text-white"><i class="fa-solid fa-truck"></i>Manage  Suppliers</a>
             </li>
             <li>
-                <a href="add_employee.php" class="nav-link text-white"><i class="fa-solid fa-user-plus"></i>Manage Employees</a>
+                <a href="manageemployee.php" class="nav-link text-white"><i class="fa-solid fa-user-plus"></i>Manage Employees</a>
             </li>
             <li>
-                <a href="manage_business.php" class="nav-link text-white"><i class="fa-solid fa-briefcase"></i> Manage Business</a>
+                <a href="manageinventory.php" class="nav-link text-white"><i class="fa-solid fa-briefcase"></i> Manage Inventory</a>
             </li>
             <li>
                 <a href="reports.php" class="nav-link text-white"><i class="fa-solid fa-chart-line"></i> Reports</a>

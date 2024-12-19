@@ -14,6 +14,9 @@ function validate($data) {
     return htmlspecialchars(stripslashes(trim($data)));
 }
 
+// Define the password regex (at least 8 characters, 1 special character)
+$password_regex = '/^(?=.*[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?]).{8,}$/';
+
 // Login Logic
 if (isset($_POST['login'])) {
     $uname = validate($_POST['uname']);
@@ -33,9 +36,9 @@ if (isset($_POST['login'])) {
         if (password_verify($password, $row['password'])) {
             $_SESSION['id'] = $row['id']; 
             $_SESSION['username'] = $row['username'];
-            $_SESSION['type'] = $row['type']; 
+            $_SESSION['type'] = (int)$row['type']; // Ensure type is an integer
 
-            if ($row['type'] == 1) {
+            if ($_SESSION['type'] == 1) {
                 $supplierId = $controller->getSupplierId($row['id']);
                 if ($supplierId) {
                     $_SESSION['supplierid'] = $supplierId;
@@ -43,8 +46,16 @@ if (isset($_POST['login'])) {
                     $_SESSION['error'] = "Supplier ID not found.";
                 }
             }
+            if ($_SESSION['type'] == 3) {
+                $boid = $controller->getBOid($row['id']);
+                if ($boid) {
+                    $_SESSION['boid'] = $boid;
+                } else {
+                    $_SESSION['error'] = "BOID not found.";
+                }
+            }
 
-            switch ($row['type']) {
+            switch ($_SESSION['type']) {
                 case 0:
                     header("Location: ../app/Views/Admin/admin.php");
                     break;
@@ -78,8 +89,6 @@ if (isset($_POST['signup'])) {
     $password = validate($_POST['password']);
     $re_password = validate($_POST['re_password']);
 
-    $password_regex = "/^(?=.*[!@#$%^&*(),.?\":{}|<>]).{8,}$/";
-
     if (empty($uname) || empty($email) || empty($password) || empty($re_password)) {
         header("Location: loginhome.php?error=All fields are required&type=signup");
         exit();
@@ -90,51 +99,24 @@ if (isset($_POST['signup'])) {
         header("Location: loginhome.php?error=Passwords do not match&type=signup");
         exit();
     } else {
-        $dbh = new DatabaseHandler();
-        $sql_check = "SELECT * FROM user WHERE username='$uname' OR email='$email'";
-        $result_check = $dbh->query($sql_check);
+        try {
+            // Use the model method to sign up a business owner
+            $userId = $model->signUpBusinessOwner($uname, $email, $password);
 
-        if ($result_check->num_rows > 0) {
-            header("Location: loginhome.php?error=Username or Email already exists&type=signup");
+            // Store session variables for the newly created user
+            $_SESSION['id'] = $userId;
+            $_SESSION['username'] = $uname;
+            $_SESSION['type'] = 3; // Set type as business owner
+
+            header("Location: ../app/Views/Owner/ownerdashboard.php");
             exit();
-        } else {
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $sql = "INSERT INTO user (username, email, password, type) VALUES('$uname', '$email', '$hashed_password', '3')";
-
-            if ($dbh->query($sql)) {
-                $sql = "SELECT * FROM user WHERE username='$uname' AND email='$email'";
-                $result = $dbh->query($sql);
-                $user = $result->fetch_assoc();
-
-                $_SESSION['id'] = $user['id'];
-                $_SESSION['username'] = $user['username'];
-                $_SESSION['type'] = $user['type'];
-
-                // Insert into the 'owner' table
-                $ownerSql = "INSERT INTO owner (user_id) VALUES ('" . $user['id'] . "')";
-                $dbh->query($ownerSql); // Insert into the owner table
-
-                switch ($user['type']) {
-                    case 0:
-                        header("Location: ../app/Views/Admin/admin.php");
-                        break;
-                    case 1:
-                        header("Location: ../app/Views/Supplier/supplierdashboard.php");
-                        break;
-                    case 2:
-                        header("Location: ../app/Views/User/dashboard.php");
-                        break;
-                    case 3:
-                        header("Location: ../app/Views/Owner/ownerdashboard.php");
-                }
-                exit();
-            } else {
-                header("Location: loginhome.php?error=Database error&type=signup");
-                exit();
-            }
+        } catch (Exception $e) {
+            header("Location: loginhome.php?error=" . $e->getMessage() . "&type=signup");
+            exit();
         }
     }
 }
+
 ?>
 
 <!DOCTYPE html>

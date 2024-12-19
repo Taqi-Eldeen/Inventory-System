@@ -66,5 +66,9 @@ class UsersController extends Controller {
     public function getSupplierId($userId) {
         return $this->model->getSupplierId($userId);  // Use $this->model instead of $this->usersModel
     }
+
+public function getBOid($userId) {
+    return $this->model->getBOid($userId);  // Use $this->model instead of $this->usersModel
+}
 }
 ?>

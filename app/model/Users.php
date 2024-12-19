@@ -79,6 +79,60 @@ class Users extends Model {
         }
     }
     
+    public function signUpBusinessOwner($uname, $email, $password) {
+        // Create an instance of the DatabaseHandler class
+        $dbh = new DatabaseHandler();
+    
+        // Start the transaction
+        $dbh->begin_transaction();
+    
+        try {
+            // Sanitize and prepare the SQL query
+            $uname = $dbh->real_escape_string($uname);
+            $email = $dbh->real_escape_string($email);
+            $password = $dbh->real_escape_string($password);
+            
+            // Hash the password
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    
+            // Insert user data into the user table
+            $sql = "INSERT INTO user (username, email, password) VALUES ('$uname', '$email', '$hashedPassword')";
+            $result = $dbh->query($sql);
+            
+            if ($result) {
+                // Get the last inserted user ID
+                $userId = $dbh->getInsertId();
+    
+                // Insert the userId into the bowner table (using 'userid' without underscore)
+                $sqlBowner = "INSERT INTO bowner (userid) VALUES ('$userId')";
+                $resultBowner = $dbh->query($sqlBowner);
+    
+                if ($resultBowner) {
+                    // If insertion into both tables is successful, commit the transaction
+                    $dbh->commit();
+                    return $userId;  // Return the new user's ID
+                } else {
+                    // Rollback if inserting into bowner fails
+                    $dbh->rollback();
+                    throw new Exception("Failed to insert into bowner table");
+                }
+            } else {
+                // Rollback if inserting into user table fails
+                $dbh->rollback();
+                throw new Exception("Failed to insert user data");
+            }
+        } catch (Exception $e) {
+            // Rollback the transaction if any exception occurs
+            $dbh->rollback();
+            throw $e;
+        }
+    }
+    
+    
+
+    // Additional methods...
+
+
     
 // Insert into the supplier table
 private function insertSupplier($user_id) {
@@ -108,6 +162,21 @@ public function getSupplierId($userId) {
     if ($result && $result->num_rows === 1) {
         $row = $result->fetch_assoc();
         return $row['supplierid'];  // Return the supplier ID
+    } else {
+        return null;  // Return null if no supplier found
+    }
+}
+public function getBOid($userId) {
+    // Sanitize the user ID to prevent SQL injection
+    $userId = intval($userId);
+
+    // Query to get the supplier ID from the supplier table
+    $sql = "SELECT boid FROM bowner WHERE userid = $userId";
+    $result = $this->db->query($sql);
+
+    if ($result && $result->num_rows === 1) {
+        $row = $result->fetch_assoc();
+        return $row['boid'];  // Return the supplier ID
     } else {
         return null;  // Return null if no supplier found
     }

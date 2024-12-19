@@ -64,6 +64,21 @@ if (!class_exists('DatabaseHandler')) {
             return $this->conn->insert_id;
         }
 
+        // Begin a transaction
+        public function begin_transaction() {
+            $this->conn->begin_transaction();
+        }
+
+        // Commit the transaction
+        public function commit() {
+            $this->conn->commit();
+        }
+
+        // Rollback the transaction
+        public function rollback() {
+            $this->conn->rollback();
+        }
+
         function __destruct() {
             $this->conn->close();
         }

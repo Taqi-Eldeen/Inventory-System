@@ -1,6 +1,6 @@
 <?php
 // Include the Product and Products models and the base Controller
-require_once __DIR__ . "/../Config/DBConnection.php";
+
 
 require_once(dirname(__FILE__) . '/../model/Products.php');
 require_once(dirname(__FILE__) . '/../Controller/Controller.php');
