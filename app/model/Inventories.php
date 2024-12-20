@@ -1,116 +1,84 @@
 <?php
 require_once(dirname(__FILE__) . '/../model/Model.php');
-require_once(dirname(__FILE__) . '/../model/Inventory.php');
+require_once(dirname(__FILE__) . '/../model/inventory.php');
 
 class Inventories extends Model {
     private $inventories;
 
     public function __construct() {
         $this->inventories = [];
-        $this->db = $this->connect(); // Initialize the database connection
-        $this->fillArray(); // Populate the array with inventory data when the object is instantiated
+        $this->db = $this->connect();
+        $this->fillArray();
     }
 
-    // Populate the inventories array
+    // Method to read all inventories from the database
+    public function readInventories() {
+        $sql = "SELECT * FROM inventory";
+        $result = $this->db->query($sql);
+        return $result;
+    }
+
+    // Method to fetch all inventories
     public function fillArray() {
-        $this->inventories = []; // Clear the current array
-        $result = $this->readInventories(); // Fetch data from the database
+        $this->inventories = [];
+        $result = $this->readInventories();
 
         if ($result) {
             while ($row = $result->fetch_assoc()) {
-                $inventory = new Inventory(
-                    $row["invid"], 
-                    $row["boid"], 
-                    $row["productid"], 
-                    $row["level"]
-                );
-                $this->inventories[] = $inventory; // Add each inventory object to the array
+                // Create Inventory object
+                $inventory = new Inventory($row["invid"], $row["boid"]);
+                // Add the inventory to the inventories array
+                $this->inventories[] = $inventory;
             }
         }
     }
 
-    // Return the inventories array
-    public function getInventories() {
-        return $this->inventories;
-    }
-
-    // Fetch all inventories from the database
-    private function readInventories() {
-        $sql = "SELECT * FROM inventory";
-        $result = $this->db->query($sql);
-
-        return ($result && $result->num_rows > 0) ? $result : false;
-    }
-
-    // Insert a new inventory record
-    public function insertInventory($boid, $productid = null, $level = null) {
-        // Prepare the SQL query
-        $sql = "INSERT INTO inventory (boid, productid, level) VALUES (?, ?, ?)";
+    // Method to insert inventory for a business owner (boid)
+    public function insertInventory($boid) {
+        $sql = "INSERT INTO inventory (boid) VALUES (?)";
         $stmt = $this->db->prepare($sql);
-        $stmt->bind_param("iii", $boid, $productid, $level); // Bind the parameters
-
-        // Execute the query and refresh the inventory array after insertion
+        $stmt->bind_param("i", $boid);
+        
         if ($stmt->execute()) {
-            $this->fillArray(); // Refresh the inventories array after insert
-            return true;
+            // Log or print the result to ensure insertion is successful
+            $invid = $stmt->insert_id;  // Get the inserted ID
+            var_dump($invid);  // Debugging: Check the inserted inventory ID
+            return [
+                'invid' => $invid,
+                'boid' => $boid
+            ];
         } else {
+            var_dump($stmt->error);  // Debugging: Check the error in case of failure
             return false;
         }
     }
+    
+    
+    
 
-    // Delete an inventory record by ID
+    // Method to delete an inventory by its ID
     public function deleteInventory($invid) {
         $sql = "DELETE FROM inventory WHERE invid = ?";
         $stmt = $this->db->prepare($sql);
         $stmt->bind_param("i", $invid);
 
         if ($stmt->execute()) {
-            $this->fillArray(); // Refresh the inventories array after delete
+            $this->fillArray();
             return true;
         } else {
             return false;
         }
     }
 
-    // Update an existing inventory record
-    public function updateInventory($invid, $boid, $productid, $level) {
-        $sql = "UPDATE inventory SET boid = ?, productid = ?, level = ? WHERE invid = ?";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bind_param("iiii", $boid, $productid, $level, $invid);
-
-        if ($stmt->execute()) {
-            $this->fillArray(); // Refresh the inventories array after update
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    // Fetch all inventory records in the database
-    public static function SelectAllInventoriesInDB() {
-        $db = new DatabaseHandler();
-        $sql = "SELECT * FROM inventory";
-        return $db->query($sql);
-    }
-
-    // Fetch inventories by BOID
-    public static function SelectInventoriesByBOID($boid) {
-        $db = new DatabaseHandler();
+    // Method to check if inventory exists for a specific boid
+    public function getInventoryByBOID($boid) {
         $sql = "SELECT * FROM inventory WHERE boid = ?";
-        $stmt = $db->prepare($sql);
+        $stmt = $this->db->prepare($sql);
         $stmt->bind_param("i", $boid);
         $stmt->execute();
         $result = $stmt->get_result();
 
-        if ($result) {
-            $inventories = [];
-            while ($row = $result->fetch_assoc()) {
-                $inventories[] = $row; // Add each inventory to the array
-            }
-            return $inventories;
-        } else {
-            return ['success' => false, 'message' => 'No inventory records found for this BOID.'];
-        }
+        return $result->num_rows > 0 ? $result->fetch_assoc() : null;
     }
 }
 ?>
