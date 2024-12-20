@@ -6,13 +6,13 @@ include_once 'sidebarowner.php';
 <head>
     <meta charset="UTF-8">
     <title>Business Owner Dashboard</title>
-    <link rel="stylesheet" href="businessownerdashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css">
-    <link rel="stylesheet" href="../../../public/css/supplierdashboard.css">
+    <link rel="stylesheet" href="../../../public/css/dashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
+    </head>
+    </head>
+    <body>
     <div class="main-content">
         <h2>Dashboard</h2>
 
@@ -59,52 +59,91 @@ include_once 'sidebarowner.php';
             <canvas id="employeeChart"></canvas>
         </div>
     </div>
-
+    </body>
     <script>
-        const ctxSales = document.getElementById('salesChart').getContext('2d');
-        const salesChart = new Chart(ctxSales, {
-            type: 'bar',
-            data: {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-                datasets: [{
-                    label: 'Sales',
-                    data: [5000, 7000, 8000, 6000, 9000, 7500],
-                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: { beginAtZero: true }
-                }
+        const ctx = document.getElementById('sales-chart').getContext('2d');
+new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+        datasets: [{
+            label: 'Sales',
+            data: [1000, 2000, 5, 1300, 1400],
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 2
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
             }
-        });
+        }
+    }
+});
 
-        const ctxEmployee = document.getElementById('employeeChart').getContext('2d');
-        const employeeChart = new Chart(ctxEmployee, {
-            type: 'line',
-            data: {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-                datasets: [{
-                    label: 'Employees',
-                    data: [50, 60, 70, 65, 80, 75],
-                    backgroundColor: 'rgba(255, 99, 132, 0.6)',
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    fill: false,
-                    tension: 0.1
-                }]
+const ctx2 = document.getElementById('stock-chart').getContext('2d');
+new Chart(ctx2, {
+    type: 'bar',
+    data: {
+        labels: ['Product A', 'Product B', 'Product C', 'Product D', 'Product E'],
+        datasets: [{
+            label: 'Stock Levels',
+            data: [500, 400, 300, 200, 100],
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 2
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+const ctx3 = document.getElementById('pie-chart').getContext('2d');
+new Chart(ctx3, {
+    type: 'pie', 
+    data: {
+        labels: ['Product A', 'Product B', 'Product C', 'Product D', 'Product E'],
+        datasets: [{
+            label: 'Stock Levels',
+            data: [500, 400, 300, 200, 100],
+            backgroundColor: [
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)'
+            ],
+            borderColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)'
+            ],
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
             },
-            options: {
-                responsive: true,
-                scales: {
-                    y: { beginAtZero: true }
+            tooltip: {
+                callbacks: {
+                    label: function(tooltipItem) {
+                        return tooltipItem.label + ': ' + tooltipItem.raw;
+                    }
                 }
             }
-        });
+        }
+    }
+});
     </script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-</body>
 </html>
