@@ -1,7 +1,4 @@
-
-<?php
-include_once 'sidebarsupplier.php';
-?>
+<?php include '../User/sidebar.php'; ?>
 <html>
     <head>
         <link rel="stylesheet" href="supplierdashboard.css">

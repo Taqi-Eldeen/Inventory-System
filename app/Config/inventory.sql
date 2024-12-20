@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 20, 2024 at 05:28 PM
+-- Generation Time: Dec 20, 2024 at 09:10 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -37,7 +37,7 @@ CREATE TABLE `bowner` (
 --
 
 INSERT INTO `bowner` (`boid`, `userid`) VALUES
-(18, 182);
+(19, 185);
 
 -- --------------------------------------------------------
 
@@ -55,7 +55,43 @@ CREATE TABLE `inventory` (
 --
 
 INSERT INTO `inventory` (`invid`, `boid`) VALUES
-(10, 18);
+(11, 19);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pages`
+--
+
+CREATE TABLE `pages` (
+  `id` int(11) NOT NULL,
+  `page_name` varchar(255) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `pages`
+--
+
+INSERT INTO `pages` (`id`, `page_name`, `role_id`, `title`) VALUES
+(1, 'addusers.php', 0, 'Add User'),
+(2, 'admin.php', 0, 'Admin'),
+(3, 'manageusers.php', 0, 'Manage Users'),
+(4, 'manageemployee.php', 3, 'Manage Employee'),
+(5, 'manageinventory.php', 3, 'Manage Inventory'),
+(6, 'managesupply.php', 3, 'Manage Supply'),
+(7, 'Ownerdashboard.php', 3, 'Owner Dashboard'),
+(8, 'supplierdashboard.php', 1, 'Supplier Dashboard'),
+(9, 'addproduct.php', 1, 'Add Product'),
+(10, 'editproduct.php', 1, 'Edit Product'),
+(11, 'trackmovement.php', 1, 'Track Stock Movements'),
+(12, 'logs.php', 2, 'Logs'),
+(13, 'availablesuppliers.php', 2, 'Available Suppliers'),
+(14, 'supplierView.php', 2, 'Supplier View'),
+(15, 'dashboard.php', 2, 'User Dashboard'),
+(16, 'products.php', 2, 'Products'),
+(17, 'shopDemp.php', 2, 'Shop');
 
 -- --------------------------------------------------------
 
@@ -71,6 +107,14 @@ CREATE TABLE `product` (
   `supplierid` int(11) NOT NULL,
   `invid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product`
+--
+
+INSERT INTO `product` (`id`, `name`, `price`, `qty`, `supplierid`, `invid`) VALUES
+(27, 'iphone 13', 1000, 10, 9, 11),
+(28, 'Iphone 15', 1000, 10, 8, 11);
 
 -- --------------------------------------------------------
 
@@ -89,8 +133,8 @@ CREATE TABLE `supplier` (
 --
 
 INSERT INTO `supplier` (`supplierid`, `userid`, `boid`) VALUES
-(6, 183, 18),
-(7, 184, 18);
+(8, 186, 19),
+(9, 187, 19);
 
 -- --------------------------------------------------------
 
@@ -111,10 +155,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `email`, `password`, `type`) VALUES
-(73, 'sameh', 'abu_lba@yahoo.com', '$2y$10$8ZqMb413QCU6bU4l33jDg.3tjHNnVFkkwrW1SlcNgfw4uhoNtLtOq', 0),
-(182, 'owner5', 'bo3@gmail.com', '$2y$10$nHrNgg0lsjP47G0BxosONuEk3pTFiH9sla3uXeud6nz58tMR/OU3.', 3),
-(183, 'Supplier', 'Majed@22222gmail.com', '$2y$10$.D7unjkrtjL6i7w4QmUvv.idGJRSJyCW9d/XN3ORSWzt3eGfc2XO.', 1),
-(184, 'Supplier1', 'bo@gmail.com', '$2y$10$XCZtO9oL8WOPtC4yuh092uQ4gh23AIpzEVohGg9I0fzX3KcoOTAUK', 1);
+(185, 'User', 'User@gmail.com', '$2y$10$pxb/ZoA.iMIu26tmVpExv.N/7dq6k88XrfF6f94yOvO8Q6PodDtm2', 2),
+(186, 'Owner', 'Owner@gmail.com', '$2y$10$xIg/927p7XoJnGG/i5VyWO3OimGek9kFIO4NpLD645xP8V3fmKh8q', 3),
+(187, 'Admin', 'Admin@gmail.com', '$2y$10$8X7TJ2Hm7Ds73dCdvcagnugxJ8hsuQ3mNWxY1PRdJVSOv6TaYnINy', 0),
+(191, 'Supplier', 'Supplier@gmail.com', '$2y$10$Zdji/LefGG.sGASIRbmlBexK0eMsGZasmR/HmScxtPT4SuYNKkr9m', 1);
 
 --
 -- Indexes for dumped tables
@@ -133,6 +177,12 @@ ALTER TABLE `bowner`
 ALTER TABLE `inventory`
   ADD PRIMARY KEY (`invid`),
   ADD KEY `boid` (`boid`);
+
+--
+-- Indexes for table `pages`
+--
+ALTER TABLE `pages`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `product`
@@ -164,25 +214,31 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `bowner`
 --
 ALTER TABLE `bowner`
-  MODIFY `boid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `boid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `invid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `invid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `pages`
+--
+ALTER TABLE `pages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `supplier`
 --
 ALTER TABLE `supplier`
-  MODIFY `supplierid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `supplierid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `user`

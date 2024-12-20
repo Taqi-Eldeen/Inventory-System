@@ -6,7 +6,8 @@ if (!isset($_SESSION['username'])) {
     header("Location: loginhome.php");
     exit();
 }
-
+require_once(dirname(__FILE__) . '/../../model/Pages.php');
+require_once(dirname(__FILE__) . '/../../model/Page.php');
 // Check user type
 $userType = $_SESSION['type'];
 ?>
@@ -26,23 +27,33 @@ $userType = $_SESSION['type'];
             <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                 <span class="fs-4">
                     <?php
-                    // Display dashboard title based on user type
+                   
                     if ($userType == 0) {
                         echo "Admin Dashboard";
-                    } elseif ($userType == 3) { // Owner
+                    } elseif ($userType == 3) { 
                         echo "Owner Dashboard";
-                    } elseif ($userType == 1) { // Supplier
+                    } elseif ($userType == 1) { 
                         echo "Supplier Dashboard";
-                    } else { // User
+                    } else { 
                         echo "User Dashboard";
                     }
+
+                    $pagesClass = new Pages($userType);
                     ?>
                 </span>
             </a>
             <hr>
             <ul class="nav nav-pills flex-column mb-auto" id="sidebar-nav">
-                <?php if ($userType == 0): // Admin ?>
+                <?php foreach($pagesClass->pages as $page) : ?>
                     <li>
+                        <a href="<?php echo $page->pageName ?>" class="nav-link text-white">
+                            <i class="fa-solid fa-table-columns"></i><?php echo $page->title ?>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+                <!--  -->
+                <?php// if ($userType == 0): // Admin ?>
+                    <!-- <li>
                         <a href="admin.php" class="nav-link text-white"><i class="fa-solid fa-table-columns"></i> Dashboard</a>
                     </li>
                     <li>
@@ -50,9 +61,9 @@ $userType = $_SESSION['type'];
                     </li>
                     <li>
                         <a href="addusers.php" class="nav-link text-white"><i class="fa-solid fa-user-plus"></i> Add Users</a>
-                    </li>
-                <?php elseif ($userType == 3): // Owner ?>
-                    <li>
+                    </li> -->
+                <?php// elseif ($userType == 3): // Owner ?>
+                    <!-- <li>
                         <a href="Ownerdashboard.php" class="nav-link text-white"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
                     </li>
                     <li>
@@ -66,9 +77,9 @@ $userType = $_SESSION['type'];
                     </li>
                     <li>
                         <a href="reports.php" class="nav-link text-white"><i class="fa-solid fa-chart-line"></i> Reports</a>
-                    </li>
-                <?php elseif ($userType == 1): // Supplier ?>
-                    <li>
+                    </li> -->
+                <?php// elseif ($userType == 1): // Supplier ?>
+                    <!-- <li>
                         <a href="supplierdashboard.php" class="nav-link text-white"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
                     </li>
                     <li>
@@ -79,9 +90,9 @@ $userType = $_SESSION['type'];
                     </li>
                     <li>
                         <a href="trackmovement.php" class="nav-link text-white"><i class="fa-solid fa-chart-line"></i> Track Movement</a>
-                    </li>
-                <?php else: // User ?>
-                    <li>
+                    </li> -->
+                <?php// else: // User ?>
+                    <!-- <li>
                         <a href="dashboard.php" class="nav-link text-white"><i class="fa-solid fa-table-columns"></i> Dashboard</a>
                     </li>
                     <li>
@@ -92,8 +103,8 @@ $userType = $_SESSION['type'];
                     </li>
                     <li>
                         <a href="logs.php" class="nav-link text-white"><i class="fa-solid fa-file-waveform"></i> Logs</a>
-                    </li>
-                <?php endif; ?>
+                    </li> -->
+                <?php// endif; ?>
             </ul>
             <hr>
             <div class="dropdown">
@@ -104,7 +115,7 @@ $userType = $_SESSION['type'];
                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
                     <li><a class="dropdown-item" href="profile.php">Profile</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="../auth/signout.php"><i class="fa-solid fa-right-from-bracket"></i> Sign out</a></li>
+                    <li><a class="dropdown-item" href="../../../public/loginhome.php"><i class="fa-solid fa-right-from-bracket"></i> Sign out</a></li>
                 </ul>
             </div>
         </div>

@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="../../../public/css/addproduct.css">
 </head>
 <body>
-<?php require 'sidebarsupplier.php'; ?>
+<?php include '../User/sidebar.php'; ?>
 
 <div class="main-content">
     <h2>Add Products</h2>

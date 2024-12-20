@@ -35,7 +35,7 @@ $products = $controller->ProductsBySupplier($supplierId);
 </head>
 <body>
 
-<?php require 'sidebarsupplier.php'; ?>
+<?php include '../User/sidebar.php'; ?>
 
 <div class="main-content">
     <h2>Manage Products</h2>
