@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="../../../public/css/addusers.css">
 </head>
 <body>
-<?php require 'sidebaradmin.php'; ?>
+<?php include '../User/sidebar.php'; ?>
 
 <div class="main-content"> 
     <h2>Add Users</h2>

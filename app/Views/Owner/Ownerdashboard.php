@@ -1,6 +1,4 @@
-<?php
-include_once 'sidebarowner.php';
-?>
+<?php include '../User/sidebar.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
