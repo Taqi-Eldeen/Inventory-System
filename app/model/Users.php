@@ -193,14 +193,14 @@ class Users extends Model {
             return null; 
         }
     }
-    public function getSupplierid($userId) {
+    public function getSupplierId($userId) {
         $userId = intval($userId);
         $sql = "SELECT supplierid FROM supplier WHERE userid = $userId";
         $result = $this->db->query($sql);
     
         if ($result && $result->num_rows === 1) {
             $row = $result->fetch_assoc();
-            return $row['supplier']; 
+            return $row['supplierid']; 
         } else {
             return null; 
         }

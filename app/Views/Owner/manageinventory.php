@@ -5,6 +5,7 @@ require_once(dirname(__FILE__) . "/../../Controller/inventoryController.php");
 $inventoryController = new InventoryController();
 
 $message = ""; // Initialize the message variable
+$inventoryData = null; // Initialize the inventory data variable
 
 // Handle form submission for creating inventory
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -12,11 +13,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $businessOwnerId = $_SESSION['boid'];
     
     // Call the getOrCreateInventory method from InventoryController
-    $newInventory = $inventoryController->getOrCreateInventory($businessOwnerId);
+    $inventoryData = $inventoryController->getOrCreateInventory($businessOwnerId);
 
     // Display success or error messages based on the result
-    if ($newInventory) {
-        $message = "Inventory created successfully! Inventory ID: " . $newInventory['invid'];
+    if ($inventoryData && isset($inventoryData['invid'])) {
+        $message = "Inventory created successfully! Inventory ID: " . $inventoryData['invid'];
     } else {
         $message = "Failed to create inventory. Please try again.";
     }
@@ -57,16 +58,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </thead>
         <tbody>
             <?php
-            if (isset($inventoryData['inventory']) && !empty($inventoryData['inventory']['products'])) {
-                foreach ($inventoryData['inventory']['products'] as $product) {
+            if (isset($inventoryData['products']) && !empty($inventoryData['products'])) {
+                foreach ($inventoryData['products'] as $product) {
                     echo "<tr>
                             <td>{$product['product_id']}</td>
                             <td>{$product['product_name']}</td>
                             <td>{$product['price']}</td>
-                            <td>{$product['quantity']}</td>
+                            <td>{$product['qty']}</td>
                             <td>{$product['supplier_name']}</td>
                           </tr>";
                 }
+            } else {
+                echo "<tr><td colspan='5'>No products found for this inventory.</td></tr>";
             }
             ?>
         </tbody>

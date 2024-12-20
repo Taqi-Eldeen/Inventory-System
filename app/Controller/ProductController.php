@@ -1,34 +1,31 @@
 <?php
-// Include the Product and Products models and the base Controller
-
-
 require_once(dirname(__FILE__) . '/../model/Products.php');
 require_once(dirname(__FILE__) . '/../Controller/Controller.php');
 
 class ProductsController extends Controller {
-    private $productsModel; // Instance of the Products class
+    private $productsModel;
 
     public function __construct() {
-        $this->productsModel = new Products(); // Initialize the Products model
-        parent::__construct($this->productsModel); // Pass the model to the parent constructor
+        $this->productsModel = new Products();
+        parent::__construct($this->productsModel);
     }
-    public function ProductsBySupplier($supplierID) {
-        $products = new Products(); // Create an instance of the Products class
-        return $products->SelectProductsBySupplier($supplierID);
-    }
-    
 
     // Insert a new product
     public function insert() {
+        // Access $_POST directly within the method
         $name = $_POST['name'];
         $price = $_POST['price'];
         $qty = $_POST['qty'];
-        $supplierid = $_POST['supplierid'];
+        $supplierid = $_SESSION['supplierid']; // Fetch the supplier ID from the session
 
-        if (!empty($name) && !empty($price) && !empty($qty) && !empty($supplierid)) {
-            $this->productsModel->insertProduct($name, $price, $qty, $supplierid);
+        // Get the corresponding inventory ID for the supplier
+        $invid = $this->getInventoryForSupplier($supplierid);
+
+        // Prepare the product data and insert it into the database
+        if ($invid) {
+            return $this->productsModel->insertProduct($name, $price, $qty, $supplierid, $invid);
         } else {
-            echo "All fields are required to insert a product.";
+            return false;  // If no valid inventory found, return false
         }
     }
 
@@ -39,44 +36,44 @@ class ProductsController extends Controller {
         $price = $_REQUEST['price'];
         $qty = $_REQUEST['qty'];
         $supplierid = $_REQUEST['supplierid'];
+        $invid = $_REQUEST['invid'];
 
-        if (!empty($id) && !empty($name) && !empty($price) && !empty($qty) && !empty($supplierid)) {
-            $this->productsModel->updateProduct($id, $name, $price, $qty, $supplierid);
+        if (!empty($id) && !empty($name) && !empty($price) && !empty($qty) && !empty($supplierid) && !empty($invid)) {
+            return $this->productsModel->updateProduct($id, $name, $price, $qty, $supplierid, $invid);
         } else {
             echo "All fields are required to edit a product.";
+            return false;
         }
     }
 
-    // Delete a product by ID
+    // Delete a product
     public function delete($id) {
         if (!empty($id)) {
-            $this->productsModel->deleteProduct($id);
+            return $this->productsModel->deleteProduct($id);
         } else {
             echo "Product ID is required to delete a product.";
+            return false;
         }
     }
 
     // Get all products
     public function getProducts() {
-        // Fetch all products using the Products model
         return $this->productsModel->getProducts();
     }
 
     // Get product details by ID
     public function getProductByID($id) {
         if (!empty($id)) {
-            $product = new Products($id);
-            return [
-                "id" => $product->getID(),
-                "name" => $product->getName(),
-                "price" => $product->getPrice(),
-                "qty" => $product->getQty(),
-                "supplierid" => $product->getsupplierid()
-            ];
+            return $this->productsModel->getProductByID($id);
         } else {
             echo "Product ID is required to fetch details.";
             return null;
         }
+    }
+
+    // Get inventory for a supplier
+    public function getInventoryForSupplier($supplierid) {
+        return $this->productsModel->getInventoryForSupplier($supplierid);
     }
 }
 ?>

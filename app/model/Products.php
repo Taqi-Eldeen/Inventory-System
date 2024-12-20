@@ -23,7 +23,8 @@ class Products extends Model {
                     $row["name"], 
                     $row["price"], 
                     $row["qty"], 
-                    $row["supplierid"]
+                    $row["supplierid"],
+                    $row["invid"]  // Add inventory ID to product object
                 );
                 array_push($this->products, $product);
             }
@@ -47,95 +48,95 @@ class Products extends Model {
         }
     }
 
-    function insertProduct($name, $price, $qty, $userid) {
-        // Step 1: Fetch supplierid based on userid
-        $getSupplierIdSql = "SELECT supplierid FROM supplier WHERE userid = ?";
-        $stmt = $this->db->prepare($getSupplierIdSql);
-        $stmt->bind_param("i", $userid);
-        $stmt->execute();
-        $result = $stmt->get_result();
-    
-        if ($result->num_rows === 0) {
-            // If no supplierid exists for the given userid, show an error
-            echo "ERROR: No supplier found with User ID $userid.";
-            return;
-        }
-    
-        // Fetch the supplierid
-        $row = $result->fetch_assoc();
-        $supplierid = $row['supplierid'];
-    
-        // Step 2: Insert the product using the dynamically fetched supplierid
-        $insertProductSql = "INSERT INTO product (name, price, qty, supplierid) VALUES (?, ?, ?, ?)";
+    // Insert a new product with supplierid and invid (inventory ID)
+    function insertProduct($name, $price, $qty, $supplierid, $invid) {
+        // Step 3: Insert the product using the provided supplierid and invid
+        $insertProductSql = "INSERT INTO product (name, price, qty, supplierid, invid) VALUES (?, ?, ?, ?, ?)";
         $stmt = $this->db->prepare($insertProductSql);
-        $stmt->bind_param("siii", $name, $price, $qty, $supplierid);
+        $stmt->bind_param("siiii", $name, $price, $qty, $supplierid, $invid);
     
         if ($stmt->execute()) {
-            echo "Product inserted successfully with Supplier ID $supplierid.";
             $this->fillArray(); // Refresh the products array
+            return true;
         } else {
             echo "ERROR: Could not insert product. " . $this->db->error;
+            return false;
         }
     }
     
-    
-    
+
     // Delete a product by ID
     function deleteProduct($id) {
         $sql = "DELETE FROM product WHERE id = " . intval($id);
 
         if ($this->db->query($sql) === true) {
-            echo "Product deleted successfully.";
             $this->fillArray(); // Refresh the products array
+            return true;
         } else {
             echo "ERROR: Could not execute $sql. " . $this->db->error;
+            return false;
         }
     }
 
     // Update an existing product
-    function updateProduct($id, $name, $price, $qty, $supplierid) {
+    function updateProduct($id, $name, $price, $qty, $supplierid, $invid) {
         $sql = "UPDATE product SET 
-                    name = '$name', 
-                    price = '$price', 
-                    qty = '$qty', 
-                    supplierid = '$supplierid'
-                WHERE id = " . intval($id);
+                    name = ?, 
+                    price = ?, 
+                    qty = ?, 
+                    supplierid = ?,
+                    invid = ?
+                WHERE id = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("siiii", $name, $price, $qty, $supplierid, $invid, $id);
 
-        if ($this->db->query($sql) === true) {
-            echo "Product updated successfully.";
+        if ($stmt->execute()) {
             $this->fillArray(); // Refresh the products array
+            return true;
         } else {
             echo "ERROR: Could not execute $sql. " . $this->db->error;
+            return false;
         }
     }
-    public static function SelectAllProductsInDB() {
-        $db = new DatabaseHandler(); // Use DBh to get a connection
-        $sql = "SELECT * FROM product";
-        return $db->query($sql);
-    }
 
- public static function SelectProductsBySupplier($supplierID) {
-    $db = new DatabaseHandler();
-    $sql = "SELECT * FROM product WHERE supplierid = " . intval($supplierID);
-    $result = $db->query($sql);
+    // Function to get inventory ID (invid) based on supplier's supplierid
+    public function getInventoryForSupplier($supplierid) {
+        // Step 1: Fetch boid (Business Owner ID) based on supplierid
+        $getBoidSql = "SELECT boid FROM supplier WHERE supplierid = ?";
+        $stmt = $this->db->prepare($getBoidSql);
+        $stmt->bind_param("i", $supplierid);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-    if ($result) {
-        $products = [];
-        if ($result->num_rows > 0) {  // Check if there are rows in the result
-            while ($row = $result->fetch_assoc()) {
-                $products[] = $row; // Add each product to the array
-            }
-        } else {
-            // If no rows are returned
-            echo "No products found for this supplier.";
+        // Step 2: If no supplier found, return an error message
+        if ($result->num_rows === 0) {
+            echo "ERROR: No supplier found with Supplier ID $supplierid.";
+            return false;
         }
 
-        return $products;
-    } else {
-        echo "ERROR: Could not retrieve products.";
-        return []; // Return an empty array if no products are found
-    }
-}
+        // Fetch the boid from the result
+        $row = $result->fetch_assoc();
+        $boid = $row['boid'];
 
+        // Step 3: Fetch invid (Inventory ID) for the business owner (boid)
+        $getInvidSql = "SELECT invid FROM inventory WHERE boid = ?";
+        $stmt = $this->db->prepare($getInvidSql);
+        $stmt->bind_param("i", $boid);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // Step 4: If no inventory found for the business owner, return an error
+        if ($result->num_rows === 0) {
+            echo "ERROR: No inventory found for Business Owner ID $boid.";
+            return false;
+        }
+
+        // Fetch the invid
+        $row = $result->fetch_assoc();
+        $invid = $row['invid'];
+
+        // Return the invid (Inventory ID) associated with the supplier
+        return $invid;
+    }
 }
 ?>
