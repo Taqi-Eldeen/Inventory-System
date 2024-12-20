@@ -1,9 +1,17 @@
 <?php
-session_start();
-if (!isset($_SESSION['username'])) {
-    header("Location: loginhome.php");
+
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start(); 
+}
+include "../../config/DBConnection.php";
+
+
+if (!isset($_SESSION['username']) || $_SESSION['type'] != 3) {
+    header("Location: ../loginhome.php");
     exit();
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

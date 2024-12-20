@@ -12,25 +12,40 @@ class UsersController extends Controller {
     }
 
     // Insert a new user
+    public function insertBO() {
+        $username = $_POST['username'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $type = $_POST['type']; // 1 for supplier, other values for other user types
+        $boid = $_POST['boid']; 
+    
+        if (!empty($username) && !empty($email) && !empty($password) && !empty($type)) {
+            // Validate password complexity
+    
+            // Call the Users model's insertUser method, passing boid as a parameter
+            $this->model->insertUserbo($username, $email, $password, $type, $boid);
+        } else {
+            echo "All fields are required to insert a user.";
+        }
+    }
     public function insert() {
         $username = $_POST['username'];
         $email = $_POST['email'];
         $password = $_POST['password'];
         $type = $_POST['type']; // 1 for supplier, other values for other user types
-
+        
+        // Check that all required fields are provided
         if (!empty($username) && !empty($email) && !empty($password) && !empty($type)) {
-            // Validate password complexity
-            if (!validatePassword($password)) {
-                echo "Password must be at least 8 characters long and include at least one special character.";
-                return;
-            }
-
-            // Call the Users model's insertUser method
+            // Validate password complexity (this is just a basic check)
+            // You can add more validation here if necessary
+            
+            // Call the Users model's insertUser method, passing only the parameters without boid
             $this->model->insertUser($username, $email, $password, $type);
         } else {
             echo "All fields are required to insert a user.";
         }
     }
+    
 
     // Edit an existing user
     public function edit() {

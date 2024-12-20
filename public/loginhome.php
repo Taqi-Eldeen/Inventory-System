@@ -108,7 +108,7 @@ if (isset($_POST['signup'])) {
             $_SESSION['username'] = $uname;
             $_SESSION['type'] = 3; // Set type as business owner
 
-            header("Location: ../app/Views/Owner/ownerdashboard.php");
+            header("Location: Loginhome.php");
             exit();
         } catch (Exception $e) {
             header("Location: loginhome.php?error=" . $e->getMessage() . "&type=signup");
