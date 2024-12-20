@@ -3,7 +3,6 @@ include_once 'sidebar.php';
 ?>
 <html>
     <head>
-        <link rel="stylesheet" href="dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css">
     <link rel="stylesheet" href="../../../public/css/dashboard.css">
