@@ -29,7 +29,7 @@ $allUsers = $controller->getUsers();
 </head>
 <body>
 
-<?php require 'sidebaradmin.php'; ?>
+<?php include '../User/sidebar.php'; ?>
 
 <div class="main-content">
     <h2>Manage Users</h2>

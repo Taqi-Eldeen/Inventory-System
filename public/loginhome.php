@@ -129,13 +129,6 @@ if (isset($_POST['signup'])) {
 <body>
     <div class="container d-flex justify-content-center align-items-center vh-100">
         <div class="form-container w-50">
-            <div class="button-background">
-                <div class="tabs mb-3">
-                    <a href="?type=login" class="btn btn-black <?php echo (!isset($_GET['type']) || $_GET['type'] == 'login') ? 'active' : ''; ?>">Login</a>
-                    <a href="?type=signup" class="btn btn-black <?php echo (isset($_GET['type']) && $_GET['type'] == 'signup') ? 'active' : ''; ?>">Signup</a>
-                </div>
-            </div>
-            
             <?php if (!isset($_GET['type']) || $_GET['type'] == 'login') { ?>
                 <form action="loginhome.php" method="post" class="border p-4 rounded bg-light">
                     <h2 class="text-center">Login</h2>
@@ -151,6 +144,9 @@ if (isset($_POST['signup'])) {
                         <input type="password" name="password" class="form-control" placeholder="Password" required>
                     </div>
                     <button type="submit" name="login" class="btn btn-black">Login</button>
+                    <div class="text-center mt-3">
+                <a href="?type=signup" class="btn btn-link"><i>Don't have an account?</i> <b>Signup here</b></a>
+            </div>
                 </form>
             <?php } else { ?>
                 <form action="loginhome.php" method="post" class="border p-4 rounded bg-light">
@@ -177,8 +173,13 @@ if (isset($_POST['signup'])) {
                         <input type="password" name="re_password" class="form-control" placeholder="Re-enter Password" required>
                     </div>
                     <button type="submit" name="signup" class="btn btn-black">Signup</button>
+                    <div class="text-center mt-3">
+                <a href="?type=login" class="btn btn-link"><i><b>Back to Login</b></i></a>
+            </div>
                 </form>
             <?php } ?>
+
+
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

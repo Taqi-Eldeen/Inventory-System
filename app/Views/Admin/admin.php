@@ -61,7 +61,7 @@
 </head>
 <body>
 
-<?php require 'sidebaradmin.php'; ?>
+<?php include '../User/sidebar.php'; ?>
 <div class="container-fluid">
     <div class="main-content"> 
         <h2 class="text-center">Admin Dashboard</h2>
