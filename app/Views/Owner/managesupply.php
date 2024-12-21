@@ -1,19 +1,28 @@
 <?php
-
 require_once(dirname(__FILE__) . "/../../Controller/UserController.php");
-require_once(dirname(__FILE__) . "/../../model/Users.php");
+require_once(dirname(__FILE__) . "/../../Model/Users.php");
 
 // Initialize userController
 $userController = new UsersController();
 
-// Handle form submission
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get BOid from session
-   
-
-    // Pass the BOid as part of the form submission
+// Handle form submission for adding new supplier
+if (isset($_POST['adduser'])) {
     $userController->insertBO();
 }
+
+// Handle form submission for update and delete actions
+if (isset($_POST['update_supplier'])) {
+    $userController->edit(); // Edit an existing supplier
+}
+
+if (isset($_POST['delete_supplier'])) {
+    $userController->delete($_POST['delete_id']); // Delete a supplier
+}
+
+$boid = $_SESSION['boid'];
+
+// Fetch the suppliers associated with the BOid
+$suppliers = $userController->getSuppliersByBOid($boid);
 ?>
 
 <?php include '../User/sidebar.php'; ?>
@@ -56,13 +65,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
                         </div>
 
-                        <!-- Hidden Input for Supplier Type -->
                         <input type="hidden" name="type" value="1">  <!-- 1 represents Supplier -->
-                        
-                        <!-- Hidden Input for Business Owner ID (BOid) -->
-                        <input type="hidden" name="boid" value="<?php echo $_SESSION['boid']; ?>"> <!-- BOid from session -->
+                        <input type="hidden" name="boid" value="<?php echo $_SESSION['boid']; ?>">
 
-                        <button type="submit" class="btn btn-success">Add Supplier</button>
+                        <button type="submit" class="btn btn-success" name="adduser">Add Supplier</button>
                     </form>
                 </section>
                 
@@ -80,19 +86,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- Example Row -->
-                                <tr>
-                                    <td>1</td>
-                                    <td>Supplier X</td>
-                                    <td>supplierx@example.com</td>
-                                    <td>
-                                        <form action="delete_supplier.php" method="post" onsubmit="return confirm('Are you sure you want to delete this supplier?');">
-                                            <input type="hidden" name="supplierId" value="1">
-                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                <!-- More rows will be populated here dynamically -->
+                                <?php if (empty($suppliers)): ?>
+                                    <tr>
+                                        <td colspan="4" class="text-center">No suppliers found.</td>
+                                    </tr>
+                                <?php else: ?>
+                                    <?php foreach ($suppliers as $supplier): ?>
+                                        <tr>
+                                            <td><?php echo htmlspecialchars($supplier['id']); ?></td>
+                                            <td><?php echo htmlspecialchars($supplier['username']); ?></td>
+                                            <td><?php echo htmlspecialchars($supplier['email']); ?></td>
+                                            <td>
+                                                <!-- Edit Supplier -->
+                                                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal" 
+                                                    data-id="<?php echo $supplier['id']; ?>"
+                                                    data-username="<?php echo htmlspecialchars($supplier['username']); ?>"
+                                                    data-email="<?php echo htmlspecialchars($supplier['email']); ?>"
+                                                >Edit</button>
+                                                
+                                                <!-- Delete Supplier -->
+                                                <form action="managesupply.php" method="POST" style="display:inline;">
+                                                    <input type="hidden" name="delete_id" value="<?php echo $supplier['id']; ?>">
+                                                    <button type="submit" name="delete_supplier" class="btn btn-danger btn-sm">Delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
@@ -100,5 +120,59 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </main>
     </div>
+
+    <!-- Modal for Edit Supplier -->
+    <!-- Modal for Edit Supplier -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit Supplier</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="managesupply.php">
+                    <input type="hidden" id="supplier_id" name="id">
+                    <!-- Name Input -->
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Supplier Name:</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                    </div>
+                    <!-- Email Input -->
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email:</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <!-- Password Input -->
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password:</label>
+                        <input type="password" class="form-control" id="password" name="password">
+                        <small class="form-text text-muted">Leave blank if you don't want to change the password.</small>
+                    </div>
+                    <button type="submit" name="update_supplier" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Populate the edit modal with the selected supplier's data
+        $('#editModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var supplierID = button.data('id');
+            var username = button.data('username');
+            var email = button.data('email');
+
+            var modal = $(this);
+            modal.find('#supplier_id').val(supplierID);
+            modal.find('#username').val(username);
+            modal.find('#email').val(email);
+        });
+    </script>
 </body>
 </html>

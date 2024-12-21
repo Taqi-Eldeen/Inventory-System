@@ -30,7 +30,7 @@ if (isset($_POST['login'])) {
     $sql = "SELECT * FROM user WHERE username='$uname'";
     $dbh = new DatabaseHandler();
     $result = $dbh->query($sql);
-
+    
     if ($result->num_rows === 1) {
         $row = $result->fetch_assoc();
         if (password_verify($password, $row['password'])) {
@@ -44,6 +44,15 @@ if (isset($_POST['login'])) {
                     $_SESSION['supplierid'] = $supplierId;
                 } else {
                     $_SESSION['error'] = "Supplier ID not found.";
+                }
+            }
+            
+            if ($_SESSION['type'] == 2) {
+                $EmployeeId = $controller->getEmployeeId($row['id']);
+                if ($EmployeeId) {
+                    $_SESSION['empid'] = $EmployeeId;
+                } else {
+                    $_SESSION['error'] = "Employee ID not found.";
                 }
             }
             if ($_SESSION['type'] == 3) {

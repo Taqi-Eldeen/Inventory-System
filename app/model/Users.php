@@ -240,5 +240,24 @@ class Users extends Model {
             echo "ERROR: Could not execute $sql. " . $this->db->error;
         }
     }
+    // In Users Model
+public function getSuppliersByBOid($boid) {
+    $boid = intval($boid);
+    $sql = "SELECT u.id, u.username, u.email FROM user u
+            JOIN supplier s ON u.id = s.userid
+            WHERE s.boid = $boid";
+    
+    $result = $this->db->query($sql);
+
+    $suppliers = [];
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $suppliers[] = $row;
+        }
+    }
+
+    return $suppliers;
+}
+
 }
 ?>

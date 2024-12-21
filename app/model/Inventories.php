@@ -80,5 +80,35 @@ class Inventories extends Model {
 
         return $result->num_rows > 0 ? $result->fetch_assoc() : null;
     }
+    public function getProductsByInventoryID($invid) {
+        $sql = "SELECT p.id AS product_id, p.name AS product_name, p.price, p.qty, s.userid AS supplier_name 
+                FROM product p
+                JOIN supplier s ON p.supplierid = s.supplierid
+                WHERE p.invid = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("i", $invid);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        $products = [];
+        while ($row = $result->fetch_assoc()) {
+            $products[] = $row;
+        }
+    
+        return $products;
+    }
+    
+    public function deleteProductByIdInInventory($productId) {
+        $sql = "DELETE FROM product WHERE id = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("i", $productId);
+    
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
 }
 ?>

@@ -9,34 +9,31 @@ class InventoryController extends Controller {
         $this->inventoryModel = new Inventories();
         parent::__construct($this->inventoryModel);
     }
-
+    
     /**
      * This method fetches the inventory for the business owner (boid).
      * If it doesn't exist, it creates a new inventory.
      */
-    public function getOrCreateInventory() {
-        $boid = $_SESSION['boid'];  // Get the boid from the session
-        var_dump($boid);  // Debugging: Check if boid is correct
+    public function getOrCreateInventory($boid) {
         if (!empty($boid)) {
-            $inventory = $this->inventoryModel->getInventoryByBOID($boid);  // Check if inventory exists for boid
-            var_dump($inventory);  // Debugging: Check if inventory is returned correctly
+            $inventory = $this->inventoryModel->getInventoryByBOID($boid);
             
             if ($inventory) {
-                // If inventory exists, return it
+                // Fetch products for this inventory
+                $products = $this->inventoryModel->getProductsByInventoryID($inventory['invid']);
                 return [
                     'invid' => $inventory['invid'],
-                    'boid' => $inventory['boid']
+                    'boid' => $inventory['boid'],
+                    'products' => $products
                 ];
             } else {
-                // If no inventory exists, create a new one for the specific boid
                 $newInventory = $this->inventoryModel->insertInventory($boid);
-                var_dump($newInventory);  // Debugging: Check the result of inserting the inventory
                 return $newInventory;
             }
-        } else {
-            return null;
         }
+        return null;
     }
+    
     
     
     
@@ -85,5 +82,19 @@ class InventoryController extends Controller {
             echo json_encode(['success' => false, 'message' => 'Inventory ID is required.']);
         }
     }
+    public function removeProduct($productId) {
+        if (!empty($productId)) {
+            $success = $this->inventoryModel->deleteProductByIdInInventory($productId);
+    
+            if ($success) {
+                return json_encode(['success' => true, 'message' => 'Product removed successfully.']);
+            } else {
+                return json_encode(['success' => false, 'message' => 'Failed to remove product.']);
+            }
+        } else {
+            return json_encode(['success' => false, 'message' => 'Product ID is required.']);
+        }
+    }
+    
 }
 ?>
