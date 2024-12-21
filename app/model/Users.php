@@ -123,7 +123,7 @@ class Users extends Model {
     }
     
     public function signUpBusinessOwner($uname, $email, $password) {
-        $dbh = new DatabaseHandler();
+        $dbh = DatabaseHandler::getInstance();
         $dbh->begin_transaction();
     
         try {
