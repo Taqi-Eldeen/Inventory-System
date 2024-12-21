@@ -107,6 +107,11 @@ $userType = $_SESSION['type'];
                 <?php// endif; ?>
             </ul>
             <hr>
+        </div>
+        
+        <div class="flex-grow-1 d-flex flex-column" style="margin-left: 15%;">
+        <nav class="navbar search-nav">
+            <div class="container-fluid justify-content-end">
             <div class="dropdown">
                 <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="images/user.jpg" alt="" width="32" height="32" class="rounded-circle me-2">
@@ -118,15 +123,6 @@ $userType = $_SESSION['type'];
                     <li><a class="dropdown-item" href="../../../public/loginhome.php"><i class="fa-solid fa-right-from-bracket"></i> Sign out</a></li>
                 </ul>
             </div>
-        </div>
-        
-        <div class="flex-grow-1 d-flex flex-column" style="margin-left: 280px;">
-        <nav class="navbar search-nav">
-            <div class="container-fluid justify-content-end">
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-light" type="submit">Search</button>
-                </form>
             </div>
         </nav>
     </div>

@@ -11,10 +11,6 @@
         }
 
     
-        .main-content {
-            margin-left: 220px; 
-            padding: 20px;
-        }
 
 
         button.edit-btn, button.delete-btn {
@@ -25,15 +21,4 @@
             border-radius: 15px;
             cursor: pointer;
             margin-right: 10px;
-        }
-
-     
-        @media (max-width: 768px) {
-            .main-content {
-                margin-left: 0;
-            }
-
-            button.edit-btn, button.delete-btn {
-                width: 100%;
-            }
         }

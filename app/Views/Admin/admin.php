@@ -62,10 +62,8 @@
 <body>
 
 <?php include '../User/sidebar.php'; ?>
-<div class="container-fluid">
+<div>
     <div class="main-content"> 
-        <h2 class="text-center">Admin Dashboard</h2>
-        
         <section class="overview-section">
             <h2>Overview</h2>
             <div class="row">

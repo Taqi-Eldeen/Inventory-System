@@ -12,11 +12,6 @@ body {
 }
 
 
-.main-content {
-    margin-left: 220px; 
-    padding: 20px;
-}
-
 
 h2 {
     color: #333;
@@ -76,13 +71,3 @@ h2 {
     background-color: #f9f9f9;
 }
 
-
-@media (max-width: 768px) {
-    .main-content {
-        margin-left: 0;
-    }
-    
-    .btn-primary {
-        width: 100%;
-    }
-}

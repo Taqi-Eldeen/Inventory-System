@@ -1,8 +1,6 @@
-
 body {
     background-color: #d8dede !important; /* Use !important to override other styles */
 }
-
 
 .container {
     background-color: #ffffff; /* White background for content */
@@ -11,7 +9,7 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
 }
 
-h1, h2 {
+h2 {
     color: #333; /* Darker text for headings */
 }
 
@@ -19,6 +17,10 @@ h1, h2 {
     margin-top: 20px;
 }
 
+.alert {
+    margin-bottom: 20px; /* Space below alert messages */
+}
+
 .btn {
     margin-right: 5px; /* Space between buttons */
-}
+} 

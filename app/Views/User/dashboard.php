@@ -10,41 +10,35 @@ include_once 'sidebar.php';
     </head>
     <body>
         <div class="main-content">
-            <H2>Dashboard</H2>
 
-            <ul class="box-info">
+            <div class="box-info ">
                 <li>
-                  
                 <i class="fa-solid fa-user"></i>
-
-                    
                     <span class="text">
                         <h3>2450</h3>
                         <p>Users</p>
                     </span>
                 </li>
                 <li>
-                  
-
-                        <i class="fa-solid fa-truck-fast"></i>
-                   
+                    <i class="fa-solid fa-truck-fast"></i>
                     <span class="text">
                         <h3>3</h3>
                         <p>Suppliers</p>
                     </span>
                 </li>
                 <li>
-                    
-
-                        <i class="fa-solid fa-box-open"></i>
-                   
+                    <i class="fa-solid fa-box-open"></i>
                     <span class="text">
                         <h3>654</h3>
                         <p>Items</p>
                     </span>
                 </li>
             </ul>
-            <div class=" chart-container" >
+
+            </div>
+
+            <div class='chart-box'>
+            <div class="chart-container" >
                 <div class="sales-chart-cont">
                     
                     <canvas id="sales-chart" ></canvas>
@@ -55,13 +49,12 @@ include_once 'sidebar.php';
                 <div class="pie-chart-cont">
                     <canvas id="pie-chart" ></canvas>
                 </div>
-
-                
-                
             </div>
+            </div>
+
             <div class="Recent-5-Table" >
-            <div class="table-data"  >
-            <div class="order">
+                <div class="table-data"  >
+                    <div class="order">
                 <div class="head">
                     <h3>Recent 5 Movements</h3>
                 </div>
@@ -144,10 +137,6 @@ include_once 'sidebar.php';
                     </table>
                 </div>
             </div>
-
-
-            </div>
-            
         </div>
     </body>
     <script>

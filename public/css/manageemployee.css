@@ -1,25 +1,23 @@
-/* Add styles for the inventory management page */
-form {
-    margin: 20px 0;
+body {
+    background-color: #d8dede !important; /* Use !important to override other styles */
 }
 
-form label {
-    margin-right: 10px;
+
+.container {
+    background-color: #ffffff; /* White background for content */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
 }
 
-form input {
-    margin-right: 10px;
+h1, h2 {
+    color: #333; /* Darker text for headings */
 }
 
-button {
-    background-color: #4CAF50; /* Green */
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.table-responsive {
+    margin-top: 20px;
 }
 
-button:hover {
-    background-color: #45a049; /* Darker green */
-}
+
+
+

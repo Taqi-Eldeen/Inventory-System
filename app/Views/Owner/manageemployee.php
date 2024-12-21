@@ -25,8 +25,6 @@ $boid = $_SESSION['boid'];
 $employees = $userController->getEmployeeByBOid($boid);
 ?>
 
-<?php include '../User/sidebar.php'; ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,91 +32,81 @@ $employees = $userController->getEmployeeByBOid($boid);
     <title>Manage Employee</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../../public/css/manageemployee.css">
+
 </head>
 <body>
-    <div class="dashboard">
-        <main class="main-content">
-            <div class="container-fluid fade-in">
-                <h1 class="my-4">Manage Employee</h1>
-                
-                <!-- Add Employee Section -->
-                <section class="add-employee mb-4">
-                    <h2>Add New Employee</h2>
-                    <form action="manageemployee.php" method="post">
-                        <div class="row">
-                            <!-- Name Input -->
-                            <div class="col-md-4 mb-3">
-                                <label for="username" class="form-label">Employee Name:</label>
-                                <input type="text" id="username" name="username" class="form-control" required>
-                            </div>
-                            
-                            <!-- Email Input -->
-                            <div class="col-md-4 mb-3">
-                                <label for="email" class="form-label">Email:</label>
-                                <input type="email" id="email" name="email" class="form-control" required>
-                            </div>
-                            
-                            <!-- Password Input -->
-                            <div class="col-md-4 mb-3">
-                                <label for="password" class="form-label">Password:</label>
-                                <input type="password" id="password" name="password" class="form-control" required>
-                            </div>
-                        </div>
+    <?php include '../User/sidebar.php'; ?>
 
-                        <input type="hidden" name="type" value="2">  <!-- 2 represents Employee -->
-                        <input type="hidden" name="boid" value="<?php echo $_SESSION['boid']; ?>">
+    <div class="main-content">
+    <div class="container mt-4">
+        <h1 class="mb-4 text-start">Manage Employee</h1>
 
-                        <button type="submit" class="btn btn-success" name="adduser">Add Employee</button>
-                    </form>
-                </section>
-                
-                <!-- View Employees Section -->
-                <section class="view-employees">
-                    <h2>Existing Employees</h2>
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
-                            <thead class="table-dark">
+        <!-- Add Employee Section -->
+        <section class="mb-4">
+            <h2 class="text-start">Add New Employee</h2>
+            <form action="manageemployee.php" method="post" class="row g-3">
+                <div class="col-md-4">
+                    <label for="username" class="form-label">Employee Name:</label>
+                    <input type="text" id="username" name="username" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="email" id="email" name="email" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="password" class="form-label">Password:</label>
+                    <input type="password" id="password" name="password" class="form-control" required>
+                </div>
+                <input type="hidden" name="type" value="2">
+                <input type="hidden" name="boid" value="<?php echo $_SESSION['boid']; ?>">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-success" name="adduser">Add Employee</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- View Employees Section -->
+        <section>
+            <h2 class="text-start">Existing Employees</h2>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Employee ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (empty($employees)): ?>
+                            <tr>
+                                <td colspan="4" class="text-center">No employees found.</td>
+                            </tr>
+                        <?php else: ?>
+                            <?php foreach ($employees as $employee): ?>
                                 <tr>
-                                    <th>Employee ID</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Actions</th>
+                                    <td><?php echo htmlspecialchars($employee['id']); ?></td>
+                                    <td><?php echo htmlspecialchars($employee['username']); ?></td>
+                                    <td><?php echo htmlspecialchars($employee['email']); ?></td>
+                                    <td>
+                                        <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal" 
+                                            data-id="<?php echo $employee['id']; ?>"
+                                            data-username="<?php echo htmlspecialchars($employee['username']); ?>"
+                                            data-email="<?php echo htmlspecialchars($employee['email']); ?>"
+                                        >Edit</button>
+                                        <form action="manageemployee.php" method="POST" style="display:inline;">
+                                            <input type="hidden" name="delete_id" value="<?php echo $employee['id']; ?>">
+                                            <button type="submit" name="delete_employee" class="btn btn-danger btn-sm">Delete</button>
+                                        </form>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                <?php if (empty($employees)): ?>
-                                    <tr>
-                                        <td colspan="4" class="text-center">No employees found.</td>
-                                    </tr>
-                                <?php else: ?>
-                                    <?php foreach ($employees as $employee): ?>
-                                        <tr>
-                                            <td><?php echo htmlspecialchars($employee['id']); ?></td>
-                                            <td><?php echo htmlspecialchars($employee['username']); ?></td>
-                                            <td><?php echo htmlspecialchars($employee['email']); ?></td>
-                                            <td>
-                                                <!-- Edit Employee -->
-                                                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal" 
-                                                    data-id="<?php echo $employee['id']; ?>"
-                                                    data-username="<?php echo htmlspecialchars($employee['username']); ?>"
-                                                    data-email="<?php echo htmlspecialchars($employee['email']); ?>"
-                                                >Edit</button>
-                                                
-                                                <!-- Delete Employee -->
-                                                <form action="manageemployee.php" method="POST" style="display:inline;">
-                                                    <input type="hidden" name="delete_id" value="<?php echo $employee['id']; ?>">
-                                                    <button type="submit" name="delete_employee" class="btn btn-danger btn-sm">Delete</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
             </div>
-        </main>
+        </section>
     </div>
 
     <!-- Modal for Edit Employee -->
@@ -151,14 +139,13 @@ $employees = $userController->getEmployeeByBOid($boid);
             </div>
         </div>
     </div>
+</div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-
     <script>
-        // Populate the edit modal with the selected employee's data
         $('#editModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget); // Button that triggered the modal
+            var button = $(event.relatedTarget);
             var employeeID = button.data('id');
             var username = button.data('username');
             var email = button.data('email');

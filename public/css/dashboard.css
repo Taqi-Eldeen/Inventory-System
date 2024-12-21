@@ -1,12 +1,15 @@
 .box-info {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    grid-gap: 24px;
+    display: grid; 
+    grid-template-columns: repeat(3, 630px); 
+    gap: 8px; 
+    margin-left: 40px;
     margin-top: 36px;
+    margin-bottom: 20px;
+    margin-right: 100px;
 }
 
 .box-info li {
-    padding: 24px;
+    padding: 20px 20px;
     background: #f8f9fa;
     border-radius: 20px;
     display: flex;
@@ -16,7 +19,7 @@
 }
 
 .box-info li:hover {
-    transform: scale(1.1);
+    transform: scale(1.025);
 }
 
 .box-info li .fa {
@@ -43,15 +46,14 @@
     background: #ffe8e6;
     
 }
-
-
+.chart-box{
+    margin-left: 40px;
+    margin-right: 40px;
+}
 .chart-container {
     display: grid; 
     grid-template-columns: repeat(3, 1fr); 
     gap: 8px; 
-    margin-left: 40px;
-
-    
 }
 
 .sales-chart-cont{
@@ -91,8 +93,7 @@ align-self: center;
 
 .Recent-5-Table {
     margin-top: 10px;
-   
-    margin-left: 50px;
+    margin-left: 40px;
     background: #ffffff; 
     border-radius: 20px; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 

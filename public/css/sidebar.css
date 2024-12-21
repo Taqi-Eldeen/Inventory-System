@@ -1,6 +1,9 @@
+.container{
+    max-width: 90% !important;
+}
 
 .sidebar {
-    width: 280px;
+    width: 15%;
     height: 100vh;
     position: fixed;
     top: 0;
@@ -19,12 +22,11 @@
 }
 
 .main-content {
-    margin-left: 280px;
+    margin-left: 15%;
     padding: 20px;
     min-height: 100vh;
     background-color: #d8dede;
     transition: margin-left 0.3s ease;
- 
 }
 
 .search-nav {
@@ -147,13 +149,16 @@
 }
 
 .dropdown-menu {
-    transition: all 0.3s ease;
-    transform-origin: top;
-    animation: dropdownAnimation  0.3s ease;
+    right: auto;
+    left: 0;
+    transition: none;
+    transform-origin: unset;
+    animation: none;
 }
 
 .dropdown-menu.show {
-    animation: dropdownAnimation 0.3s ease reverse;
+    animation: none;
+    left: -60px;
 }
 
 .burger-menu {
@@ -221,22 +226,3 @@
     }
 }
 
-@media (max-width: 768px) {
-    .sidebar {
-        width: 0;
-        margin-left: -280px;
-    }
-    .main-content {
-        margin-left: 0;
-    }
-    .burger-menu {
-        display: block;
-    }
-    .sidebar.active {
-        width: 280px;
-        margin-left: 0;
-    }
-    .main-content.active {
-        margin-left: 280px;
-    }
-}
