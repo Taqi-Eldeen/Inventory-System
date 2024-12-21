@@ -109,6 +109,45 @@ class Inventories extends Model {
             return false;
         }
     }
+    public function getInventoryForEmployee($employeeid) {
+        // Step 1: Fetch boid (Business Owner ID) based on employeeid
+        $getBoidSql = "SELECT boid FROM employee WHERE empid = ?";
+        $stmt = $this->db->prepare($getBoidSql);
+        $stmt->bind_param("i", $employeeid);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        // Step 2: If no employee found, return an error message
+        if ($result->num_rows === 0) {
+            echo "ERROR: No employee found with Employee ID $employeeid.";
+            return false;
+        }
+    
+        // Fetch the boid from the result
+        $row = $result->fetch_assoc();
+        $boid = $row['boid'];
+    
+        // Step 3: Fetch invid (Inventory ID) for the business owner (boid)
+        $getInvidSql = "SELECT invid FROM inventory WHERE boid = ?";
+        $stmt = $this->db->prepare($getInvidSql);
+        $stmt->bind_param("i", $boid);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        // Step 4: If no inventory found for the business owner, return an error
+        if ($result->num_rows === 0) {
+            echo "ERROR: No inventory found for Business Owner ID $boid.";
+            return false;
+        }
+    
+        // Fetch the invid
+        $row = $result->fetch_assoc();
+        $invid = $row['invid'];
+    
+        // Return the invid (Inventory ID) associated with the employee's business owner
+        return $invid;
+    }
+    
     
 }
 ?>

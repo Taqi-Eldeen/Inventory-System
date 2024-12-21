@@ -71,8 +71,11 @@ class Users extends Model {
             if ($type === 1 && $boid) { // 1 represents supplier
                 // Insert the supplier with the provided boid
                 $this->insertSupplier($user_id, $boid);
+            } elseif ($type === 2 && $boid) { // 2 represents employee
+                // Insert the employee with the provided boid
+                $this->insertEmployee($user_id, $boid);
             } else {
-                return "Error: Business Owner ID is required for supplier.";
+                return "Error: Business Owner ID is required for both supplier and employee.";
             }
     
             // Refresh the users array
@@ -83,6 +86,7 @@ class Users extends Model {
             return "ERROR: Could not execute the query. " . $this->db->error; // Return error message
         }
     }
+    
     function insertUser($username, $email, $password, $type) {
         // Sanitize inputs to prevent SQL injection
         $username = $this->db->real_escape_string($username);
@@ -179,7 +183,26 @@ class Users extends Model {
             echo "ERROR: Could not insert supplier. " . $this->db->error;
         }
     }
-
+    private function insertEmployee($user_id, $boid) {
+        if (empty($user_id) || empty($boid)) {
+            echo "Error: User ID and Business Owner ID are required to add an employee.";
+            return;
+        }
+    
+        // Sanitize inputs
+        $user_id = intval($user_id);
+        $boid = intval($boid);
+    
+        // Insert the user ID and boid into the employee table
+        $sql = "INSERT INTO employee (userid, boid) VALUES ($user_id, $boid)";
+    
+        if ($this->db->query($sql) === true) {
+            echo "Employee inserted successfully with User ID: $user_id and assigned to Business Owner ID: $boid.";
+        } else {
+            echo "ERROR: Could not insert employee. " . $this->db->error;
+        }
+    }
+    
     // Get the Business Owner ID for a user
     public function getBOid($userId) {
         $userId = intval($userId);
@@ -205,6 +228,19 @@ class Users extends Model {
             return null; 
         }
     }
+    public function getEmployeeId($userId) {
+        $userId = intval($userId);
+        $sql = "SELECT empid FROM employee WHERE userid = $userId";
+        $result = $this->db->query($sql);
+    
+        if ($result && $result->num_rows === 1) {
+            $row = $result->fetch_assoc();
+            return $row['empid']; 
+        } else {
+            return null; 
+        }
+    }
+    
     
     
 
@@ -258,6 +294,24 @@ public function getSuppliersByBOid($boid) {
 
     return $suppliers;
 }
+public function getEmployeeByBOid($boid) {
+    $boid = intval($boid);
+    $sql = "SELECT u.id, u.username, u.email FROM user u
+            JOIN employee e ON u.id = e.userid
+            WHERE e.boid = $boid";
+    
+    $result = $this->db->query($sql);
+
+    $employees = [];
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $employees[] = $row;
+        }
+    }
+
+    return $employees;
+}
+
 
 }
 ?>

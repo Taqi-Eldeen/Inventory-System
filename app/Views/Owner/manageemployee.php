@@ -7,7 +7,7 @@ $userController = new UsersController();
 
 // Handle form submission for adding new employee
 if (isset($_POST['adduser'])) {
-    $userController->insert();
+    $userController->insertBO();
 }
 
 // Handle form submission for update and delete actions

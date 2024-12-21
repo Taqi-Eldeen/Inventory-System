@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 20, 2024 at 09:10 PM
+-- Generation Time: Dec 21, 2024 at 05:33 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -32,12 +32,17 @@ CREATE TABLE `bowner` (
   `userid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `bowner`
+-- Table structure for table `employee`
 --
 
-INSERT INTO `bowner` (`boid`, `userid`) VALUES
-(19, 185);
+CREATE TABLE `employee` (
+  `empid` int(11) NOT NULL,
+  `userid` int(11) NOT NULL,
+  `boid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -49,13 +54,6 @@ CREATE TABLE `inventory` (
   `invid` int(11) NOT NULL,
   `boid` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `inventory`
---
-
-INSERT INTO `inventory` (`invid`, `boid`) VALUES
-(11, 19);
 
 -- --------------------------------------------------------
 
@@ -108,14 +106,6 @@ CREATE TABLE `product` (
   `invid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `product`
---
-
-INSERT INTO `product` (`id`, `name`, `price`, `qty`, `supplierid`, `invid`) VALUES
-(27, 'iphone 13', 1000, 10, 9, 11),
-(28, 'Iphone 15', 1000, 10, 8, 11);
-
 -- --------------------------------------------------------
 
 --
@@ -127,14 +117,6 @@ CREATE TABLE `supplier` (
   `userid` int(11) NOT NULL,
   `boid` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `supplier`
---
-
-INSERT INTO `supplier` (`supplierid`, `userid`, `boid`) VALUES
-(8, 186, 19),
-(9, 187, 19);
 
 -- --------------------------------------------------------
 
@@ -155,10 +137,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `email`, `password`, `type`) VALUES
-(185, 'User', 'User@gmail.com', '$2y$10$pxb/ZoA.iMIu26tmVpExv.N/7dq6k88XrfF6f94yOvO8Q6PodDtm2', 2),
-(186, 'Owner', 'Owner@gmail.com', '$2y$10$xIg/927p7XoJnGG/i5VyWO3OimGek9kFIO4NpLD645xP8V3fmKh8q', 3),
-(187, 'Admin', 'Admin@gmail.com', '$2y$10$8X7TJ2Hm7Ds73dCdvcagnugxJ8hsuQ3mNWxY1PRdJVSOv6TaYnINy', 0),
-(191, 'Supplier', 'Supplier@gmail.com', '$2y$10$Zdji/LefGG.sGASIRbmlBexK0eMsGZasmR/HmScxtPT4SuYNKkr9m', 1);
+(73, 'sameh', 'abu_lba@yahoo.com', '$2y$10$8ZqMb413QCU6bU4l33jDg.3tjHNnVFkkwrW1SlcNgfw4uhoNtLtOq', 0);
 
 --
 -- Indexes for dumped tables
@@ -169,6 +148,14 @@ INSERT INTO `user` (`id`, `username`, `email`, `password`, `type`) VALUES
 --
 ALTER TABLE `bowner`
   ADD PRIMARY KEY (`boid`),
+  ADD KEY `userid` (`userid`);
+
+--
+-- Indexes for table `employee`
+--
+ALTER TABLE `employee`
+  ADD PRIMARY KEY (`empid`),
+  ADD KEY `employee_ibfk_1` (`boid`),
   ADD KEY `userid` (`userid`);
 
 --
@@ -214,13 +201,19 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `bowner`
 --
 ALTER TABLE `bowner`
-  MODIFY `boid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `boid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT for table `employee`
+--
+ALTER TABLE `employee`
+  MODIFY `empid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `invid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `invid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `pages`
@@ -232,13 +225,13 @@ ALTER TABLE `pages`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `supplier`
 --
 ALTER TABLE `supplier`
-  MODIFY `supplierid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `supplierid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -255,6 +248,13 @@ ALTER TABLE `user`
 --
 ALTER TABLE `bowner`
   ADD CONSTRAINT `bowner_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `employee`
+--
+ALTER TABLE `employee`
+  ADD CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`boid`) REFERENCES `bowner` (`boid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `employee_ibfk_2` FOREIGN KEY (`userid`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `inventory`

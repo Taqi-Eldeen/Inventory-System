@@ -95,6 +95,9 @@ class InventoryController extends Controller {
             return json_encode(['success' => false, 'message' => 'Product ID is required.']);
         }
     }
+    public function getInventoryForEmployee($empid) {
+        return $this->inventoryModel->getInventoryForEmployee($empid);
+    }
     
 }
 ?>

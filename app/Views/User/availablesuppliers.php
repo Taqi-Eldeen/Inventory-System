@@ -1,71 +1,79 @@
+<?php
+require_once(dirname(__FILE__) . "/../../Controller/inventoryController.php");
+
+// Create an instance of the InventoryController
+$inventoryController = new InventoryController();
+
+$empid = $_SESSION['empid'];
+$inventoryController->getInventoryForEmployee($empid);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="editproduct.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Product</title>
+    <title>Business Owner Inventory</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.datatables.net/2.1.8/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.min.js"></script>
+    
+    <!-- Add JavaScript for confirmation dialog -->
+    <script>
+        function confirmDelete() {
+            return confirm("Are you sure you want to delete this product?");
+        }
+    </script>
 </head>
 <body>
-    <?php require 'sidebar.php'; ?>
+<?php include '../User/sidebar.php'; ?>
 
-    <div class="main-content"> 
-    <H2>Avaliable Suppliers</H2>
-        <table id="supplierTable" class="table table-striped" style="width:100%">
-            <thead>
-                <tr>
-                    <th>Supplier ID</th>
-                    <th>Supplier Name</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Tiger Nixon</td>
-                    <td><button class="btn btn-primary">Connect with this supplier</button></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Garrett Winters</td>
-                    <td><button class="btn btn-primary">Connect with this supplier</button></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Ashton Cox</td>
-                    <td><button class="btn btn-primary">Connect with this supplier</button></td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>Cedric Kelly</td>
-                    <td><button class="btn btn-primary">Connect with this supplier</button></td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>Airi Satou</td>
-                    <td><button class="btn btn-primary">Connect with this supplier</button></td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th>Supplier ID</th>
-                    <th>Supplier Name</th>
-                    <th>Action</th>
-                </tr>
-            </tfoot>
-        </table>
-    </div>
+<div class="main-content container mt-4">
+    <h2>Business Owner Inventory</h2>
 
-    <script>
-        $(document).ready(function() {
-            $('#supplierTable').DataTable();
-        });
-    </script>
+    <!-- Display success or error messages -->
+
+
+    <!-- Inventory Table -->
+    <table id="inventoryTable" class="table table-striped">
+        <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Supplier User ID</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php
+        if (isset($inventoryData['products']) && !empty($inventoryData['products'])) {
+            foreach ($inventoryData['products'] as $product) {
+                echo "<tr>
+                        <td>{$product['product_id']}</td>
+                        <td>{$product['product_name']}</td>
+                        <td>{$product['price']}</td>
+                        <td>{$product['qty']}</td>
+                        <td>{$product['supplier_name']}</td>
+                        <td>
+                            <form action='manageinventory.php' method='POST' style='display:inline;' onsubmit='return confirmDelete();'>
+                                <input type='hidden' name='product_id' value='{$product['product_id']}'>
+                                <button type='submit' name='remove_product' class='btn btn-danger btn-sm'>Remove</button>
+                            </form>
+                        </td>
+                    </tr>";
+            }
+        } else {
+            echo "<tr><td colspan='6'>No products found for this inventory.</td></tr>";
+        }
+        ?>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6" class="text-center">* Inventory details fetched for the business owner.</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
 
 </body>
 </html>
