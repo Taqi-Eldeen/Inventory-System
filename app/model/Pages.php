@@ -54,5 +54,5 @@ class Pages extends Model {
             return false;
         }
     }
-
+}
 ?>
