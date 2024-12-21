@@ -28,7 +28,7 @@ if (isset($_POST['login'])) {
     }
 
     $sql = "SELECT * FROM user WHERE username='$uname'";
-    $dbh = new DatabaseHandler();
+ $dbh = DatabaseHandler::getInstance();
     $result = $dbh->query($sql);
     
     if ($result->num_rows === 1) {

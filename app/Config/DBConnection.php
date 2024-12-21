@@ -5,20 +5,28 @@ require_once('config.php'); // Adjust the path as necessary
 // Check if the class already exists to avoid redeclaration
 if (!class_exists('DatabaseHandler')) {
     class DatabaseHandler {
+        private static $instance = null; // Static property to store the single instance
         private $servername;
         private $username;
         private $password;
         private $dbname;
         private $conn;
 
-        public function __construct() {
-            // Use the constants from config.php
+        // Private constructor to prevent direct instantiation
+        private function __construct() {
             $this->servername = DB_SERVER;
             $this->username = DB_USER;
             $this->password = DB_PASS;
             $this->dbname = DB_DATABASE;
-
             $this->connect();
+        }
+
+        // Public static method to get the instance
+        public static function getInstance() {
+            if (self::$instance === null) {
+                self::$instance = new self();
+            }
+            return self::$instance;
         }
 
         public function connect() {
@@ -78,7 +86,6 @@ if (!class_exists('DatabaseHandler')) {
         public function rollback() {
             $this->conn->rollback();
         }
-
         function __destruct() {
             $this->conn->close();
         }
