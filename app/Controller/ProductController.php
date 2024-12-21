@@ -36,10 +36,9 @@ class ProductsController extends Controller {
         $price = $_REQUEST['price'];
         $qty = $_REQUEST['qty'];
         $supplierid = $_REQUEST['supplierid'];
-        $invid = $_REQUEST['invid'];
 
-        if (!empty($id) && !empty($name) && !empty($price) && !empty($qty) && !empty($supplierid) && !empty($invid)) {
-            return $this->productsModel->updateProduct($id, $name, $price, $qty, $supplierid, $invid);
+        if (!empty($id) && !empty($name) && !empty($price) && !empty($qty) && !empty($supplierid)) {
+            return $this->productsModel->updateProduct($id, $name, $price, $qty, $supplierid);
         } else {
             echo "All fields are required to edit a product.";
             return false;
@@ -75,5 +74,22 @@ class ProductsController extends Controller {
     public function getInventoryForSupplier($supplierid) {
         return $this->productsModel->getInventoryForSupplier($supplierid);
     }
+
+    // Method to fetch products by supplier ID
+    public function ProductsBySupplier($supplierid) {
+        // Call the model's method to get products by supplier ID
+        $products = $this->productsModel->getProductsBySupplier($supplierid);
+
+        // Check if products are found
+        if ($products) {
+            return $products; // Return the list of products to be displayed in the view
+        } else {
+            return false; // Return false if no products found
+        }
+    }
+
+    // Other controller methods can go here
 }
+
+
 ?>

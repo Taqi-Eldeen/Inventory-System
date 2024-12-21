@@ -56,7 +56,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="form-group">
     <label for="role">Role:</label>
-    <select id="role" name="type" required> <!-- change 'role' to 'type' -->
+    <select id="role" name="type" required>
+         <option value="3">Business Owner</option> <!-- change 'role' to 'type' -->
         <option value="2">User</option>
         <option value="1">Supplier</option>
         <option value="0">Admin</option>

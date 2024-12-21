@@ -5,8 +5,6 @@ require_once(dirname(__FILE__) . "/../../Controller/ProductController.php");
     $supplierId = $_SESSION['supplierid'];
 
 
-
-
 require_once(dirname(__FILE__) . "/../../Controller/ProductController.php");
 $controller = new ProductsController();
 

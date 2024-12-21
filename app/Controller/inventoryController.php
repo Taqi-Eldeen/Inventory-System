@@ -96,8 +96,17 @@ class InventoryController extends Controller {
         }
     }
     public function getInventoryForEmployee($empid) {
-        return $this->inventoryModel->getInventoryForEmployee($empid);
+        $invid = $this->inventoryModel->getInventoryForEmployee($empid);
+        
+        if ($invid) {
+            // Get products for this inventory
+            $products = $this->inventoryModel->getProductsByInventoryID($invid);
+            return $products;
+        } else {
+            return null;
+        }
     }
+    
     
 }
 ?>

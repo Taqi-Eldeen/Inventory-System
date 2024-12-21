@@ -79,16 +79,15 @@ class Products extends Model {
     }
 
     // Update an existing product
-    function updateProduct($id, $name, $price, $qty, $supplierid, $invid) {
+    function updateProduct($id, $name, $price, $qty, $supplierid) {
         $sql = "UPDATE product SET 
                     name = ?, 
                     price = ?, 
                     qty = ?, 
-                    supplierid = ?,
-                    invid = ?
+                    supplierid = ?
                 WHERE id = ?";
         $stmt = $this->db->prepare($sql);
-        $stmt->bind_param("siiii", $name, $price, $qty, $supplierid, $invid, $id);
+        $stmt->bind_param("siiii", $name, $price, $qty, $supplierid, $id);
 
         if ($stmt->execute()) {
             $this->fillArray(); // Refresh the products array
@@ -138,5 +137,27 @@ class Products extends Model {
         // Return the invid (Inventory ID) associated with the supplier
         return $invid;
     }
+    // Function to get products by supplier ID
+    public function getProductsBySupplier($supplierid) {
+        // Use a direct query to fetch products associated with the supplier
+        $sql = "SELECT * FROM product WHERE supplierid = $supplierid"; // Direct query using the supplier ID
+    
+        // Execute the query
+        $result = $this->db->query($sql);
+    
+        // Check if there are any products associated with the supplier
+        if ($result && $result->num_rows > 0) {
+            $products = [];
+            while ($row = $result->fetch_assoc()) {
+                // Simply store each row as an array in the $products array
+                $products[] = $row; // Add the product row to the products array
+            }
+            return $products; // Return the array of product data
+        } else {
+            return false; // No products found for the given supplier ID
+        }
+    }
+    
+
 }
 ?>
