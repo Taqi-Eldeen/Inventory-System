@@ -11,7 +11,7 @@ class Inventories extends Model {
         $this->fillArray();
     }
 
-    // Method to read all inventories from the database
+
     public function readInventories() {
         $sql = "SELECT * FROM inventory";
         $result = $this->db->query($sql);
@@ -27,7 +27,7 @@ class Inventories extends Model {
             while ($row = $result->fetch_assoc()) {
                 // Create Inventory object
                 $inventory = new Inventory($row["invid"], $row["boid"]);
-                // Add the inventory to the inventories array
+ 
                 $this->inventories[] = $inventory;
             }
         }

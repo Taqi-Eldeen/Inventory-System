@@ -32,7 +32,6 @@ $allUsers = $controller->getUsers();
 <?php include '../User/sidebar.php'; ?>
 
 <div class="main-content">
-    <h2>Manage Users</h2>
     
     <!-- Users Table -->
     <table class="table table-striped">

@@ -1,86 +1,111 @@
+<?php
+require_once(dirname(__FILE__) . "/../../Controller/reportController.php");
+
+// Initialize the controller
+$reportsController = new ReportsController();
+
+// Get the employee ID from the session
+$empid = isset($_SESSION['empid']) ? $_SESSION['empid'] : '';
+
+// Fetch reports for the logged-in employee
+$reports = [];
+if (!empty($empid)) {
+    $reports = $reportsController->getReportsByEmployee($empid);
+}
+
+// Handle form submission for inserting a new report
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $reportsController->insert();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tech E-Commerce Store</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports Table</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css">
+    <link rel="stylesheet" href="logs.css">
 </head>
 <body>
+<?php include '../User/sidebar.php'; ?>
 
+<div class="main-content">
+    <h2>Your Reports</h2>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container">
-    <a class="navbar-brand" href="#">TechStore</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Products</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contact</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#"><i class="bi bi-cart"></i> Cart</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
-
-<div class="container my-5">
-  <div class="row text-center">
-    <h1 class="mb-4">Tech Products</h1>
-    
-   
-    <div class="col-md-4 mb-4">
-      <div class="card">
-        <img src="https://via.placeholder.com/150" class="card-img-top" alt="Product Image">
-        <div class="card-body">
-          <h5 class="card-title">Smartphone XYZ</h5>
-          <p class="card-text">$499.00</p>
-          <a href="#" class="btn btn-primary">Buy Now</a>
-        </div>
-      </div>
-    </div>
-    
-   
-    <div class="col-md-4 mb-4">
-      <div class="card">
-        <img src="https://via.placeholder.com/150" class="card-img-top" alt="Product Image">
-        <div class="card-body">
-          <h5 class="card-title">Laptop ABC</h5>
-          <p class="card-text">$999.00</p>
-          <a href="#" class="btn btn-primary">Buy Now</a>
-        </div>
-      </div>
-    </div>
-    
-
-    <div class="col-md-4 mb-4">
-      <div class="card">
-        <img src="https://via.placeholder.com/150" class="card-img-top" alt="Product Image">
-        <div class="card-body">
-          <h5 class="card-title">Wireless Headphones</h5>
-          <p class="card-text">$199.00</p>
-          <a href="#" class="btn btn-primary">Buy Now</a>
-        </div>
-      </div>
-    </div>
-
-  </div>
+    <!-- Reports Table -->
+    <table id="example" class="table table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>Report ID</th>
+                <th>Message</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if (!empty($reports)): ?>
+                <?php foreach ($reports as $report): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($report['repid']); ?></td>
+                        <td><?php echo htmlspecialchars($report['mesg']); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="2" style="text-align: center;">No reports available.</td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2" style="text-align:center;">
+                    <button id="generateReport" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#generateModal">
+                        Generate Report
+                    </button>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
 </div>
 
+<!-- Modal for Generate Report -->
+<div class="modal fade" id="generateModal" tabindex="-1" aria-labelledby="generateModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="generateModalLabel">Generate Report</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Report Submission Form inside the Modal -->
+                <form method="POST" action="" class="mb-4">
+                    <div class="mb-3">
+                        <label for="empid" class="form-label">Employee ID</label>
+                        <!-- Automatically fill in the Employee ID from the session -->
+                        <input type="text" id="empid" name="empid" class="form-control" value="<?php echo htmlspecialchars($empid); ?>" readonly required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="mesg" class="form-label">Message</label>
+                        <textarea id="mesg" name="mesg" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success">Submit Report</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
 
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+});
+</script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

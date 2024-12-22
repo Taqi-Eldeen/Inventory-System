@@ -122,13 +122,7 @@
             </div>
         </section>
 
-        <section class="reports-section">
-            <h2>Sales Reports</h2>
-            <div class="report-summary">
-                <p>Generate detailed reports on sales trends, inventory status, and more.</p>
-                <button class="btn btn-success rounded-button">Generate Report</button>
-            </div>
-        </section>
+        
     </div>
 </div>
 

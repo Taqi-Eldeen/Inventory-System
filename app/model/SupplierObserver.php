@@ -20,12 +20,11 @@ class SupplierObserver implements Observer {
                 <li>Quantity: {$product['qty']}</li>
             </ul>
             <p>Thank you.</p>
-            <p>Best regards,<br>Your Company Name</p>
+            <p>Best regards,<br>
         ";
 
         // Use EmailService to send the email
         $response = $this->emailService->sendEmail($supplierEmail, $subject, $body);
-        echo $response['message'];
     }
 }
 

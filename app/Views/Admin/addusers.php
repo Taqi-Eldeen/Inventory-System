@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <?php include '../User/sidebar.php'; ?>
 
 <div class="main-content"> 
-    <h2>Add Users</h2>
+
     <div class="container">
         <h1>Add New User</h1>
         <!-- Display success or error message based on the form submission -->
