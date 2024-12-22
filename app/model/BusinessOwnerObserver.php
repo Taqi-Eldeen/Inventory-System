@@ -6,22 +6,28 @@ require_once('Inventory.php'); // Include the Inventory class if needed
 
 // BusinessOwnerObserver class
  class BusinessOwnerObserver implements Observer {
-    public function update($subject, $supplierEmail, $product) {
-        // Call the function to send the product added notification
-        $this->sendEmailNotification($businessOwnerEmail);
+    private $emailService;
+
+    public function __construct() {
+        $this->emailService = new EmailService(); // Instantiate EmailService
     }
 
-    private function sendEmailNotification($businessOwnerEmail) {
-        $subject = 'Product Added Notification';
-        $message = 'Dear Business Owner,<br><br>A product has been added to your inventory.<br><br>Best regards,<br>Your Company Name';
-        $headers = 'MIME-Version: 1.0' . "\r\n";
-        $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+    public function update($subject, $boEmail, $product) {
+        $subject = 'Product Removed from Inventory';
+        $body = "
+            <p>Dear Supplier,</p>
+            <p>The following product has besadasdadasdasdasdasen removed from the inventory:</p>
+            <ul>
+                <li>Product ID: {$product['id']}</li>
+                <li>Product Name: {$product['name']}</li>
+                <li>Quantity: {$product['qty']}</li>
+            </ul>
+            <p>Thank you.</p>
+            <p>Best regards,<br>
+        ";
 
-        if (mail($businessOwnerEmail, $subject, $message, $headers)) {
-            echo 'Notification sent to business owner successfully.';
-        } else {
-            echo 'Failed to send email to business owner.';
-        }
+        // Use EmailService to send the email
+        $response = $this->emailService->sendEmail($boEmail, $subject, $body);
     }
 }
 ?>

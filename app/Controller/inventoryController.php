@@ -39,15 +39,29 @@ class InventoryController extends Controller implements Subject {
     public function removeProduct($productId) {
         if (!empty($productId)) {
             $product = $this->inventoryModel->getProductById($productId);
+            
             if ($product) {
+                // Get the supplier's email using the supplier ID
                 $supplierEmail = $this->inventoryModel->getSupplierEmailById($product['supplierid']);
+                
+                // Get the business owner's email using the inventory ID
+                $boEmail = $this->inventoryModel->getBownerEmailById($product['invid']);
+    
+                // Remove the product from the inventory
                 $success = $this->inventoryModel->deleteProductByIdInInventory($productId);
     
                 if ($success) {
+                    // Notify the supplier if the email is available
                     if ($supplierEmail) {
-                        $this->notify($supplierEmail, $product); // Notify observers with product data
+                        $this->notify($supplierEmail, $product); // Notify the supplier
                     }
-                    return json_encode(['success' => true, 'message' => 'Product removed successfully and supplier notified.']);
+    
+                    // Notify the business owner if the email is available
+                    if ($boEmail) {
+                        $this->notify($boEmail, $product); // Notify the business owner
+                    }
+    
+                    return json_encode(['success' => true, 'message' => 'Product removed successfully, supplier and business owner notified.']);
                 } else {
                     return json_encode(['success' => false, 'message' => 'Failed to remove product.']);
                 }
@@ -58,6 +72,7 @@ class InventoryController extends Controller implements Subject {
             return json_encode(['success' => false, 'message' => 'Product ID is required.']);
         }
     }
+    
     
 
     // Fetch or create inventory for a business owner
@@ -131,11 +146,17 @@ class InventoryController extends Controller implements Subject {
                 $inventoryId = $productDetails['invid'];
                 $businessOwnerEmail = $this->inventoryModel->getBusinessOwnerEmailByInventoryId($inventoryId);
     
-                // Attach BusinessOwnerObserver to notify business owner about the new product
-                $this->attach(new BusinessOwnerObserver());
-                $this->notify($businessOwnerEmail, $productDetails);
+                // If the product was added successfully, create the product data and notify observers
+                if ($businessOwnerEmail) {
+                    // Attach BusinessOwnerObserver to notify business owner about the new product
+                    $this->attach(new BusinessOwnerObserver());
     
-                return json_encode(['success' => true, 'message' => 'Product added successfully.']);
+                    // Notify the observers (BusinessOwner) with product details
+                    $this->notify($businessOwnerEmail, $productDetails);
+    
+                }
+    
+                return json_encode(['success' => true, 'message' => 'Product added successfully and business owner notified.']);
             } else {
                 return json_encode(['success' => false, 'message' => 'Failed to add product.']);
             }
@@ -143,6 +164,7 @@ class InventoryController extends Controller implements Subject {
             return json_encode(['success' => false, 'message' => 'Product details are required.']);
         }
     }
+    
 
     // Fetch inventory information for a specific employee
     public function getInventoryForEmployee($empid) {

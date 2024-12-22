@@ -2,10 +2,8 @@
 
 require_once(dirname(__FILE__) . "/../../Controller/ProductController.php");
 
-    $supplierId = $_SESSION['supplierid'];
+$supplierId = $_SESSION['supplierid'];
 
-
-require_once(dirname(__FILE__) . "/../../Controller/ProductController.php");
 $controller = new ProductsController();
 
 // Handle form submissions
@@ -19,7 +17,6 @@ if (isset($_POST['delete_product'])) {
 
 // Fetch all products for the current supplier
 $products = $controller->ProductsBySupplier($supplierId);
-
 
 ?>
 
@@ -37,43 +34,50 @@ $products = $controller->ProductsBySupplier($supplierId);
 
 <div class="main-content">
     <h2>Manage Products</h2>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Product Name</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($products as $product): ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($product['name']); ?></td>
-                    <td><?php echo htmlspecialchars($product['price']); ?></td>
-                    <td><?php echo htmlspecialchars($product['qty']); ?></td>
-                    <td>
-                        <!-- Edit Button -->
-                        <button class="btn btn-warning" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#editModal"
-                            data-id="<?php echo $product['id']; ?>"
-                            data-name="<?php echo htmlspecialchars($product['name']); ?>"
-                            data-price="<?php echo htmlspecialchars($product['price']); ?>"
-                            data-qty="<?php echo htmlspecialchars($product['qty']); ?>">
-                            Edit
-                        </button>
 
-                        <!-- Delete Button -->
-                        <form method="POST" style="display:inline;">
-                            <input type="hidden" name="delete_id" value="<?php echo $product['id']; ?>">
-                            <button type="submit" name="delete_product" class="btn btn-danger">Delete</button>
-                        </form>
-                    </td>
+    <?php if (empty($products)): ?>
+        <div class="alert alert-info" role="alert">
+            No products available.
+        </div>
+    <?php else: ?>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Actions</th>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php foreach ($products as $product): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($product['name']); ?></td>
+                        <td><?php echo htmlspecialchars($product['price']); ?></td>
+                        <td><?php echo htmlspecialchars($product['qty']); ?></td>
+                        <td>
+                            <!-- Edit Button -->
+                            <button class="btn btn-warning" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#editModal"
+                                data-id="<?php echo $product['id']; ?>"
+                                data-name="<?php echo htmlspecialchars($product['name']); ?>"
+                                data-price="<?php echo htmlspecialchars($product['price']); ?>"
+                                data-qty="<?php echo htmlspecialchars($product['qty']); ?>">
+                                Edit
+                            </button>
+
+                            <!-- Delete Button -->
+                            <form method="POST" style="display:inline;">
+                                <input type="hidden" name="delete_id" value="<?php echo $product['id']; ?>">
+                                <button type="submit" name="delete_product" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php endif; ?>
 </div>
 
 <!-- Modal for Edit Product -->

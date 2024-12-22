@@ -2,6 +2,7 @@
 require_once(dirname(__FILE__) . '/../model/Products.php');
 require_once(dirname(__FILE__) . '/../Controller/Controller.php');
 
+
 class ProductsController extends Controller {
     private $productsModel;
 

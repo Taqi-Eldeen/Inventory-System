@@ -11,7 +11,7 @@ class Inventories extends Model {
         $this->fillArray();
     }
 
-
+    // Method to read all inventories from the database
     public function readInventories() {
         $sql = "SELECT * FROM inventory";
         $result = $this->db->query($sql);
@@ -27,7 +27,7 @@ class Inventories extends Model {
             while ($row = $result->fetch_assoc()) {
                 // Create Inventory object
                 $inventory = new Inventory($row["invid"], $row["boid"]);
- 
+                // Add the inventory to the inventories array
                 $this->inventories[] = $inventory;
             }
         }
@@ -63,6 +63,41 @@ class Inventories extends Model {
     
         return null; // Return null if no supplier is found
     }
+    public function getBownerEmailById($invid) {
+        // Step 1: Get the boid from the inventory table using the invid
+        $query = "SELECT boid FROM inventory WHERE invid = ?";
+        $stmt = $this->db->prepare($query); // Assuming $this->db is a MySQLi instance
+        $stmt->bind_param('i', $invid); // Bind the inventory ID as an integer
+        $stmt->execute(); // Execute the query
+        $result = $stmt->get_result(); // Get the result set
+        $inventory = $result->fetch_assoc(); // Fetch the inventory record as an associative array
+    
+        if ($inventory) {
+            $boid = $inventory['boid']; // Get boid from the inventory record
+            
+            // Step 2: Use the boid to get the user ID of the business owner from bowner table
+            $query = "SELECT userid FROM bowner WHERE boid = ?";
+            $stmt = $this->db->prepare($query); // Prepare the query
+            $stmt->bind_param('i', $boid); // Bind boid
+            $stmt->execute(); // Execute the query
+            $result = $stmt->get_result(); // Get the result set
+            $owner = $result->fetch_assoc(); // Fetch the supplier as an associative array
+    
+            if ($owner) {
+                // Step 3: Fetch the email from the users table
+                $query = "SELECT email FROM user WHERE id = ?";
+                $stmt = $this->db->prepare($query); // Prepare the query
+                $stmt->bind_param('i', $owner['userid']); // Bind the user ID
+                $stmt->execute(); // Execute the query
+                $result = $stmt->get_result(); // Get the result set
+                $user = $result->fetch_assoc(); // Fetch the user as an associative array
+                return $user ? $user['email'] : null; // Return the email or null
+            }
+        }
+        
+        return null; // Return null if no business owner or inventory record is found
+    }
+    
     
 
     public function getBusinessOwnerEmailByInventoryId($inventoryId) {

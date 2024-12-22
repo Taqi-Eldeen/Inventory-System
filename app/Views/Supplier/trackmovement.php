@@ -16,7 +16,7 @@ if (!empty($supplierId)) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accept'])) {
     $orderId = $_POST['orderid'];
     if ($ordersController->updateOrderStatus($orderId, 'Completed')) {
-
+        echo "<script>alert('Order status updated to Completed.');</script>";
     } else {
         echo "<script>alert('Failed to update order status.');</script>";
     }
