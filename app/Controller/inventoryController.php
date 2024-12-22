@@ -1,19 +1,66 @@
 <?php
 require_once(dirname(__FILE__) . '/../model/Inventories.php');
 require_once(dirname(__FILE__) . '/../Controller/Controller.php');
+require_once(dirname(__FILE__) . '/../model/SupplierObserver.php'); // Include SupplierObserver
+require_once(dirname(__FILE__) . '/../model/Subject.php');
 
-class InventoryController extends Controller {
+class InventoryController extends Controller implements Subject {
     private $inventoryModel;
+    private $observers = []; // Array to hold observers
 
     public function __construct() {
         $this->inventoryModel = new Inventories();
         parent::__construct($this->inventoryModel);
     }
+
+    // Attach an observer
+    public function attach(Observer $observer) {
+        $this->observers[] = $observer;
+    }
+
+    // Detach an observer
+    public function detach(Observer $observer) {
+        $index = array_search($observer, $this->observers, true);
+        if ($index !== false) {
+            unset($this->observers[$index]);
+        }
+    }
+
+    // Notify all observers
+    public function notify($supplierEmail, $product) {
+        foreach ($this->observers as $observer) {
+            $observer->update($this, $supplierEmail, $product);
+        }
+    }
     
-    /**
-     * This method fetches the inventory for the business owner (boid).
-     * If it doesn't exist, it creates a new inventory.
-     */
+    
+
+    // Remove product and notify observers
+    public function removeProduct($productId) {
+        if (!empty($productId)) {
+            $product = $this->inventoryModel->getProductById($productId);
+            if ($product) {
+                $supplierEmail = $this->inventoryModel->getSupplierEmailById($product['supplierid']);
+                $success = $this->inventoryModel->deleteProductByIdInInventory($productId);
+    
+                if ($success) {
+                    if ($supplierEmail) {
+                        $this->notify($supplierEmail, $product); // Notify observers with product data
+                    }
+                    return json_encode(['success' => true, 'message' => 'Product removed successfully and supplier notified.']);
+                } else {
+                    return json_encode(['success' => false, 'message' => 'Failed to remove product.']);
+                }
+            } else {
+                return json_encode(['success' => false, 'message' => 'Product not found.']);
+            }
+        } else {
+            return json_encode(['success' => false, 'message' => 'Product ID is required.']);
+        }
+    }
+    
+
+    // Fetch or create inventory for a business owner
     public function getOrCreateInventory($boid) {
         if (!empty($boid)) {
             $inventory = $this->inventoryModel->getInventoryByBOID($boid);
@@ -33,22 +80,14 @@ class InventoryController extends Controller {
         }
         return null;
     }
-    
-    
-    
-    
 
-    /**
-     * Fetches all inventories.
-     */
+    // Fetch all inventories
     public function getInventories() {
         $inventories = $this->inventoryModel->fillArray();
         return json_encode($inventories);
     }
 
-    /**
-     * Fetches a specific inventory by its ID.
-     */
+    // Fetch a specific inventory by its ID
     public function getInventoryByID($invid) {
         if (!empty($invid)) {
             $inventory = $this->inventoryModel->getInventoryByID($invid);
@@ -66,9 +105,7 @@ class InventoryController extends Controller {
         }
     }
 
-    /**
-     * Deletes an inventory by its ID.
-     */
+    // Delete an inventory by its ID
     public function delete($invid) {
         if (!empty($invid)) {
             $success = $this->inventoryModel->deleteInventory($invid);
@@ -82,19 +119,32 @@ class InventoryController extends Controller {
             echo json_encode(['success' => false, 'message' => 'Inventory ID is required.']);
         }
     }
-    public function removeProduct($productId) {
-        if (!empty($productId)) {
-            $success = $this->inventoryModel->deleteProductByIdInInventory($productId);
+
+    // Add a new product to inventory and notify the business owner
+    public function addProduct($productDetails) {
+        if (!empty($productDetails)) {
+            // Insert product into inventory
+            $success = $this->inventoryModel->insertProduct($productDetails);
     
             if ($success) {
-                return json_encode(['success' => true, 'message' => 'Product removed successfully.']);
+                // Fetch business owner's email
+                $inventoryId = $productDetails['invid'];
+                $businessOwnerEmail = $this->inventoryModel->getBusinessOwnerEmailByInventoryId($inventoryId);
+    
+                // Attach BusinessOwnerObserver to notify business owner about the new product
+                $this->attach(new BusinessOwnerObserver());
+                $this->notify($businessOwnerEmail, $productDetails);
+    
+                return json_encode(['success' => true, 'message' => 'Product added successfully.']);
             } else {
-                return json_encode(['success' => false, 'message' => 'Failed to remove product.']);
+                return json_encode(['success' => false, 'message' => 'Failed to add product.']);
             }
         } else {
-            return json_encode(['success' => false, 'message' => 'Product ID is required.']);
+            return json_encode(['success' => false, 'message' => 'Product details are required.']);
         }
     }
+
+    // Fetch inventory information for a specific employee
     public function getInventoryForEmployee($empid) {
         $invid = $this->inventoryModel->getInventoryForEmployee($empid);
         
@@ -106,7 +156,5 @@ class InventoryController extends Controller {
             return null;
         }
     }
-    
-    
 }
 ?>

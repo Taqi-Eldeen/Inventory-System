@@ -32,6 +32,81 @@ class Inventories extends Model {
             }
         }
     }
+    public function getProductById($productId) {
+        $query = "SELECT * FROM product WHERE id = ?";
+        $stmt = $this->db->prepare($query); // Assuming $this->db is a MySQLi instance
+        $stmt->bind_param('i', $productId); // Bind the product ID as an integer
+        $stmt->execute(); // Execute the query
+        $result = $stmt->get_result(); // Get the result set
+        return $result->fetch_assoc(); // Fetch a single row as an associative array
+    }
+    
+    public function getSupplierEmailById($supplierId) {
+        // Get the user ID of the supplier
+        $query = "SELECT userid FROM supplier WHERE supplierid = ?";
+        $stmt = $this->db->prepare($query); // Assuming $this->db is a MySQLi instance
+        $stmt->bind_param('i', $supplierId); // Bind the supplier ID as an integer
+        $stmt->execute(); // Execute the query
+        $result = $stmt->get_result(); // Get the result set
+        $supplier = $result->fetch_assoc(); // Fetch the supplier as an associative array
+    
+        if ($supplier) {
+            // Fetch the email from the users table
+            $query = "SELECT email FROM user WHERE id = ?";
+            $stmt = $this->db->prepare($query);
+            $stmt->bind_param('i', $supplier['userid']); // Bind the user ID
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $user = $result->fetch_assoc(); // Fetch the user as an associative array
+            return $user ? $user['email'] : null;
+        }
+    
+        return null; // Return null if no supplier is found
+    }
+    
+
+    public function getBusinessOwnerEmailByInventoryId($inventoryId) {
+        // Get the user ID of the business owner
+        $query = "
+            SELECT bo.userid 
+            FROM inventories AS inv
+            JOIN business_owners AS bo ON inv.boid = bo.id
+            WHERE inv.invid = ?";
+        $stmt = $this->db->prepare($query); // Prepare the query
+        $stmt->bind_param('i', $inventoryId); // Bind the inventory ID as an integer
+        $stmt->execute(); // Execute the query
+        $result = $stmt->get_result(); // Get the result set
+        $businessOwner = $result->fetch_assoc(); // Fetch the business owner as an associative array
+    
+        if ($businessOwner) {
+            // Fetch the email from the users table
+            $query = "SELECT email FROM user WHERE id = ?";
+            $stmt = $this->db->prepare($query);
+            $stmt->bind_param('i', $businessOwner['userid']); // Bind the user ID
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $user = $result->fetch_assoc(); // Fetch the user as an associative array
+            return $user ? $user['email'] : null;
+        }
+    
+        return null; // Return null if no business owner is found
+    }
+    
+
+   
+
+    public function insertProduct($productDetails) {
+        $query = "INSERT INTO products (name, price, qty, supplierid, invid) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $this->db->prepare($query);
+        return $stmt->execute([
+            $productDetails['name'],
+            $productDetails['price'],
+            $productDetails['qty'],
+            $productDetails['supplierid'],
+            $productDetails['invid']
+        ]);
+    }
+
 
     // Method to insert inventory for a business owner (boid)
     public function insertInventory($boid) {

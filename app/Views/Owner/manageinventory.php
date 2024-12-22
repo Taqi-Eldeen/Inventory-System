@@ -1,8 +1,13 @@
 <?php
 require_once(dirname(__FILE__) . "/../../Controller/inventoryController.php");
+require_once(dirname(__FILE__) . '/../../model/SupplierObserver.php');
 
 // Create an instance of the InventoryController
 $inventoryController = new InventoryController();
+
+// Create and attach the SupplierObserver
+$supplierObserver = new SupplierObserver();
+$inventoryController->attach($supplierObserver);
 
 $message = ""; // Initialize the message variable
 $inventoryData = null; // Initialize the inventory data variable
