@@ -1,0 +1,23 @@
+body {
+    background-color: #d8dede !important; 
+}
+
+.container {
+    background-color: #ffffff; 
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    color: #333;
+}
+
+.table-responsive {
+    margin-top: 20px;
+}
+
+.btn {
+    margin-right: 5px; 
+}
+

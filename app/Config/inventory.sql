@@ -110,13 +110,13 @@ INSERT INTO `pages` (`id`, `page_name`, `role_id`, `title`) VALUES
 (8, 'supplierdashboard.php', 1, 'Supplier Dashboard'),
 (9, 'addproduct.php', 1, 'Add Product'),
 (10, 'editproduct.php', 1, 'Edit Product'),
-(11, 'trackmovement.php', 1, 'Owner\'s Orders'),
+(11, 'trackmovement.php', 1, 'Owners Orders'),
 (12, 'dashboard.php', 2, 'User Dashboard'),
 (13, 'availablesuppliers.php', 2, 'Business Inventory'),
 (14, 'supplierView.php', 2, 'Supplier View'),
 (15, 'manageemployee.php', 3, 'Manage Employee'),
 (17, 'shopDemp.php', 2, 'Reports'),
-(18, 'reportsOwner.php\r\n', 3, 'Employees Reports'),
+(18, 'reportsOwner.php', 3, 'Employees Reports'),
 (19, 'orderproducts.php', 3, 'Order Products');
 
 -- --------------------------------------------------------

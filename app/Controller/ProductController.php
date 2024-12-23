@@ -89,6 +89,17 @@ class ProductsController extends Controller {
         }
     }
 
+    public function ProductsByBusinessOwner($boid) {
+        
+        $products = $this->productsModel->getProductsByBusinessOwner($boid);
+
+        
+        if ($products) {
+            return $products; 
+        } else {
+            return false; 
+        }
+    }
     
 }
 

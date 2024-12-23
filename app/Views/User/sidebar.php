@@ -53,19 +53,17 @@ $pagesClass = new Pages($userType);
                                     echo "Supplier Dashboard";
                                     break;
                                 default:
-                                    echo "User Dashboard";
+                                    echo "Employee Dashboard";
                             }
                             ?>
                         </span>
                     </a>
                     <div class="dropdown">
                         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="images/user.jpg" alt="" width="32" height="32" class="rounded-circle me-2">
+                            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="" width="32" height="32" class="rounded-circle me-2">
                             <strong><?php echo htmlspecialchars($_SESSION['username']); ?></strong>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                            <li><a class="dropdown-item" href="profile.php">Profile</a></li>
-                            <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="../../../public/loginhome.php"><i class="fa-solid fa-right-from-bracket"></i> Sign out</a></li>
                         </ul>
                     </div>

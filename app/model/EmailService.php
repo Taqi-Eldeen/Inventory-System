@@ -34,7 +34,6 @@ class EmailService {
             $this->mailer->Body = $body;
             $this->mailer->isHTML(true);
             $this->mailer->send();
-            echo 'Email sent successfully.';
         } catch (Exception $e) {
             echo 'Email failed to send: ' . $this->mailer->ErrorInfo;
         }

@@ -178,7 +178,6 @@ class Users extends Model {
         $sql = "INSERT INTO supplier (userid, boid) VALUES ($user_id, $boid)";
 
         if ($this->db->query($sql) === true) {
-            echo "Supplier inserted successfully with User ID: $user_id and assigned to Business Owner ID: $boid.";
         } else {
             echo "ERROR: Could not insert supplier. " . $this->db->error;
         }
@@ -197,7 +196,6 @@ class Users extends Model {
         $sql = "INSERT INTO employee (userid, boid) VALUES ($user_id, $boid)";
     
         if ($this->db->query($sql) === true) {
-            echo "Employee inserted successfully with User ID: $user_id and assigned to Business Owner ID: $boid.";
         } else {
             echo "ERROR: Could not insert employee. " . $this->db->error;
         }

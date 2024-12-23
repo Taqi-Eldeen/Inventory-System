@@ -33,7 +33,7 @@ $products = $controller->ProductsBySupplier($supplierId);
 <?php include '../User/sidebar.php'; ?>
 
 <div class="main-content">
-    <h2>Manage Products</h2>
+    <h2>Edit Products</h2>
 
     <?php if (empty($products)): ?>
         <div class="alert alert-info" role="alert">

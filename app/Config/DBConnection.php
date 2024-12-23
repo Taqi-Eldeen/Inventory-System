@@ -6,7 +6,7 @@ require_once('config.php');
 if (!class_exists('DatabaseHandler')) {
     class DatabaseHandler {
         private static $instance = null; 
-        public $servername;
+        private $servername;
         private $username;
         private $password;
         private $dbname;

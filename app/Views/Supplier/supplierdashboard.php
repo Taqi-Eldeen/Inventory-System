@@ -1,238 +1,178 @@
-<?php include '../User/sidebar.php'; ?>
+<?php
+require_once(dirname(__FILE__) . "/../../Controller/UserController.php");
+require_once(dirname(__FILE__) . "/../../Controller/ProductController.php");
+require_once(dirname(__FILE__) . "/../User/sidebar.php");
+
+$userController = new UsersController();
+
+$boid = $_SESSION['boid'];
+$employees = $userController->getEmployeeByBOid($boid);
+$employee_count = count($employees);
+
+$suppliers = $userController->getSuppliersByBOid($boid);
+$supplier_count = count($suppliers);
+
+$productController = new ProductsController();
+$products = $productController->ProductsByBusinessOwner($boid);
+if (!is_array($products))
+    $products = [];
+$productsSlices = array_slice($products, 0, 4);
+?>
 <html>
     <head>
-        <link rel="stylesheet" href="supplierdashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css">
-    <link rel="stylesheet" href="../../../public/css/supplierdashboard.css">
+    <link rel="stylesheet" href="../../../public/css/dashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
     <body>
         <div class="main-content">
-            <H2>Dashboard</H2>
 
-            <ul class="box-info">
-                <li>
-                  
-                <i class="fa-solid fa-user"></i>
-
-                    
-                    <span class="text">
-                        <h3>2450</h3>
-                        <p>Users</p>
-                    </span>
-                </li>
-                <li>
-                  
-
-                        <i class="fa-solid fa-truck-fast"></i>
-                   
-                    <span class="text">
-                        <h3>3</h3>
-                        <p>Suppliers</p>
-                    </span>
-                </li>
-                <li>
-                    
-
-                        <i class="fa-solid fa-box-open"></i>
-                   
-                    <span class="text">
-                        <h3>654</h3>
-                        <p>Items</p>
-                    </span>
-                </li>
-            </ul>
-            <div class=" chart-container" >
-                <div class="sales-chart-cont">
-                    
-                    <canvas id="sales-chart" ></canvas>
+        <div class="container-xs">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Supplier</h5>
+                            <p class="card-text">
+                                <i class="fa-solid fa-truck-fast"></i>
+                                <?php echo $supplier_count ?> 
+                            </p>
+                        </div>
+                    </div>
                 </div>
-                <div class="stock-chart-cont">
+                <div class="col-sm-6 ">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Employees</h5>
+                            <p class="card-text">
+                                <i class="fa-solid fa-people-carry"></i>
+                                <?php echo $employee_count ?> 
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row my-4">
+                <div class="col">
+                    <div class="card p-4">
+                        <h3 class="card-title">Recent Added Products</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                <th scope="col">ID </th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach($productsSlices as $product) : ?>
+                                <thead>
+                                    <tr>
+                                    <th scope="row"><?php echo $product->getID() ?> </th>
+                                    <td><?php echo $product->getName() ?> </th>
+                                    <td>$<?php echo $product->getPrice() ?> </th>
+                                    <td><?php echo $product->getQty() ?> </th>
+                                    </tr>
+                                </thead>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
+        </div>
+
+        <div class="row" >
+            <div class="col-md-6">
+                <div class=" stock-chart-cont">
                     <canvas id="stock-chart" ></canvas>
                 </div>
+            </div>
+            <div class="col-md-6">
                 <div class="pie-chart-cont">
                     <canvas id="pie-chart" ></canvas>
                 </div>
-
-                
-                
             </div>
-            <div class="Recent-5-Table" >
-            <div class="table-data"  >
-            <div class="order">
-                <div class="head">
-                    <h3>Recent 5 Movements</h3>
-                </div>
-                <table id="productsTable">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Remaining Pieces</th>
-                            <th>sold</th>
-                            
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="pname">Product 1</td>
-                           
-                            <td class="pprice">$19.99</td>
-                          
-                            <td class="psold">10</td>
-                            <td class="premain">5</td>
-                            <td class="de" id="delete">
-                                
-                                </td>
-                               
-                              
-                            </tr>
-                            <tr>
-                            <td class="pname">Product 1</td>
-                           
-                            <td class="pprice">$19.99</td>
-                          
-                            <td class="psold">10</td>
-                            <td class="premain">5</td>
-                            <td class="de" id="delete">
-                                
-                                </td>
-                               
-                            </tr>
-                            <tr>
-                            <td class="pname">Product 1</td>
-                           
-                            <td class="pprice">$19.99</td>
-                          
-                            <td class="psold">10</td>
-                            <td class="premain">5</td>
-                            <td class="de" id="delete">
-                                
-                                </td>
-                               
-                            </tr>
-                            <tr>
-                            <td class="pname">Product 1</td>
-                           
-                            <td class="pprice">$19.99</td>
-                          
-                            <td class="psold">10</td>
-                            <td class="premain">5</td>
-                            <td class="de" id="delete">
-                                
-                                </td>
-                               
-                            </tr>
-                            <tr>
-                            <td class="pname">Product 1</td>
-                           
-                            <td class="pprice">$19.99</td>
-                          
-                            <td class="psold">10</td>
-                            <td class="premain">5</td>
-                            <td class="de" id="delete">
-                                
-                                </td>
-                               
-                            </tr>
-                            
-                            
-                            
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-
-            </div>
-            
         </div>
+
+    </div>
     </body>
     <script>
-        const ctx = document.getElementById('sales-chart').getContext('2d');
-new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-        datasets: [{
-            label: 'Sales',
-            data: [1000, 2000, 5, 1300, 1400],
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            borderColor: 'rgba(255, 99, 132, 1)',
-            borderWidth: 2
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
+        <?php
+            $productNames = [];
+            $productQty = [];
+            foreach($products as $product)
+            {
+                array_push($productNames, $product->getName());
+                array_push($productQty, $product->getQty());
             }
-        }
-    }
-});
-
-const ctx2 = document.getElementById('stock-chart').getContext('2d');
-new Chart(ctx2, {
-    type: 'bar',
-    data: {
-        labels: ['Product A', 'Product B', 'Product C', 'Product D', 'Product E'],
-        datasets: [{
-            label: 'Stock Levels',
-            data: [500, 400, 300, 200, 100],
-            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 2
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-});
-const ctx3 = document.getElementById('pie-chart').getContext('2d');
-new Chart(ctx3, {
-    type: 'pie', 
-    data: {
-        labels: ['Product A', 'Product B', 'Product C', 'Product D', 'Product E'],
-        datasets: [{
-            label: 'Stock Levels',
-            data: [500, 400, 300, 200, 100],
-            backgroundColor: [
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)'
-            ],
-            borderColor: [
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 99, 132, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)'
-            ],
-            borderWidth: 2
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            legend: {
-                position: 'top',
+            $js_array = json_encode($productNames);
+            echo "var productNames = ". $js_array . ";\n";
+            $js_array = json_encode($productQty);
+            echo "var productQty = ". $js_array . ";\n";
+        ?>
+        const ctx2 = document.getElementById('stock-chart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: productNames,
+                datasets: [{
+                    label: 'Stock Levels',
+                    data: productQty,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 2
+                }]
             },
-            tooltip: {
-                callbacks: {
-                    label: function(tooltipItem) {
-                        return tooltipItem.label + ': ' + tooltipItem.raw;
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
                     }
                 }
             }
-        }
-    }
-});
+        });
+        const ctx3 = document.getElementById('pie-chart').getContext('2d');
+        new Chart(ctx3, {
+            type: 'pie', 
+            data: {
+                labels: productNames,
+                datasets: [{
+                    label: 'Stock Levels',
+                    data: productQty,
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw;
+                            }
+                        }
+                    }
+                }
+            }
+        });
     </script>
 </html>
