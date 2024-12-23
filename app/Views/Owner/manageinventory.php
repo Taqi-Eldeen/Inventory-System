@@ -2,38 +2,37 @@
 require_once(dirname(__FILE__) . "/../../Controller/inventoryController.php");
 require_once(dirname(__FILE__) . '/../../model/SupplierObserver.php');
 
-// Create an instance of the InventoryController
+
 $inventoryController = new InventoryController();
 
-// Create and attach the SupplierObserver
+
 $supplierObserver = new SupplierObserver();
 $inventoryController->attach($supplierObserver);
 
-$message = ""; // Initialize the message variable
-$inventoryData = null; // Initialize the inventory data variable
+$message = "";
+$inventoryData = null; 
 
-// Automatically fetch inventory for the business owner when the page loads
+
 $businessOwnerId = $_SESSION['boid'];
 $inventoryData = $inventoryController->getOrCreateInventory($businessOwnerId);
 
-// Handle product removal
+
 if (isset($_POST['remove_product'])) {
     $productId = $_POST['product_id'];
 
-    // Call the removeProduct method from the InventoryController
     $response = $inventoryController->removeProduct($productId);
     $responseData = json_decode($response, true);
 
     if ($responseData['success']) {
         $message = $responseData['message'];
-        // Refresh inventory data after product removal
+
         $inventoryData = $inventoryController->getOrCreateInventory($businessOwnerId);
     } else {
         $message = $responseData['message'];
     }
 }
 
-// Display success or error messages based on the result
+
 if ($inventoryData && isset($inventoryData['invid'])) {
     $message = "Inventory loaded successfully! Inventory ID: " . $inventoryData['invid'];
 } else {
@@ -62,11 +61,7 @@ if ($inventoryData && isset($inventoryData['invid'])) {
     <div class="main-content">
     <div class="container mt-4">
         <h2 class="mb-4 text-start">Business Owner Inventory</h2>
-
-        <!-- Display success or error messages -->
         <p class="alert alert-info"><?php echo $message; ?></p>
-
-        <!-- Inventory Table -->
         <div class="table-responsive">
             <table id="inventoryTable" class="table table-bordered table-striped">
                 <thead>

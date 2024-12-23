@@ -14,10 +14,10 @@ class Page extends Model {
 		$this->roleId = $roleId;
     }
 
-    // Fetch Product Details
+    
     function readPage($id) {
         if (!empty($id)) {
-            $sql = "SELECT * FROM pages WHERE id = " . intval($id); // Prevent SQL injection using intval
+            $sql = "SELECT * FROM pages WHERE id = " . intval($id); 
             $result = $this->db->query($sql);
 
             if ($result && $result->num_rows == 1) {
@@ -26,7 +26,7 @@ class Page extends Model {
 				$this->title = $row["title"];
 				$this->roleId = $row["role_id"];
             } else {
-                // If no product is found, set default values
+                
 				$this->pageName = $pageName;
 				$this->title = $title;
 				$this->roleId = $roleId;

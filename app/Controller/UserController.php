@@ -85,18 +85,18 @@ class UsersController extends Controller {
         return $this->model->getEmployeeId($userId);  // Use $this->model instead of $this->usersModel
     }
 
-public function getBOid($userId) {
-    return $this->model->getBOid($userId);  // Use $this->model instead of $this->usersModel
-}
-// In UsersController
-public function getSuppliersByBOid($boid) {
-    // Use the Users model to fetch suppliers associated with the Business Owner (boid)
-    return $this->model->getSuppliersByBOid($boid);
-}
+    public function getBOid($userId) {
+        return $this->model->getBOid($userId);  // Use $this->model instead of $this->usersModel
+    }
+    // In UsersController
+    public function getSuppliersByBOid($boid) {
+        // Use the Users model to fetch suppliers associated with the Business Owner (boid)
+        return $this->model->getSuppliersByBOid($boid);
+    }
 
-public function getEmployeeByBOid($boid) {
-    // Use the Users model to fetch suppliers associated with the Business Owner (boid)
-    return $this->model->getEmployeeByBOid($boid);
-}
+    public function getEmployeeByBOid($boid) {
+        // Use the Users model to fetch suppliers associated with the Business Owner (boid)
+        return $this->model->getEmployeeByBOid($boid);
+    }
 }
 ?>

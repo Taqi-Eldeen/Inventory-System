@@ -2,24 +2,16 @@
 require_once __DIR__ . "/../../Config/DBConnection.php";
 require_once(dirname(__FILE__) . "/../../Controller/ProductController.php");
 
-
-
 if (!isset($_SESSION['id'])) {
     header("Location: login.php");
     exit();
 }
 
-// Assuming the session stores supplierid for logged-in suppliers
-$supplierid = $_SESSION['supplierid'];  // Get the supplier ID from the session
-
-
-
-// If the supplierid is not set in the session, handle it (you may want to redirect or show an error)
+$supplierid = $_SESSION['supplierid'];
 $productsController = new ProductsController();
 $message = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Call insert without parameters, it will use $_POST data inside the method
     $isInserted = $productsController->insert($supplierid);
 
     if ($isInserted) {
@@ -46,13 +38,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <h2>Add Products</h2>
     <div class="container">
         <h1>Add New Product</h1>
-
-        <!-- Display success or error messages -->
         <?php if (!empty($message)): ?>
             <p class="alert alert-info"><?php echo $message; ?></p>
         <?php endif; ?>
-
-        <!-- Form for adding a new product -->
         <form action="addproduct.php" method="POST">
             <div class="mb-3">
                 <label for="name" class="form-label">Product Name:</label>
@@ -66,7 +54,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="qty" class="form-label">Quantity:</label>
                 <input type="number" id="qty" name="qty" class="form-control" required>
             </div>
-            <!-- No need to include supplierid field as it is fetched from session -->
             <button type="submit" class="btn btn-primary">Add Product</button>
         </form>
     </div>

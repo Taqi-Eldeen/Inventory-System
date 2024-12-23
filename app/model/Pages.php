@@ -7,11 +7,11 @@ class Pages extends Model {
 
     function __construct($roleId) {
         $this->pages = [];
-        $this->db = $this->connect(); // Initialize the database connection
+        $this->db = $this->connect(); 
         $this->fillArray($roleId);
     }
 
-    // Populate the products array
+    
     function fillArray($roleId) {
         $this->pages = [];
         $result = $this->readPagesByRole($roleId);
@@ -29,7 +29,7 @@ class Pages extends Model {
         }
     }
 
-    // Fetch all products from the database
+    
     function readPages() {
         $sql = "SELECT * FROM pages ORDER BY title DESC";
         $result = $this->db->query($sql);

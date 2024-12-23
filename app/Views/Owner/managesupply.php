@@ -2,26 +2,19 @@
 require_once(dirname(__FILE__) . "/../../Controller/UserController.php");
 require_once(dirname(__FILE__) . "/../../Model/Users.php");
 
-// Initialize userController
 $userController = new UsersController();
 
-// Handle form submission for adding new supplier
 if (isset($_POST['adduser'])) {
     $userController->insertBO();
 }
-
-// Handle form submission for update and delete actions
 if (isset($_POST['update_supplier'])) {
-    $userController->edit(); // Edit an existing supplier
+    $userController->edit(); 
 }
-
 if (isset($_POST['delete_supplier'])) {
-    $userController->delete($_POST['delete_id']); // Delete a supplier
+    $userController->delete($_POST['delete_id']);
 }
 
 $boid = $_SESSION['boid'];
-
-// Fetch the suppliers associated with the BOid
 $suppliers = $userController->getSuppliersByBOid($boid);
 ?>
 
@@ -43,7 +36,6 @@ $suppliers = $userController->getSuppliersByBOid($boid);
     <div class="container mt-4">
         <h1 class="mb-4 text-start">Manage Supplier</h1>
 
-        <!-- Add Supplier Section -->
         <section class="mb-4">
             <h2 class="text-start">Add New Supplier</h2>
             <form action="managesupply.php" method="post" class="row g-3">
@@ -67,7 +59,6 @@ $suppliers = $userController->getSuppliersByBOid($boid);
             </form>
         </section>
 
-        <!-- View Suppliers Section -->
         <section>
             <h2 class="text-start">Existing Suppliers</h2>
             <div class="table-responsive">
@@ -111,7 +102,6 @@ $suppliers = $userController->getSuppliersByBOid($boid);
         </section>
     </div>
 
-    <!-- Modal for Edit Supplier -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

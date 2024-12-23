@@ -1,21 +1,19 @@
 <?php
-// Including necessary files
 require_once(dirname(__FILE__) . "/../../Controller/UserController.php");
 require_once(dirname(__FILE__) . "/../../Model/Users.php");
 
-// Create an instance of the UsersController
+
 $controller = new UsersController();
 
-// Handle update and delete actions based on POST requests
 if (isset($_POST['update_user'])) {
-    $controller->edit(); // Edit an existing user
+    $controller->edit(); 
 }
 
 if (isset($_POST['delete_user'])) {
-    $controller->delete($_POST['delete_id']); // Delete a user
+    $controller->delete($_POST['delete_id']); 
 }
 
-// Fetch all users again to ensure the latest data is loaded
+
 $allUsers = $controller->getUsers();
 ?>
 
@@ -33,7 +31,7 @@ $allUsers = $controller->getUsers();
 
 <div class="main-content">
     
-    <!-- Users Table -->
+    
     <table class="table table-striped">
         <thead>
             <tr>
@@ -50,7 +48,7 @@ $allUsers = $controller->getUsers();
                     <td><?php echo htmlspecialchars($user->getUsername()); ?></td>
                     <td><?php echo htmlspecialchars($user->getEmail()); ?></td>
                     <td>
-                        <!-- Edit User -->
+
                         <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal" 
                             data-id="<?php echo $user->getID(); ?>"
                             data-username="<?php echo htmlspecialchars($user->getUsername()); ?>"
@@ -58,7 +56,7 @@ $allUsers = $controller->getUsers();
                             data-type="<?php echo $user->getType(); ?>"
                         >Edit</button>
                         
-                        <!-- Delete User -->
+                        
                         <form action="manageusers.php" method="POST" style="display:inline;">
                             <input type="hidden" name="delete_id" value="<?php echo $user->getID(); ?>">
                             <button type="submit" name="delete_user" class="btn btn-danger">Delete</button>
@@ -70,7 +68,7 @@ $allUsers = $controller->getUsers();
     </table>
 </div>
 
-<!-- Modal for Edit User -->
+
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -104,9 +102,9 @@ $allUsers = $controller->getUsers();
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    // Populate the edit modal with the selected user's data
+    
     $('#editModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget); // Button that triggered the modal
+        var button = $(event.relatedTarget); 
         var userID = button.data('id');
         var username = button.data('username');
         var email = button.data('email');

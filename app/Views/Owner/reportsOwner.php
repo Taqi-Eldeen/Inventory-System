@@ -2,20 +2,14 @@
 require_once(dirname(__FILE__) . "/../../Controller/reportController.php");
 
 $reportsController = new ReportsController();
-
-// Check if the user is a business owner and get their ID
 $businessOwnerId = isset($_SESSION['boid']) ? $_SESSION['boid'] : '';
-
-// Fetch reports for the business owner
 $reports = [];
 if (!empty($businessOwnerId)) {
     $reports = $reportsController->getReportsByBusinessOwner($businessOwnerId);
 }
-
-// Handle report deletion
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
     $repid = $_POST['repid'];
-    $reportsController->delete($repid); // Call delete method from the controller
+    $reportsController->delete($repid);
 }
 ?>
 
@@ -34,8 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
 <?php include '../User/sidebar.php'; ?>
 <div class="main-content">
     <h2>All Employee Reports</h2>
-
-    <!-- Reports Table -->
     <table id="example" class="table table-striped" style="width:100%">
         <thead>
             <tr>
@@ -53,7 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
                         <td><?php echo htmlspecialchars($report['empid']); ?></td>
                         <td><?php echo htmlspecialchars($report['mesg']); ?></td>
                         <td>
-                            <!-- Delete Button (no confirmation) -->
                             <form method="POST" action="" style="display:inline;">
                                 <input type="hidden" name="repid" value="<?php echo htmlspecialchars($report['repid']); ?>">
                                 <button type="submit" name="delete" class="btn btn-danger">

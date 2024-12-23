@@ -1,29 +1,15 @@
 <?php
 require_once(dirname(__FILE__) . "/../../Controller/orderController.php");
-require_once(dirname(__FILE__) . "/../../Controller/userController.php"); // Include UsersController
-
-// Initialize the controllers
+require_once(dirname(__FILE__) . "/../../Controller/userController.php");
 $ordersController = new OrdersController();
 $usersController = new UsersController();
-
-// Get the business owner ID (boid) from the session
 $boid = isset($_SESSION['boid']) ? $_SESSION['boid'] : '';
-
-// Fetch orders associated with the current business owner (boid)
 $orders = $ordersController->getOrdersByBusinessOwner($boid);
-
-// Fetch suppliers associated with the current business owner (boid) from UsersController
 $suppliers = $usersController->getSuppliersByBoid($boid);
-
-// Handle form submission for inserting a new order
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get the supplier ID and message from the form submission
     $supplierId = isset($_POST['supplierid']) ? $_POST['supplierid'] : '';
     $message = isset($_POST['mesg']) ? $_POST['mesg'] : '';
-
-    // Ensure supplierId and message are not empty
     if (!empty($supplierId) && !empty($message)) {
-        // Call the insert method and pass the supplier ID and message
         if ($ordersController->insert($supplierId, $message)) {
             echo "<script>alert('Order has been sent to the supplier successfully!');</script>";
         } else {
@@ -50,8 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="main-content">
     <h2>Your Orders</h2>
-
-    <!-- Orders Table -->
     <table id="ordersTable" class="table table-striped" style="width:100%">
         <thead>
             <tr>
@@ -62,7 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </tr>
         </thead>
         <tbody>
-            <!-- Fetch and display orders here -->
             <?php if (!empty($orders)): ?>
                 <?php foreach ($orders as $order): ?>
                     <tr>
@@ -89,8 +72,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </tfoot>
     </table>
 </div>
-
-<!-- Modal for Generate Order -->
 <div class="modal fade" id="generateOrderModal" tabindex="-1" aria-labelledby="generateOrderModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -99,16 +80,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- Order Submission Form inside the Modal -->
                 <form method="POST" action="" class="mb-4">
-                    <!-- Hidden input for boid -->
                     <input type="hidden" id="boid" name="boid" value="<?php echo htmlspecialchars($boid); ?>" required>
 
                     <div class="mb-3">
                         <label for="supplierid" class="form-label">Supplier</label>
                         <select id="supplierid" name="supplierid" class="form-control" required>
                             <option value="">Select Supplier</option>
-                            <!-- Loop through suppliers and populate the dropdown -->
                             <?php if (!empty($suppliers)): ?>
                                 <?php foreach ($suppliers as $supplier): ?>
                                     <option value="<?php echo htmlspecialchars($supplier['id']); ?>">
@@ -124,8 +102,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <label for="mesg" class="form-label">Order Request</label>
                         <textarea id="mesg" name="mesg" class="form-control" rows="3" required></textarea>
                     </div>
-
-                    <!-- Hidden input for status, always set to "Pending" -->
                     <input type="hidden" name="status" value="Pending">
 
                     <button type="submit" class="btn btn-success">Submit Order</button>

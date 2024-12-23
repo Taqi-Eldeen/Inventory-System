@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 21, 2024 at 05:33 PM
+-- Generation Time: Dec 23, 2024 at 01:04 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -32,6 +32,13 @@ CREATE TABLE `bowner` (
   `userid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `bowner`
+--
+
+INSERT INTO `bowner` (`boid`, `userid`) VALUES
+(26, 240);
+
 -- --------------------------------------------------------
 
 --
@@ -55,6 +62,27 @@ CREATE TABLE `inventory` (
   `boid` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `inventory`
+--
+
+INSERT INTO `inventory` (`invid`, `boid`) VALUES
+(19, 26);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `orderid` int(11) NOT NULL,
+  `boid` int(11) NOT NULL,
+  `supplierid` int(11) NOT NULL,
+  `mesg` varchar(255) NOT NULL,
+  `status` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 -- --------------------------------------------------------
 
 --
@@ -73,23 +101,23 @@ CREATE TABLE `pages` (
 --
 
 INSERT INTO `pages` (`id`, `page_name`, `role_id`, `title`) VALUES
-(1, 'addusers.php', 0, 'Add User'),
-(2, 'admin.php', 0, 'Admin'),
+(1, 'admin.php', 0, 'Admin'),
+(2, 'addusers.php', 0, 'Add User'),
 (3, 'manageusers.php', 0, 'Manage Users'),
-(4, 'manageemployee.php', 3, 'Manage Employee'),
+(4, 'Ownerdashboard.php', 3, 'Owner Dashboard'),
 (5, 'manageinventory.php', 3, 'Manage Inventory'),
 (6, 'managesupply.php', 3, 'Manage Supply'),
-(7, 'Ownerdashboard.php', 3, 'Owner Dashboard'),
 (8, 'supplierdashboard.php', 1, 'Supplier Dashboard'),
 (9, 'addproduct.php', 1, 'Add Product'),
 (10, 'editproduct.php', 1, 'Edit Product'),
-(11, 'trackmovement.php', 1, 'Track Stock Movements'),
-(12, 'logs.php', 2, 'Logs'),
-(13, 'availablesuppliers.php', 2, 'Available Suppliers'),
+(11, 'trackmovement.php', 1, 'Owner\'s Orders'),
+(12, 'dashboard.php', 2, 'User Dashboard'),
+(13, 'availablesuppliers.php', 2, 'Business Inventory'),
 (14, 'supplierView.php', 2, 'Supplier View'),
-(15, 'dashboard.php', 2, 'User Dashboard'),
-(16, 'products.php', 2, 'Products'),
-(17, 'shopDemp.php', 2, 'Shop');
+(15, 'manageemployee.php', 3, 'Manage Employee'),
+(17, 'shopDemp.php', 2, 'Reports'),
+(18, 'reportsOwner.php\r\n', 3, 'Employees Reports'),
+(19, 'orderproducts.php', 3, 'Order Products');
 
 -- --------------------------------------------------------
 
@@ -109,6 +137,18 @@ CREATE TABLE `product` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `report`
+--
+
+CREATE TABLE `report` (
+  `repid` int(11) NOT NULL,
+  `empid` int(11) NOT NULL,
+  `mesg` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `supplier`
 --
 
@@ -117,6 +157,13 @@ CREATE TABLE `supplier` (
   `userid` int(11) NOT NULL,
   `boid` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `supplier`
+--
+
+INSERT INTO `supplier` (`supplierid`, `userid`, `boid`) VALUES
+(29, 241, 26);
 
 -- --------------------------------------------------------
 
@@ -137,7 +184,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `email`, `password`, `type`) VALUES
-(73, 'sameh', 'abu_lba@yahoo.com', '$2y$10$8ZqMb413QCU6bU4l33jDg.3tjHNnVFkkwrW1SlcNgfw4uhoNtLtOq', 0);
+(73, 'sameh', 'abu_lba@yahoo.com', '$2y$10$8ZqMb413QCU6bU4l33jDg.3tjHNnVFkkwrW1SlcNgfw4uhoNtLtOq', 0),
+(240, 'owner0', 'wizardhavewizard@gmail.com', '$2y$10$s2fh3ISGQCEeKLFGtEabcu1Kapdig2OKmKjluzFcYEtC6ZIWRELz2', 3),
+(241, 'Supplier', 'abu_lba@yahoo.com', '$2y$10$gnlvCbH2OMr1c7S4usKa..ntzApk2EyyIFI059RgndKBbt9S0EdZO', 1);
 
 --
 -- Indexes for dumped tables
@@ -166,6 +215,14 @@ ALTER TABLE `inventory`
   ADD KEY `boid` (`boid`);
 
 --
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`orderid`),
+  ADD KEY `boid` (`boid`),
+  ADD KEY `supplierid` (`supplierid`);
+
+--
 -- Indexes for table `pages`
 --
 ALTER TABLE `pages`
@@ -178,6 +235,13 @@ ALTER TABLE `product`
   ADD PRIMARY KEY (`id`),
   ADD KEY `product_ibfk_1` (`supplierid`),
   ADD KEY `invid` (`invid`);
+
+--
+-- Indexes for table `report`
+--
+ALTER TABLE `report`
+  ADD PRIMARY KEY (`repid`),
+  ADD KEY `report_ibfk_1` (`empid`);
 
 --
 -- Indexes for table `supplier`
@@ -201,37 +265,49 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `bowner`
 --
 ALTER TABLE `bowner`
-  MODIFY `boid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `boid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `empid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `empid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `invid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `invid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `orderid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `pages`
 --
 ALTER TABLE `pages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
+
+--
+-- AUTO_INCREMENT for table `report`
+--
+ALTER TABLE `report`
+  MODIFY `repid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `supplier`
 --
 ALTER TABLE `supplier`
-  MODIFY `supplierid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `supplierid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -263,11 +339,24 @@ ALTER TABLE `inventory`
   ADD CONSTRAINT `inventory_ibfk_1` FOREIGN KEY (`boid`) REFERENCES `bowner` (`boid`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `orders`
+--
+ALTER TABLE `orders`
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`boid`) REFERENCES `bowner` (`boid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`supplierid`) REFERENCES `supplier` (`supplierid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `product`
 --
 ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`supplierid`) REFERENCES `supplier` (`supplierid`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `product_ibfk_2` FOREIGN KEY (`invid`) REFERENCES `inventory` (`invid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `report`
+--
+ALTER TABLE `report`
+  ADD CONSTRAINT `report_ibfk_1` FOREIGN KEY (`empid`) REFERENCES `employee` (`empid`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `supplier`

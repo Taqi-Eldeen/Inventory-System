@@ -6,7 +6,7 @@
 }
 
 body {
-    background-color: #f4f4f4;
+    background-color: #d8dede;
 }
 
 
@@ -72,9 +72,15 @@ h2 {
     background-color: #6A9AB0;
     color: white;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 20px;
     text-align: center;
     width: 30%;
+    transition: transform 0.3s ease;
+    margin-bottom: 5px;
+}
+
+.card:hover {
+    transform: scale(1.05);
 }
 
 table {
@@ -114,4 +120,33 @@ button:hover {
 .report-summary p {
     font-size: 1.2rem;
     margin-bottom: 20px;
+}
+
+.rounded-button {
+    border-radius: 50px;
+    transition: background-color 0.3s ease;
+}
+
+.rounded-button:hover {
+    background-color: #0056b3;
+}
+
+.main-content {
+    padding: 30px;
+}
+
+.overview-section, .businesses-section, .reports-section {
+    margin-bottom: 40px;
+}
+
+.business-card {
+    margin-bottom: 20px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+.text-center {
+    margin-bottom: 30px;
 }

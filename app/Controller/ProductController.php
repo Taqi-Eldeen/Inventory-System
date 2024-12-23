@@ -11,26 +11,26 @@ class ProductsController extends Controller {
         parent::__construct($this->productsModel);
     }
 
-    // Insert a new product
+    
     public function insert() {
-        // Access $_POST directly within the method
+        
         $name = $_POST['name'];
         $price = $_POST['price'];
         $qty = $_POST['qty'];
-        $supplierid = $_SESSION['supplierid']; // Fetch the supplier ID from the session
+        $supplierid = $_SESSION['supplierid']; 
 
-        // Get the corresponding inventory ID for the supplier
+        
         $invid = $this->getInventoryForSupplier($supplierid);
 
-        // Prepare the product data and insert it into the database
+        
         if ($invid) {
             return $this->productsModel->insertProduct($name, $price, $qty, $supplierid, $invid);
         } else {
-            return false;  // If no valid inventory found, return false
+            return false;  
         }
     }
 
-    // Edit an existing product
+    
     public function edit() {
         $id = $_REQUEST['id'];
         $name = $_REQUEST['name'];
@@ -46,7 +46,7 @@ class ProductsController extends Controller {
         }
     }
 
-    // Delete a product
+    
     public function delete($id) {
         if (!empty($id)) {
             return $this->productsModel->deleteProduct($id);
@@ -56,12 +56,12 @@ class ProductsController extends Controller {
         }
     }
 
-    // Get all products
+    
     public function getProducts() {
         return $this->productsModel->getProducts();
     }
 
-    // Get product details by ID
+    
     public function getProductByID($id) {
         if (!empty($id)) {
             return $this->productsModel->getProductByID($id);
@@ -71,25 +71,25 @@ class ProductsController extends Controller {
         }
     }
 
-    // Get inventory for a supplier
+    
     public function getInventoryForSupplier($supplierid) {
         return $this->productsModel->getInventoryForSupplier($supplierid);
     }
 
-    // Method to fetch products by supplier ID
+    
     public function ProductsBySupplier($supplierid) {
-        // Call the model's method to get products by supplier ID
+        
         $products = $this->productsModel->getProductsBySupplier($supplierid);
 
-        // Check if products are found
+        
         if ($products) {
-            return $products; // Return the list of products to be displayed in the view
+            return $products; 
         } else {
-            return false; // Return false if no products found
+            return false; 
         }
     }
 
-    // Other controller methods can go here
+    
 }
 
 

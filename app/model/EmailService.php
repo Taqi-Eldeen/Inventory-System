@@ -1,8 +1,12 @@
 <?php
-require_once(dirname(__DIR__, 2) . '/vendor/autoload.php'); 
 
+// use PHPMailer\PHPMailer\PHPMailer;
+// use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+
+require(dirname(__DIR__, 2) . '/vendor/autoload.php'); 
 
 class EmailService {
     private $mailer;

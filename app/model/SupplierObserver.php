@@ -1,12 +1,12 @@
 <?php
 require_once 'Observer.php';
-require_once 'EmailService.php'; // Include the EmailService class
+require_once 'EmailService.php'; 
 
 class SupplierObserver implements Observer {
     private $emailService;
 
     public function __construct() {
-        $this->emailService = new EmailService(); // Instantiate EmailService
+        $this->emailService = new EmailService(); 
     }
 
     public function update($subject, $supplierEmail, $product) {
@@ -23,7 +23,7 @@ class SupplierObserver implements Observer {
             <p>Best regards,<br>
         ";
 
-        // Use EmailService to send the email
+        
         $response = $this->emailService->sendEmail($supplierEmail, $subject, $body);
     }
 }

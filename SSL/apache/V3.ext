@@ -1,0 +1,7 @@
+subjectAltName = @alt_names
+[alt_names]
+DNS.1 = localhost
+DNS.2 = *.dev.example.com
+DNS.3 = dev.example.com
+DNS.4 = 127.0.0.1
+DNS.5 = 127.0.0.2

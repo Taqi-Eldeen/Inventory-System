@@ -10,15 +10,15 @@ class OrdersController extends Controller {
         parent::__construct($this->ordersModel);
     }
 
-    // Insert a new order
+    
     public function insert() {
-        // Access $_POST data for creating the order
-        $boid = $_SESSION['boid']; // Assuming the Business Owner ID is stored in session
-        $supplierid = $_POST['supplierid']; // Get the supplier ID from the request
+        
+        $boid = $_SESSION['boid']; 
+        $supplierid = $_POST['supplierid']; 
         $mesg = $_POST['mesg'];
         $status = $_POST['status'];
 
-        // Prepare the order data and insert it into the database
+        
         if (!empty($boid) && !empty($supplierid) && !empty($mesg) && !empty($status)) {
             return $this->ordersModel->insertOrder($boid, $supplierid, $mesg, $status);
         } else {
@@ -27,7 +27,7 @@ class OrdersController extends Controller {
         }
     }
 
-    // Edit an existing order
+    
     public function edit() {
         $orderid = $_REQUEST['orderid'];
         $boid = $_REQUEST['boid'];
@@ -43,7 +43,7 @@ class OrdersController extends Controller {
         }
     }
 
-    // Delete an order
+    
     public function delete($orderid) {
         if (!empty($orderid)) {
             return $this->ordersModel->deleteOrder($orderid);
@@ -53,12 +53,12 @@ class OrdersController extends Controller {
         }
     }
 
-    // Get all orders
+    
     public function getOrders() {
         return $this->ordersModel->getOrders();
     }
 
-    // Get order details by order ID
+    
     public function getOrderByID($orderid) {
         if (!empty($orderid)) {
             return $this->ordersModel->getOrderByID($orderid);
@@ -68,22 +68,22 @@ class OrdersController extends Controller {
         }
     }
 
-    // Method to fetch orders by supplier ID
+    
 public function getOrdersBySupplier($supplierid) {
     $orders = $this->ordersModel->getOrdersBySupplier($supplierid);
     return $orders;
 }
 
-   // Method to fetch orders by business owner ID (boid)
+   
 public function getOrdersByBusinessOwner($boid) {
     $orders = $this->ordersModel->getOrdersByBusinessOwner($boid);
     return $orders;
 }
 
 public function updateOrderStatus($orderId, $status) {
-    return $this->ordersModel->updateOrderStatus($orderId, $status);  // Delegate to model
+    return $this->ordersModel->updateOrderStatus($orderId, $status);  
 }
 
-    // Other controller methods can go here
+    
 }
 ?>

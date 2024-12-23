@@ -6,58 +6,7 @@
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-
-        .card {
-            border-radius: 20px;
-            transition: transform 0.3s ease;
-            margin-bottom: 5px;
-        }
-
-        .card:hover {
-            transform: scale(1.05);
-        }
-
-        .rounded-button {
-            border-radius: 50px;
-            transition: background-color 0.3s ease;
-        }
-
-        .rounded-button:hover {
-            background-color: #0056b3;
-        }
-
-        .main-content {
-            padding: 30px;
-        }
-
-        .overview-section {
-            margin-bottom: 40px;
-        }
-
-        .businesses-section {
-            margin-bottom: 40px;
-        }
-
-        .reports-section {
-            margin-bottom: 40px;
-        }
-
-        .business-card {
-            margin-bottom: 20px;
-        }
-
-        h2 {
-            margin-bottom: 20px;
-        }
-
-        .text-center {
-            margin-bottom: 30px;
-        }
-    </style>
+    <link rel="stylesheet" href="path/to/your/admin.css">
 </head>
 <body>
 
@@ -118,7 +67,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- Add more business cards as needed -->
+                
             </div>
         </section>
 

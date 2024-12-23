@@ -9,12 +9,12 @@ class Product extends Model {
     private $supplierid;
 
     function __construct($id = null, $name = "", $price = "", $qty = "", $supplierid = "") {
-        $this->db = $this->connect(); // Ensure DB connection
+        $this->db = $this->connect(); 
         if ($id !== null) {
             $this->id = $id;
-            $this->readProduct($id); // Read product if ID is provided
+            $this->readProduct($id); 
         } else {
-            // If no ID is passed, set default values
+            
             $this->name = $name;
             $this->price = $price;
             $this->qty = $qty;
@@ -22,7 +22,7 @@ class Product extends Model {
         }
     }
 
-    // Getters and Setters
+    
     function getID() {
         return $this->id;
     }
@@ -59,10 +59,10 @@ class Product extends Model {
         $this->supplierid = $supplierid;
     }
 
-    // Fetch Product Details
+    
     function readProduct($id) {
         if (!empty($id)) {
-            $sql = "SELECT * FROM product WHERE id = " . intval($id); // Prevent SQL injection using intval
+            $sql = "SELECT * FROM product WHERE id = " . intval($id); 
             $result = $this->db->query($sql);
 
             if ($result && $result->num_rows == 1) {
@@ -72,7 +72,7 @@ class Product extends Model {
                 $this->qty = $row["qty"];
                 $this->supplierid = $row["supplierid"];
             } else {
-                // If no product is found, set default values
+                
                 $this->name = "";
                 $this->price = "";
                 $this->qty = "";
@@ -83,7 +83,7 @@ class Product extends Model {
         }
     }
 
-    // Update Product
+    
     function updateProduct() {
         $sql = "UPDATE product SET 
                 name = '" . $this->db->real_escape_string($this->name) . "', 
@@ -95,13 +95,13 @@ class Product extends Model {
         return $this->db->query($sql);
     }
 
-    // Delete Product
+    
     function deleteProduct() {
         $sql = "DELETE FROM product WHERE id = " . intval($this->id);
         return $this->db->query($sql);
     }
 
-    // Fetch all products from DB
+    
 
 }
 ?>

@@ -9,11 +9,11 @@ class User extends Model {
     private $type;
 
     function __construct($id = "", $username = "", $email = "", $password = "", $type = "") {
-        $this->db = $this->connect(); // Initialize DB connection
+        $this->db = $this->connect(); 
         
         if ($id !== "") {
             $this->id = $id;
-            $this->readUser($id); // Fetch user data if ID is provided
+            $this->readUser($id); 
         } else {
             $this->username = $username;
             $this->email = $email;
@@ -22,7 +22,7 @@ class User extends Model {
         }
     }
 
-    // Getters and Setters
+    
     function getID() { return $this->id; }
     function getUsername() { return $this->username; }
     function setUsername($username) { $this->username = $username; }
@@ -36,7 +36,7 @@ class User extends Model {
     function getType() { return $this->type; }
     function setType($type) { $this->type = $type; }
 
-    // Read user details
+    
     function readUser($id) {
         $sql = "SELECT * FROM user WHERE id = " . intval($id);
         $result = $this->db->query($sql);
@@ -55,7 +55,7 @@ class User extends Model {
         }
     }
 
-    // Insert user into the database
+    
     function insertUser() {
         $sql = "INSERT INTO user (username, email, password, type) 
                 VALUES ('$this->username', '$this->email', '$this->password', '$this->type')";
@@ -63,7 +63,7 @@ class User extends Model {
         return $this->db->query($sql) ? true : false;
     }
 
-    // Update user in the database
+    
     function updateUser() {
         $sql = "UPDATE user SET 
                     username = '$this->username', 
@@ -75,16 +75,16 @@ class User extends Model {
         return $this->db->query($sql) ? true : false;
     }
 
-    // Delete user
+    
     function deleteUser() {
         $sql = "DELETE FROM user WHERE id = " . intval($this->id);
 
         return $this->db->query($sql) ? true : false;
     }
 
-    // Static method to retrieve all users
+    
     static function getAllUsers() {
-        $db = (new self())->connect(); // Create a temporary instance for DB connection
+        $db = (new self())->connect(); 
         $sql = "SELECT * FROM user";
         $result = $db->query($sql);
 

@@ -11,120 +11,120 @@ class Inventories extends Model {
         $this->fillArray();
     }
 
-    // Method to read all inventories from the database
+    
     public function readInventories() {
         $sql = "SELECT * FROM inventory";
         $result = $this->db->query($sql);
         return $result;
     }
 
-    // Method to fetch all inventories
+    
     public function fillArray() {
         $this->inventories = [];
         $result = $this->readInventories();
 
         if ($result) {
             while ($row = $result->fetch_assoc()) {
-                // Create Inventory object
+                
                 $inventory = new Inventory($row["invid"], $row["boid"]);
-                // Add the inventory to the inventories array
+                
                 $this->inventories[] = $inventory;
             }
         }
     }
     public function getProductById($productId) {
         $query = "SELECT * FROM product WHERE id = ?";
-        $stmt = $this->db->prepare($query); // Assuming $this->db is a MySQLi instance
-        $stmt->bind_param('i', $productId); // Bind the product ID as an integer
-        $stmt->execute(); // Execute the query
-        $result = $stmt->get_result(); // Get the result set
-        return $result->fetch_assoc(); // Fetch a single row as an associative array
+        $stmt = $this->db->prepare($query); 
+        $stmt->bind_param('i', $productId); 
+        $stmt->execute(); 
+        $result = $stmt->get_result(); 
+        return $result->fetch_assoc(); 
     }
     
     public function getSupplierEmailById($supplierId) {
-        // Get the user ID of the supplier
+        
         $query = "SELECT userid FROM supplier WHERE supplierid = ?";
-        $stmt = $this->db->prepare($query); // Assuming $this->db is a MySQLi instance
-        $stmt->bind_param('i', $supplierId); // Bind the supplier ID as an integer
-        $stmt->execute(); // Execute the query
-        $result = $stmt->get_result(); // Get the result set
-        $supplier = $result->fetch_assoc(); // Fetch the supplier as an associative array
+        $stmt = $this->db->prepare($query); 
+        $stmt->bind_param('i', $supplierId); 
+        $stmt->execute(); 
+        $result = $stmt->get_result(); 
+        $supplier = $result->fetch_assoc(); 
     
         if ($supplier) {
-            // Fetch the email from the users table
+            
             $query = "SELECT email FROM user WHERE id = ?";
             $stmt = $this->db->prepare($query);
-            $stmt->bind_param('i', $supplier['userid']); // Bind the user ID
+            $stmt->bind_param('i', $supplier['userid']); 
             $stmt->execute();
             $result = $stmt->get_result();
-            $user = $result->fetch_assoc(); // Fetch the user as an associative array
+            $user = $result->fetch_assoc(); 
             return $user ? $user['email'] : null;
         }
     
-        return null; // Return null if no supplier is found
+        return null; 
     }
     public function getBownerEmailById($invid) {
-        // Step 1: Get the boid from the inventory table using the invid
+        
         $query = "SELECT boid FROM inventory WHERE invid = ?";
-        $stmt = $this->db->prepare($query); // Assuming $this->db is a MySQLi instance
-        $stmt->bind_param('i', $invid); // Bind the inventory ID as an integer
-        $stmt->execute(); // Execute the query
-        $result = $stmt->get_result(); // Get the result set
-        $inventory = $result->fetch_assoc(); // Fetch the inventory record as an associative array
+        $stmt = $this->db->prepare($query); 
+        $stmt->bind_param('i', $invid); 
+        $stmt->execute(); 
+        $result = $stmt->get_result(); 
+        $inventory = $result->fetch_assoc(); 
     
         if ($inventory) {
-            $boid = $inventory['boid']; // Get boid from the inventory record
+            $boid = $inventory['boid']; 
             
-            // Step 2: Use the boid to get the user ID of the business owner from bowner table
+            
             $query = "SELECT userid FROM bowner WHERE boid = ?";
-            $stmt = $this->db->prepare($query); // Prepare the query
-            $stmt->bind_param('i', $boid); // Bind boid
-            $stmt->execute(); // Execute the query
-            $result = $stmt->get_result(); // Get the result set
-            $owner = $result->fetch_assoc(); // Fetch the supplier as an associative array
+            $stmt = $this->db->prepare($query); 
+            $stmt->bind_param('i', $boid); 
+            $stmt->execute(); 
+            $result = $stmt->get_result(); 
+            $owner = $result->fetch_assoc(); 
     
             if ($owner) {
-                // Step 3: Fetch the email from the users table
+                
                 $query = "SELECT email FROM user WHERE id = ?";
-                $stmt = $this->db->prepare($query); // Prepare the query
-                $stmt->bind_param('i', $owner['userid']); // Bind the user ID
-                $stmt->execute(); // Execute the query
-                $result = $stmt->get_result(); // Get the result set
-                $user = $result->fetch_assoc(); // Fetch the user as an associative array
-                return $user ? $user['email'] : null; // Return the email or null
+                $stmt = $this->db->prepare($query); 
+                $stmt->bind_param('i', $owner['userid']); 
+                $stmt->execute(); 
+                $result = $stmt->get_result(); 
+                $user = $result->fetch_assoc(); 
+                return $user ? $user['email'] : null; 
             }
         }
         
-        return null; // Return null if no business owner or inventory record is found
+        return null; 
     }
     
     
 
     public function getBusinessOwnerEmailByInventoryId($inventoryId) {
-        // Get the user ID of the business owner
+        
         $query = "
             SELECT bo.userid 
             FROM inventories AS inv
             JOIN business_owners AS bo ON inv.boid = bo.id
             WHERE inv.invid = ?";
-        $stmt = $this->db->prepare($query); // Prepare the query
-        $stmt->bind_param('i', $inventoryId); // Bind the inventory ID as an integer
-        $stmt->execute(); // Execute the query
-        $result = $stmt->get_result(); // Get the result set
-        $businessOwner = $result->fetch_assoc(); // Fetch the business owner as an associative array
+        $stmt = $this->db->prepare($query); 
+        $stmt->bind_param('i', $inventoryId); 
+        $stmt->execute(); 
+        $result = $stmt->get_result(); 
+        $businessOwner = $result->fetch_assoc(); 
     
         if ($businessOwner) {
-            // Fetch the email from the users table
+            
             $query = "SELECT email FROM user WHERE id = ?";
             $stmt = $this->db->prepare($query);
-            $stmt->bind_param('i', $businessOwner['userid']); // Bind the user ID
+            $stmt->bind_param('i', $businessOwner['userid']); 
             $stmt->execute();
             $result = $stmt->get_result();
-            $user = $result->fetch_assoc(); // Fetch the user as an associative array
+            $user = $result->fetch_assoc(); 
             return $user ? $user['email'] : null;
         }
     
-        return null; // Return null if no business owner is found
+        return null; 
     }
     
 
@@ -143,22 +143,22 @@ class Inventories extends Model {
     }
 
 
-    // Method to insert inventory for a business owner (boid)
+    
     public function insertInventory($boid) {
         $sql = "INSERT INTO inventory (boid) VALUES (?)";
         $stmt = $this->db->prepare($sql);
         $stmt->bind_param("i", $boid);
         
         if ($stmt->execute()) {
-            // Log or print the result to ensure insertion is successful
-            $invid = $stmt->insert_id;  // Get the inserted ID
-            var_dump($invid);  // Debugging: Check the inserted inventory ID
+            
+            $invid = $stmt->insert_id;  
+            var_dump($invid);  
             return [
                 'invid' => $invid,
                 'boid' => $boid
             ];
         } else {
-            var_dump($stmt->error);  // Debugging: Check the error in case of failure
+            var_dump($stmt->error);  
             return false;
         }
     }
@@ -166,7 +166,7 @@ class Inventories extends Model {
     
     
 
-    // Method to delete an inventory by its ID
+    
     public function deleteInventory($invid) {
         $sql = "DELETE FROM inventory WHERE invid = ?";
         $stmt = $this->db->prepare($sql);
@@ -180,7 +180,7 @@ class Inventories extends Model {
         }
     }
 
-    // Method to check if inventory exists for a specific boid
+    
     public function getInventoryByBOID($boid) {
         $sql = "SELECT * FROM inventory WHERE boid = ?";
         $stmt = $this->db->prepare($sql);
@@ -220,7 +220,7 @@ class Inventories extends Model {
         }
     }
     public function getInventoryForEmployee($employeeid) {
-        // Step 1: Fetch boid (Business Owner ID) based on employeeid
+        
         $getBoidSql = "SELECT boid FROM employee WHERE empid = ?";
         $stmt = $this->db->prepare($getBoidSql);
         $stmt->bind_param("i", $employeeid);

@@ -1,4 +1,22 @@
-<?php include '../User/sidebar.php'; ?>
+<?php
+require_once(dirname(__FILE__) . "/../../Controller/UserController.php");
+require_once(dirname(__FILE__) . "/../../Controller/ProductController.php");
+require_once(dirname(__FILE__) . "/../User/sidebar.php");
+
+$userController = new UsersController();
+
+$boid = $_SESSION['boid'];
+$employees = $userController->getEmployeeByBOid($boid);
+$employee_count = count($employees);
+
+$suppliers = $userController->getSuppliersByBOid($boid);
+$supplier_count = count($suppliers);
+
+$productController = new ProductsController();
+$products = $productController->ProductsByBusinessOwner($boid);
+$products = array_slice($products, 0, 4);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,49 +30,70 @@
     </head>
     <body>
     <div class="main-content">
-        <h2>Dashboard</h2>
-
-        <ul class="box-info">
-            <li>
-                <i class="fa-solid fa-user"></i>
-                <span class="text">
-                    <h3>2450</h3>
-                    <p>Users</p>
-                </span>
-            </li>
-            <li>
-                <i class="fa-solid fa-truck-fast"></i>
-                <span class="text">
-                    <h3>3</h3>
-                    <p>Suppliers</p>
-                </span>
-            </li>
-            <li>
-                <i class="fa-solid fa-briefcase"></i>
-                <span class="text">
-                    <h3>150</h3>
-                    <p>Businesses</p>
-                </span>
-            </li>
-            <li>
-                <i class="fa-solid fa-chart-line"></i>
-                <span class="text">
-                    <h3>$75,000</h3>
-                    <p>Revenue</p>
-                </span>
-            </li>
-            <li>
-                <i class="fa-solid fa-people-carry"></i>
-                <span class="text">
-                    <h3>300</h3>
-                    <p>Employees</p>
-                </span>
-            </li>
-        </ul>
-
-        <div class="charts">
-            <canvas id="salesChart"></canvas>
-            <canvas id="employeeChart"></canvas>
+        <div class="container-xs">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Supplier</h5>
+                            <p class="card-text">
+                                <i class="fa-solid fa-truck-fast"></i>
+                                <?php echo $supplier_count ?> 
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 ">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Employees</h5>
+                            <p class="card-text">
+                                <i class="fa-solid fa-people-carry"></i>
+                                <?php echo $employee_count ?> 
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 ">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Employees</h5>
+                            <p class="card-text">
+                                <i class="fa-solid fa-people-carry"></i>
+                                <?php echo $employee_count ?> 
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row my-4">
+                <div class="col">
+                    <div class="card p-4">
+                        <h3 class="card-title">Recent Added Products</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                <th scope="col">ID </th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach($products as $product) : ?>
+                                <thead>
+                                    <tr>
+                                    <th scope="row"><?php echo $product->getID() ?> </th>
+                                    <td><?php echo $product->getName() ?> </th>
+                                    <td>$<?php echo $product->getPrice() ?> </th>
+                                    <td><?php echo $product->getQty() ?> </th>
+                                    </tr>
+                                </thead>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
         </div>
     </div>
     </body>

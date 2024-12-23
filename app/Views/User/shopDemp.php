@@ -1,19 +1,12 @@
 <?php
 require_once(dirname(__FILE__) . "/../../Controller/reportController.php");
 
-// Initialize the controller
 $reportsController = new ReportsController();
-
-// Get the employee ID from the session
 $empid = isset($_SESSION['empid']) ? $_SESSION['empid'] : '';
-
-// Fetch reports for the logged-in employee
 $reports = [];
 if (!empty($empid)) {
     $reports = $reportsController->getReportsByEmployee($empid);
 }
-
-// Handle form submission for inserting a new report
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $reportsController->insert();
 }
@@ -34,8 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="main-content">
     <h2>Your Reports</h2>
-
-    <!-- Reports Table -->
     <table id="example" class="table table-striped" style="width:100%">
         <thead>
             <tr>
@@ -68,8 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </tfoot>
     </table>
 </div>
-
-<!-- Modal for Generate Report -->
 <div class="modal fade" id="generateModal" tabindex="-1" aria-labelledby="generateModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -78,11 +67,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- Report Submission Form inside the Modal -->
                 <form method="POST" action="" class="mb-4">
                     <div class="mb-3">
                         <label for="empid" class="form-label">Employee ID</label>
-                        <!-- Automatically fill in the Employee ID from the session -->
                         <input type="text" id="empid" name="empid" class="form-control" value="<?php echo htmlspecialchars($empid); ?>" readonly required>
                     </div>
                     <div class="mb-3">

@@ -1,10 +1,8 @@
 <?php
 require_once(dirname(__FILE__) . "/../../Controller/inventoryController.php");
-
-// Create an instance of the InventoryController
 $inventoryController = new InventoryController();
 
-$empid = $_SESSION['empid'];  // Get employee ID from session
+$empid = $_SESSION['empid'];
 $inventoryData = $inventoryController->getInventoryForEmployee($empid);
 ?>
 
@@ -21,12 +19,9 @@ $inventoryData = $inventoryController->getInventoryForEmployee($empid);
 
 <div class="main-content container mt-4">
     <h2>Employee Inventory</h2>
-
-    <!-- Display success or error messages -->
     <?php if (!$inventoryData): ?>
         <p>No products found for this employee's inventory.</p>
     <?php else: ?>
-        <!-- Inventory Table -->
         <table id="inventoryTable" class="table table-striped">
             <thead>
                 <tr>

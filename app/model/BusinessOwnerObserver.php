@@ -1,15 +1,15 @@
 <?php
-// BusinessOwnerObserver.php
-require_once('Observer.php');  // Include the Observer interface
-require_once('Inventory.php'); // Include the Inventory class if needed
+
+require_once('Observer.php');  
+require_once('Inventory.php'); 
 
 
-// BusinessOwnerObserver class
+
  class BusinessOwnerObserver implements Observer {
     private $emailService;
 
     public function __construct() {
-        $this->emailService = new EmailService(); // Instantiate EmailService
+        $this->emailService = new EmailService(); 
     }
 
     public function update($subject, $boEmail, $product) {
@@ -26,7 +26,7 @@ require_once('Inventory.php'); // Include the Inventory class if needed
             <p>Best regards,<br>
         ";
 
-        // Use EmailService to send the email
+        
         $response = $this->emailService->sendEmail($boEmail, $subject, $body);
     }
 }

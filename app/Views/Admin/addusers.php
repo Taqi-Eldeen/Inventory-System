@@ -1,19 +1,19 @@
 <?php
-// Include the necessary controller and model files
+
 require_once(dirname(__FILE__) . "/../../Controller/UserController.php");
 require_once(dirname(__FILE__) . "/../../model/Users.php");
 
-// Function to validate password complexity
+
 function validatePassword($password) {
     return strlen($password) >= 8 && preg_match('/[!@#$%^&*(),.?":{}|<>]/', $password);
 }
 
-// Create an instance of the UserController
+
 $userController = new UsersController();
 
-// Handle form submission
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Call the insert method from UserController
+    
     $userController->insert();
 }
 ?>
@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="container">
         <h1>Add New User</h1>
-        <!-- Display success or error message based on the form submission -->
+        
         <?php if (!empty($errorMessage)): ?>
             <p class="error"><?php echo $errorMessage; ?></p>
         <?php endif; ?>
@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <p class="success"><?php echo $successMessage; ?></p>
         <?php endif; ?>
 
-        <!-- The form for adding a new user -->
+        
         <form action="addusers.php" method="POST">
             <div class="form-group">
                 <label for="username">Username:</label>
